@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>RH</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2021-03-29T03:20:03.906Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>RH</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>博客发布后自定义域名失效</title>
+    <link href="http://example.com/2021/03/29/%E5%8D%9A%E5%AE%A2%E5%8F%91%E5%B8%83%E5%90%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%A4%B1%E6%95%88/"/>
+    <id>http://example.com/2021/03/29/博客发布后自定义域名失效/</id>
+    <published>2021-03-29T03:19:01.000Z</published>
+    <updated>2021-03-29T03:20:03.906Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.博客发布后自定义域名失效<br><a href="https://blog.csdn.net/xs20691718/article/details/81873921" target="_blank" rel="noopener">https://blog.csdn.net/xs20691718/article/details/81873921</a></p><p>2.title标题中，冒号后面不能接空格，否则会报错</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1.博客发布后自定义域名失效&lt;br&gt;&lt;a href=&quot;https://blog.csdn.net/xs20691718/article/details/81873921&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://blog.csdn.ne
+      
+    
+    </summary>
+    
+      <category term="其它" scheme="http://example.com/categories/%E5%85%B6%E5%AE%83/"/>
+    
+    
+      <category term="博客" scheme="http://example.com/tags/%E5%8D%9A%E5%AE%A2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Android和PHP，字符压缩和编码</title>
+    <link href="http://example.com/2019/07/11/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81/"/>
+    <id>http://example.com/2019/07/11/字符串压缩编码/</id>
+    <published>2019-07-11T05:11:23.000Z</published>
+    <updated>2021-03-29T03:01:27.458Z</updated>
+    
+    <content type="html"><![CDATA[<p>base64_encode(gzdeflate(源字符串))</p><p>Android字符压缩<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] deflater(String data) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//ByteArrayInputStream inputStream = new ByteArrayInputStream(data.getBytes());</span></span><br><span class="line">        <span class="comment">//内存输出流</span></span><br><span class="line">        ByteArrayOutputStream outputStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 要使用no_wrap的Deflater，php才能解压，9是最高的压缩级别，可以设置为1-9的级别，1速度最快</span></span><br><span class="line">        DeflaterOutputStream deflaterOut = <span class="keyword">new</span> DeflaterOutputStream(outputStream, <span class="keyword">new</span> Deflater(<span class="number">9</span>, <span class="keyword">true</span>));</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            deflaterOut.write(data.getBytes());</span><br><span class="line">            <span class="comment">//一定要finish否则长度为0</span></span><br><span class="line">            deflaterOut.finish();</span><br><span class="line">            outputStream.flush();</span><br><span class="line"></span><br><span class="line">            <span class="comment">//String str = outputStream.toString();</span></span><br><span class="line">            <span class="keyword">byte</span>[] byteArray = outputStream.toByteArray();</span><br><span class="line">            <span class="keyword">return</span> byteArray;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">//inputStream.close();</span></span><br><span class="line">                deflaterOut.close();</span><br><span class="line">                outputStream.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p><p>Android Base64编码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">enncode</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">byte</span>[] bytes;</span><br><span class="line">    String encodeString = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        bytes = s.getBytes(<span class="string">"UTF-8"</span>);</span><br><span class="line">        encodeString = Base64.encodeToString(bytes, Base64.NO_WRAP)</span><br><span class="line">        <span class="comment">//java中使用（需要jdk8）</span></span><br><span class="line">        <span class="comment">//Base64.getEncoder().encodeToString("some string".getBytes("utf-8"));</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> encodeString;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>PHP 解码与解压缩</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$Code = <span class="string">'这里填写要解密的编码'</span>; <span class="comment">// base64编码 </span></span><br><span class="line">$Temp = base64_decode($Code); </span><br><span class="line">$postStr = gzinflate($Temp);</span><br></pre></td></tr></table></figure><p>参考网址：<a href="https://blog.csdn.net/hdgcx/article/details/53916837" target="_blank" rel="noopener">https://blog.csdn.net/hdgcx/article/details/53916837</a></p><hr>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;base64_encode(gzdeflate(源字符串))&lt;/p&gt;
+&lt;p&gt;Android字符压缩&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="数据压缩" scheme="http://example.com/tags/%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>json数据</title>
+    <link href="http://example.com/2019/07/10/json%E6%95%B0%E6%8D%AE/"/>
+    <id>http://example.com/2019/07/10/json数据/</id>
+    <published>2019-07-10T05:10:05.000Z</published>
+    <updated>2021-03-29T03:01:27.444Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.出现转译字符    </p><pre><code>String s = new Gson().toJson(encodedText);出现转译字符原因：Gson会把html标签，转换为Unicode转义字符。正确的使用方法是:Gson gson = new GsonBuilder().disableHtmlEscaping().create();</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1.出现转译字符    &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;String s = new Gson().toJson(encodedText);出现转译字符
+
+原因：Gson会把html标签，转换为Unicode转义字符。
+
+正确的使用方法是:Gson gson = new G
+      
+    
+    </summary>
+    
+    
+      <category term="json" scheme="http://example.com/tags/json/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>FFmpeg视频工具</title>
+    <link href="http://example.com/2019/06/10/FFmpeg/"/>
+    <id>http://example.com/2019/06/10/FFmpeg/</id>
+    <published>2019-06-10T05:00:00.000Z</published>
+    <updated>2021-03-29T03:01:27.423Z</updated>
+    
+    <content type="html"><![CDATA[<p>FFmpeg是非常强大的多媒体视频处理工具。<br>功能包括视频采集功能、视频格式转换、视频抓图、给视频加水印等。<br>下载地址：<a href="https://ffmpeg.org/" target="_blank" rel="noopener">https://ffmpeg.org/</a></p><h4 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h4><p>1080P转720P</p><pre><code>./ffmpeg -i A.mp4 -c copy -c:v libx264 -vf scale=-2:720 B.mp4</code></pre><p>mp3转换pcm</p><pre><code>./ffmpeg -y -i test.mp3 -acodec pcm_s16le -f s16le -ac 1 -ar 16000 16k.pcm</code></pre><table><thead><tr><th>参数</th><th>说明</th></tr></thead><tbody><tr><td>-y</td><td>允许覆盖</td></tr><tr><td>-i test.mp3</td><td>源文件</td></tr><tr><td>-acodec pcm_s16le</td><td>编码器</td></tr><tr><td>-f s16le</td><td>强制文件格式</td></tr><tr><td>-ac 2</td><td>双声道</td></tr><tr><td>-ar 16000</td><td>采样率</td></tr></tbody></table><p>pcm转mp3    </p><pre><code>ffmpeg -y -f s16be -ac 2 -ar 16000 -acodec pcm_s16le -i 16k.pcm new_mp3.mp3</code></pre><p>pcm播放</p><pre><code>./ffplay -ar 16000 -channels 1 -f s16le -i xxx.pcm</code></pre><p>MP3截取</p><pre><code>ffmpeg -y -i test.mp3 -ss 00:00:00 -t 00:00:03 -acodec copy output_mp3.mp3    </code></pre><table><thead><tr><th>参数</th><th>说明</th></tr></thead><tbody><tr><td>-y</td><td>允许覆盖</td></tr><tr><td>-i test.mp3</td><td>源文件</td></tr><tr><td>-ss 00:00:00</td><td>开始时间</td></tr><tr><td>-t 00:00:03</td><td>结束时间</td></tr><tr><td>-acodec copy</td><td>编码格式复制    </td></tr></tbody></table>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;FFmpeg是非常强大的多媒体视频处理工具。&lt;br&gt;功能包括视频采集功能、视频格式转换、视频抓图、给视频加水印等。&lt;br&gt;下载地址：&lt;a href=&quot;https://ffmpeg.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://ff
+      
+    
+    </summary>
+    
+    
+      <category term="视频" scheme="http://example.com/tags/%E8%A7%86%E9%A2%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux scp命令</title>
+    <link href="http://example.com/2019/05/22/Linux%20scp%E5%91%BD%E4%BB%A4/"/>
+    <id>http://example.com/2019/05/22/Linux scp命令/</id>
+    <published>2019-05-22T05:00:00.000Z</published>
+    <updated>2021-03-29T03:01:27.428Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Linux-scp命令"><a href="#Linux-scp命令" class="headerlink" title="Linux scp命令"></a>Linux scp命令</h2><p>Linux scp命令用于Linux之间复制文件和目录。</p><p>scp是 secure copy的缩写, scp是linux系统下基于ssh登陆进行安全的远程文件拷贝命令。</p><pre><code>scp [-1246BCpqrv] [-c cipher] [-F ssh_config] [-i identity_file][-l limit] [-o ssh_option] [-P port] [-S program][[user@]host1:]file1 [...] [[user@]host2:]file2</code></pre><p>简易写法:</p><pre><code>scp [可选参数] file_source file_target </code></pre><p>参数说明：</p><pre><code>-1： 强制scp命令使用协议ssh1-2： 强制scp命令使用协议ssh2-4： 强制scp命令只使用IPv4寻址-6： 强制scp命令只使用IPv6寻址-B： 使用批处理模式（传输过程中不询问传输口令或短语）-C： 允许压缩。（将-C标志传递给ssh，从而打开压缩功能）-p：保留原文件的修改时间，访问时间和访问权限。-q： 不显示传输进度条。-r： 递归复制整个目录。-v：详细方式显示输出。scp和ssh(1)会显示出整个过程的调试信息。这些信息用于调试连接，验证和配置问题。-c cipher： 以cipher将数据传输进行加密，这个选项将直接传递给ssh。-F ssh_config： 指定一个替代的ssh配置文件，此参数直接传递给ssh。-i identity_file： 从指定文件中读取传输时使用的密钥文件，此参数直接传递给ssh。-l limit： 限定用户所能使用的带宽，以Kbit/s为单位。-o ssh_option： 如果习惯于使用ssh_config(5)中的参数传递方式，-P port：注意是大写的P, port是指定数据传输用到的端口号-S program： 指定加密传输时所使用的程序。此程序必须能够理解ssh(1)的选项。    </code></pre><p>1.将文件从中间服务器拷贝到远程Android设备</p><pre><code>scp local_file remote_username@remote_ip:remote_folder或scp local_file remote_ip:remote_folder例：scp -i /root/id_rsa -P 60048 /root/RH/v2.0.75.apk root@127.0.0.1:/sdcard/Box/apk/  </code></pre><p>2.将文件从远程Android设备拷贝到中间Linux服务器（调换后面两个参数位置）</p><pre><code>scp -i /root/id_rsa -P 2313 root@127.0.0.1:/data/data/com.example.test/databases/test.db /root/RH/</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;Linux-scp命令&quot;&gt;&lt;a href=&quot;#Linux-scp命令&quot; class=&quot;headerlink&quot; title=&quot;Linux scp命令&quot;&gt;&lt;/a&gt;Linux scp命令&lt;/h2&gt;&lt;p&gt;Linux scp命令用于Linux之间复制文件和目录。&lt;/p&gt;
+&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="指令" scheme="http://example.com/tags/%E6%8C%87%E4%BB%A4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Android,Linux常用指令</title>
+    <link href="http://example.com/2019/05/20/%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/"/>
+    <id>http://example.com/2019/05/20/常用指令/</id>
+    <published>2019-05-20T06:20:00.000Z</published>
+    <updated>2021-03-29T03:01:27.461Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h4><p>adb 查看文件详细信息： </p><pre><code>ls –l</code></pre><p>pull文件</p><pre><code>adb pull sdcard/Box/log/log_2019-04-24.log 2019-01-24.log</code></pre><p>push文件：</p><pre><code>adb push C:/Users/EDZ/Desktop/test.db data/data/com.example.test/databases/</code></pre><p>查看文件：</p><pre><code>cat file</code></pre><p>修改文件别名</p><pre><code>adb shell ln -s [源文件] [目标文件]</code></pre><p>删除system/avi.apk:</p><pre><code>adb shell rm /system/avi.apk</code></pre><p>删除文件夹及其下面所有文件：</p><pre><code>adb shell rm -r &lt;folder&gt;</code></pre><p>强制删除当前目录下的所有文件及目录</p><pre><code>adb shell rm -rf *</code></pre><p>设置文件权限：</p><pre><code>adb shell chmod 777 /system/fonts/DroidSansFallback.ttf</code></pre><p>新建文件夹：</p><pre><code>adb shell mkdir path/foldelname</code></pre><p>新建文件夹 上层目录不存在则创建上层目录(path)</p><pre><code>adb shell mkdir -p path/foldelname</code></pre><p>查看文件内容：</p><pre><code>adb shell cat &lt;file&gt;</code></pre><p>创建了一个空文本文件</p><pre><code>touch text.txt</code></pre><p>查看wifi密码：</p><pre><code>adb shell cat /data/misc/wifi/*.conf</code></pre><h4 id="vim编辑文件"><a href="#vim编辑文件" class="headerlink" title="vim编辑文件"></a>vim编辑文件</h4><p>创建并打开编辑一个文件（android系统下需要安装busybox才能使用vi编辑）</p><pre><code>busybox-armv7l vi 1.txt </code></pre><p>退出编辑模式 </p><pre><code>esc   </code></pre><p>保存并退出</p><pre><code>:wq</code></pre><p>不保存强制退出</p><pre><code>:q!</code></pre><hr><h4 id="APK操作"><a href="#APK操作" class="headerlink" title="APK操作"></a>APK操作</h4><p>查看log：</p><pre><code>adb logcat</code></pre><p>安装apk</p><pre><code>adb install C:/Users/EDZ/Desktop/Android_sign.apk</code></pre><p>卸载apk</p><pre><code>adb uninstall com.example.test</code></pre><p>启动应用：</p><pre><code>adb shell am start &lt;package_name&gt;/&lt;activity_class_name&gt;</code></pre><p>覆盖安装</p><pre><code>adb install -r xxx.apk</code></pre><p>查看apk详细信息</p><pre><code>adb shell dumpsys package com.example.test</code></pre><hr><h4 id="pm指令"><a href="#pm指令" class="headerlink" title="pm指令"></a>pm指令</h4><p>安装</p><pre><code>pm install sdcard/Box/apk/v2.0.75.apk</code></pre><p>卸载</p><pre><code>pm uninstall com.example.test</code></pre><p>静默安装</p><pre><code>pm install -r /xx/xxx.apk</code></pre><p>查看已有程序包名</p><pre><code>adb shell pm list packages</code></pre><p>清除APK数据</p><pre><code>adb shell pm clear &lt;PACKAGE&gt;</code></pre><hr><h4 id="am指令"><a href="#am指令" class="headerlink" title="am指令"></a>am指令</h4><pre><code>am start com.example.test/com.example.test.activity.LaunchActivityam force-stop com.example.testam start com.example.test/com.example.test.activity.LaunchActivityam force-stop com.example.testam start com.example.test/com.example.test.activity.LaunchActivity</code></pre><h4 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h4><p>可读写权限</p><pre><code>mount -o remount,rw /system</code></pre><p>只读权限    </p><pre><code>mount -o remount,ro /system</code></pre><h4 id="python"><a href="#python" class="headerlink" title="python"></a>python</h4><pre><code class="python"><span class="keyword">import</span> os<span class="keyword">import</span> timeos.system(<span class="string">'adb root'</span>);time.sleep(<span class="number">2</span>);<span class="comment">#将 '/system' 部分置于可写入的模式</span>os.system(<span class="string">'adb remount'</span>);</code></pre><p>//查看系统信息<br>adb shell cat /system/build.prop</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;文件操作&quot;&gt;&lt;a href=&quot;#文件操作&quot; class=&quot;headerlink&quot; title=&quot;文件操作&quot;&gt;&lt;/a&gt;文件操作&lt;/h4&gt;&lt;p&gt;adb 查看文件详细信息： &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ls –l
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;pull文件&lt;/p&gt;
+      
+    
+    </summary>
+    
+    
+      <category term="指令" scheme="http://example.com/tags/%E6%8C%87%E4%BB%A4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git</title>
+    <link href="http://example.com/2019/05/13/Git/"/>
+    <id>http://example.com/2019/05/13/Git/</id>
+    <published>2019-05-13T08:00:00.000Z</published>
+    <updated>2021-03-29T03:01:27.424Z</updated>
+    
+    <content type="html"><![CDATA[<p>打 tag </p><pre><code>git tag v2.0.88git push origin v2.0.88</code></pre><p>创建分支</p><pre><code>git branch gravity_test</code></pre><p>查看分支</p><pre><code>git branch</code></pre><p>切换分支</p><pre><code>git checkout gravity_test</code></pre><p>提交代码</p><pre><code>1.git add .(git add -A)2.git commit -m &quot;&quot;3.git push origin gravity_test</code></pre><p>git commit 编写提交信息</p><p>1.<code>Insert</code>+信息</p><p>2.<code>Esc</code> : wq <code>Enter</code></p><p>暂存</p><pre><code>#储藏git stashgit stash list#释放最后一次stash的数据并将其从list中移除git stash pop#将你指定版本号为stash@{1}的工作取出来git stash pop stash@{1} </code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;打 tag &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git tag v2.0.88
+git push origin v2.0.88
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;创建分支&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git branch gravity_test
+&lt;/code&gt;&lt;/pre&gt;&lt;p
+      
+    
+    </summary>
+    
+    
+      <category term="git" scheme="http://example.com/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Windows路由删除后出现的问题</title>
+    <link href="http://example.com/2019/04/24/Windows%E8%B7%AF%E7%94%B1%E5%88%A0%E9%99%A4%E5%90%8E%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://example.com/2019/04/24/Windows路由删除后出现的问题/</id>
+    <published>2019-04-24T03:08:30.000Z</published>
+    <updated>2021-03-29T03:21:39.799Z</updated>
+    
+    <content type="html"><![CDATA[<p>错误:Protocol family unavailable和connect:network is unreachable</p><p>原由：在Windows中 进行路由重置操作 route -f</p><p>现象：<br>1.Android Studio 项目无法编译，报错 ERROR: Protocol family unavailable<br>2.路由删除后重新连上网，Shadowsocks无法翻墙，国内网络可以上</p><p>解决：<br>1.参照网上经验 关防火墙，然后重启as，没用。<br>2.在环境变量添加：_JAVA_OPTIONS  值为：-Djava.net.preferIPv4Stack=true<br>此时Android Studio出现新的错误connect: network is unreachable ,还是无法翻墙<br>3.以管理员身份运行 命令提示符，键入netsh winsock reset，再重启电脑 。正解，问题解决！</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;错误:Protocol family unavailable和connect:network is unreachable&lt;/p&gt;
+&lt;p&gt;原由：在Windows中 进行路由重置操作 route -f&lt;/p&gt;
+&lt;p&gt;现象：&lt;br&gt;1.Android Studio 项目无法编译
+      
+    
+    </summary>
+    
+      <category term="其它" scheme="http://example.com/categories/%E5%85%B6%E5%AE%83/"/>
+    
+    
+      <category term="Android" scheme="http://example.com/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java数据转换</title>
+    <link href="http://example.com/2019/04/08/Java%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2/"/>
+    <id>http://example.com/2019/04/08/Java数据转换/</id>
+    <published>2019-04-08T05:30:35.000Z</published>
+    <updated>2021-03-29T03:01:27.431Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="基本Java类型转换"><a href="#基本Java类型转换" class="headerlink" title="基本Java类型转换"></a><strong>基本Java类型转换</strong></h3><p>Java类型转换分为自动转换和强制转换两种。</p><p>基本类型间的自动类型转换需要满足以下条件:</p><p>(1)转换双方的类型必须兼容，例如int和long类型就是兼容的，而int和boolean就是不兼容的。</p><p>(2)只能是”窄类型”向”宽类型”转换,也就是目标类型的数据表示范围要比源类型的数据表示范围要大。</p><p>byte–&gt;short–&gt;int–&gt;long</p><p>float–&gt;double</p><p>按照箭头可以实现自动类型转换，而如果是相反方向间的类型转换则需要强制类型转换（强制转换会造成精度缺失）.</p><h3 id="数值常量默认类型"><a href="#数值常量默认类型" class="headerlink" title="数值常量默认类型"></a><strong>数值常量默认类型</strong></h3><p>(1)Java中整型常量数值的默认类型是int类型，如果需要声明long类型的常量 ，需要在数值加上’l’或者’L’.</p><p>例如:int i = 3;</p><p>long l = 3L;</p><p>(2)Java中的浮点型常量数值默认是double类型，如果要声明一个数值为float型，则需要在数值后面加上’f’或者’F’.</p><p>Float = 3.4是错误的 ，高级向低级转换用强转</p><font color="#EE1111" size="3"><br>1 byte (字节)= 8 bit (八个二进制数)<br>char = 2 byte<br>short = 2 byte<br>int = 4 byte<br>long = 4|8 byte<br>float = 4 byte<br>double = 8 bytef<br></font><font color="#0099FF" size="3"><br>short SF = 0xC8;<br>int data = 200;<br>则 data == SF 成立<br></font><h3 id="byte-转-int"><a href="#byte-转-int" class="headerlink" title="byte 转 int"></a><strong>byte 转 int</strong></h3><p>b[i] &amp; 0xFF运算后得出的仍然是个int,那么为何要和 0xFF进行与运算呢? 将byte强转为int不行吗?答案是不行的.</p><p>其原因在于:</p><ol><li><p>计算机中数据按照补码存储</p></li><li><p>byte是8位，int是32位，byte转换为int后是32位，如果不和0xff进行与运算，</p></li></ol><p>如果不进行&amp;0xff，那么当一个byte会转换成int时，由于int是32位，而byte只有8位这时会进行补位，</p><p>byte=-1 原码 1000 0001 ，反码1111 1110 ，补码1111 1111</p><p>转换为32位int时的补码则为 1111 1111 1111 1111 1111 1111 1111 1111 ，呵呵！即0xffffffff，但是这个数是不对的，这种补位就会造成误差。</p><p>和0xff相与后，高24比特就会被清0了，结果就对了。</p><p>1111 1111 1111 1111 1111 1111 1111 1111&amp;0xff</p><p>= 1111 1111 1111 1111 1111 1111 1111 1111 &amp; 0000 0000 0000 0000 0000 0000 1111 1111</p><p>= 0000 0000 0000 0000 0000 0000 1111 1111 (补码)</p><p>-&gt;0000 0000 0000 0000 0000 0000 1111 1111（原码）= 255（int 十进制）</p><font color="#EE1111" size="3"><br>byte为负数，高3字节就填充1，整数就补0，所以，如果byte是正数那么是否进行&amp;0xff结果都一样；如果是负数就一定需要&amp;0xff<br></font><h3 id="计算机基础理论"><a href="#计算机基础理论" class="headerlink" title="计算机基础理论"></a><strong>计算机基础理论</strong></h3><p>计算机运算时是将原码转成补码，用补码进行运算，最后再将运算结果转换成原码</p><p>byte是一个字节保存的，有8个位，即8个0、1。</p><p>8位的第一个位是符号位，</p><p>也就是说0000 0001代表的是数字1</p><p>1000 0001代表的就是-1</p><p>所以正数最大位0111 1111，也就是数字127</p><p>负数最大为1111 1111，也就是数字-128</p><p>上面说的是二进制原码，但是在java中采用的是补码的形式，下面介绍下什么是补码</p><p>1、反码：</p><p> 一个数如果是正，则它的反码与原码相同；</p><p> 一个数如果是负，则符号位为1，其余各位是对原码取反；</p><p>2、补码：利用溢出，我们可以将减法变成加法</p><p> 对于十进制数，从9得到5可用减法：</p><p> 9－4＝5 因为4+6＝10，我们可以将6作为4的补数</p><p> 改写为加法：</p><p> 9+6＝15（去掉高位1，也就是减10）得到5.</p><p> 对于十六进制数，从c到5可用减法：</p><p> c－7＝5 因为7+9＝16 将9作为7的补数</p><p> 改写为加法：</p><p> c+9＝15（去掉高位1，也就是减16）得到5.</p><p> 在计算机中，如果我们用1个字节表示一个数，一个字节有8位，超过8位就进1，在内存中情况为（100000000），进位1被丢弃。</p><p> ⑴一个数为正，则它的原码、反码、补码相同</p><p> ⑵一个数为负，刚符号位为1，其余各位是对原码取反，然后整个数加1</p><ul><li><p>1的原码为 10000001</p></li><li><p>1的反码为 11111110</p><ul><li>1</li></ul></li><li><p>1的补码为 11111111</p></li></ul><p>0的原码为 00000000</p><p>0的反码为 11111111（正零和负零的反码相同）</p><p> +1</p><p>0的补码为 100000000（舍掉打头的1，正零和负零的补码相同）</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;基本Java类型转换&quot;&gt;&lt;a href=&quot;#基本Java类型转换&quot; class=&quot;headerlink&quot; title=&quot;基本Java类型转换&quot;&gt;&lt;/a&gt;&lt;strong&gt;基本Java类型转换&lt;/strong&gt;&lt;/h3&gt;&lt;p&gt;Java类型转换分为自动转换和强制转换两种
+      
+    
+    </summary>
+    
+      <category term="Java" scheme="http://example.com/categories/Java/"/>
+    
+    
+      <category term="数据转换" scheme="http://example.com/tags/%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>题集</title>
+    <link href="http://example.com/2019/03/26/%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86/"/>
+    <id>http://example.com/2019/03/26/面试题集/</id>
+    <published>2019-03-26T02:32:27.000Z</published>
+    <updated>2021-03-29T03:01:27.464Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.java的几种引用类型及区别</p><p>2.简述newSingleThreadExecutor()，newFixedThreadPool(int mThread),newCachedThreadPool(),newScheduledThreadPool(5)</p><p>3.什么是内部类？静态内部类和非静态内部类的区别。</p><p>4.onMeasure(),onLayout(),onDraw()的使用顺序和各自实现内容。</p><p>5.ANR出现情况，怎样查找？，怎样解决？</p><p>6.OOM出现原因，怎样解决？</p><p>7.Android 事件分发</p><p>8.视图动画和属性动画的区别</p><p>9.自然排序</p><p>10.进程间通讯方式</p><p>11.线程间通讯方式</p><p>12.线程间即时通讯技术</p><p>1.抽象类和接口的区别</p><p>2.什么时候使用抽象类，什么时候使用接口</p><p>3.List、Set、Map的区别</p><p>4.mybatis的SqlSession如何保证线程安全</p><p>5.Collections提供的工具方法</p><p>6.String、StringBuffer和StringBuilder区别</p><p>7.Map的键和值可以为null吗？为什么</p><p>8.集合排序、内排序、外排序简单Demo</p><p>9.封装、继承、多态</p><p>10.堆和栈的区别</p><p>11.设计模式</p><p>1.Android中常用的四个布局</p><p>2.横竖屏切换时Activity的生命周期</p><p>3.Padding和Margin有什么区别</p><p>4.ListView如何提高其效率？</p><p>5.activity生命周期</p><p>6.Fragment生命周期</p><p>6.写一个单例模式</p><p>1.2&lt;&lt;3=__</p><p>2.4&amp;5=__</p><p>3.线程安全的List有<strong>__ ，线程安全的Map有</strong> __ .</p><p>4.快速排序的时间复杂度为O(<strong><strong>___</strong></strong>)。</p><p>5.Service 的启动方式有<strong>_和 </strong></p><p>6.Activity的启动模式有<strong> 、</strong> 、<strong> 、</strong> 四种</p><p>7.BroadCastReciever 的注册方式分为__ 和_  _ .</p><p>8.Android 6.0 蓝牙编程除了蓝牙相关权限外还需要___ 权限。</p><p>9.BLE数据一次最大传输 ___ 字节。</p><p>10.SparseArray 的key是 ___  类型。</p><p>11.Intent 传递对象时，对象需要实现 ___ 接口。</p><ol start="12"><li>在Canvas 中，画圆的方法是 <strong> ,旋转的方法是   _</strong> 。</li><li>Jni 里面，java 类型 char[] 对应本地类型 ____</li></ol><p>14,写一个单例Demo</p><p>15.</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.print(<span class="string">"A"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        System.out.print(<span class="string">"B"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.print(<span class="string">"C"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Test();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Test();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ABCBC</span></span><br></pre></td></tr></table></figure><p>16</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> String my_data = <span class="string">"Lonbon Inc."</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        <span class="comment">//System.out.println("Welcome to " + my_data);//陷阱，调用不了</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="number">2</span> + <span class="number">3</span> + <span class="string">"4"</span>);</span><br><span class="line">        System.out.println(<span class="string">"4"</span> + <span class="number">2</span> + <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">        String abc = <span class="string">"abc"</span>;</span><br><span class="line">        String def = <span class="string">"def"</span>;</span><br><span class="line">        <span class="keyword">if</span> ((abc + def) == <span class="string">"abcdef"</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">"Good!"</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"Bad!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//54 ，423，Bad!</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1.java的几种引用类型及区别&lt;/p&gt;
+&lt;p&gt;2.简述newSingleThreadExecutor()，newFixedThreadPool(int mThread),newCachedThreadPool(),newScheduledThreadPool(5)&lt;/p&gt;
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="其它" scheme="http://example.com/tags/%E5%85%B6%E5%AE%83/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深拷贝与浅拷贝</title>
+    <link href="http://example.com/2019/02/18/%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/"/>
+    <id>http://example.com/2019/02/18/深拷贝与浅拷贝/</id>
+    <published>2019-02-18T03:11:48.000Z</published>
+    <updated>2021-03-29T03:01:27.463Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h4><p>只复制对象的引用，两个引用仍然指向同一个对象，在内存中占用同一块内存；</p><p>被复制对象的所有变量都含有与原来的对象相同的值，该对象内容被改变原对象内容也会相应的改变；</p><h4 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h4><p>被复制对象的所有变量都含有与原来的对象相同的值，但两者已经没有关联；</p><p>被复制的对象内容发生改变，原对象内容并不会发生改变；</p><hr><h4 id="1-浅拷贝“-”："><a href="#1-浅拷贝“-”：" class="headerlink" title="1.浅拷贝“=”："></a>1.浅拷贝“=”：</h4><p>示例:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String, String&gt; m1 = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">        Map&lt;String, String&gt; m2 = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">        <span class="comment">//放基本类型数据</span></span><br><span class="line">        m2.put(<span class="string">"name"</span>, <span class="string">"11"</span>);</span><br><span class="line">        <span class="comment">//浅拷贝</span></span><br><span class="line">        m2 = m1;</span><br><span class="line">        System.out.println(<span class="string">"改变前m1:"</span> + m1);</span><br><span class="line">        System.out.println(<span class="string">"改变前m2:"</span> + m2);</span><br><span class="line">        <span class="comment">//改变</span></span><br><span class="line">        m2.put(<span class="string">"age"</span>, <span class="string">"22"</span>);</span><br><span class="line">        System.out.println(<span class="string">"改变后m1:"</span> + m1);</span><br><span class="line">        System.out.println(<span class="string">"改变后m2:"</span> + m2);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>改变前m1:{}<br>改变前m2:{}<br>改变后m1:{age=22}<br>改变后m2:{age=22}</p><h4 id="2-非真正深拷贝“putAll-”"><a href="#2-非真正深拷贝“putAll-”" class="headerlink" title="2.非真正深拷贝“putAll()”"></a>2.非真正深拷贝“putAll()”</h4><p><strong>putAll仅对基本数据类型起到深拷贝的作用</strong></p><p>示例：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String, String&gt; m1 = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">        Map&lt;String, String&gt; m2 = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">        <span class="comment">//放基本类型数据</span></span><br><span class="line">        m2.put(<span class="string">"name"</span>, <span class="string">"11"</span>);</span><br><span class="line">        <span class="comment">//类似深拷贝,putAll仅对基本数据类型起到深拷贝的作用。</span></span><br><span class="line">        m2.putAll(m1);</span><br><span class="line">        System.out.println(<span class="string">"改变前m1:"</span> + m1);</span><br><span class="line">        System.out.println(<span class="string">"改变前m2:"</span> + m2);</span><br><span class="line">        m2.put(<span class="string">"age"</span>, <span class="string">"22"</span>);</span><br><span class="line">        System.out.println(<span class="string">"改变后m1:"</span> + m1);</span><br><span class="line">        System.out.println(<span class="string">"改变后m2:"</span> + m2);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>改变前m1:{}<br>改变前m2:{name=11}<br>改变后m1:{}<br>改变后m2:{name=11, age=22}</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">        list.add(<span class="number">100</span>);</span><br><span class="line">        list.add(<span class="number">200</span>);</span><br><span class="line">        Map&lt;String, Object&gt; m1 = <span class="keyword">new</span> HashMap&lt;String, Object&gt;();</span><br><span class="line">        Map&lt;String, Object&gt; m2 = <span class="keyword">new</span> HashMap&lt;String, Object&gt;();</span><br><span class="line">        <span class="comment">//放对象</span></span><br><span class="line">        m1.put(<span class="string">"list"</span>, list);</span><br><span class="line">        <span class="comment">//浅拷贝,putAll仅对基本数据类型起到深拷贝的作用。</span></span><br><span class="line">        m2.putAll(m1);</span><br><span class="line">        System.out.println(<span class="string">"改变前m1:"</span> + m1);</span><br><span class="line">        System.out.println(<span class="string">"改变前m2:"</span> + m2);</span><br><span class="line">        <span class="comment">//改变对象</span></span><br><span class="line">        list.add(<span class="number">300</span>);</span><br><span class="line">        System.out.println(<span class="string">"改变后m1:"</span> + m1);</span><br><span class="line">        System.out.println(<span class="string">"改变后m2:"</span> + m2);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>改变前m1:{list=[100, 200]}<br>改变前m2:{list=[100, 200]}<br>改变后m1:{list=[100, 200, 300]}<br>改变后m2:{list=[100, 200, 300]}</p><h4 id="3-真正深拷贝"><a href="#3-真正深拷贝" class="headerlink" title="3.真正深拷贝"></a>3.真正深拷贝</h4><p><strong>有一种方法，是使用序列化的方式来实现对象的深拷贝，但是前提是，对象必须是实现了Serializable接口才可以，Map本身没有实现 Serializable 这个接口，所以这种方式不能序列化Map，也就是不能深拷贝Map。但是HashMap是可以的，因为它实现了 Serializable。</strong></p><p>示例:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">        list.add(<span class="number">100</span>);</span><br><span class="line">        list.add(<span class="number">200</span>);</span><br><span class="line">        Map&lt;String, Object&gt; m1 = <span class="keyword">new</span> HashMap&lt;String, Object&gt;();</span><br><span class="line">        Map&lt;String, Object&gt; m2 = <span class="keyword">new</span> HashMap&lt;String, Object&gt;();</span><br><span class="line">        <span class="comment">//放对象</span></span><br><span class="line">        m1.put(<span class="string">"list"</span>, list);</span><br><span class="line">        <span class="comment">//真正深拷贝</span></span><br><span class="line">        m2 = clone(m1);</span><br><span class="line">        System.out.println(<span class="string">"改变前m1:"</span> + m1);</span><br><span class="line">        System.out.println(<span class="string">"改变前m2:"</span> + m2);</span><br><span class="line">        list.add(<span class="number">400</span>);</span><br><span class="line">        System.out.println(<span class="string">"改变后m1:"</span> + m1);</span><br><span class="line">        System.out.println(<span class="string">"改变后m2:"</span> + m2);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对象深度复制(对象必须是实现了Serializable接口)</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> obj</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> T, 此处传入的T为Map&lt;String, Object&gt;需要更改！！！</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> Muscleape</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@date</span> 2018/8/10 14:39</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends Serializable&gt; <span class="function">T <span class="title">clone</span><span class="params">(T obj)</span> </span>&#123;</span><br><span class="line">        T clonedObj = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">            ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(baos);</span><br><span class="line">            oos.writeObject(obj);</span><br><span class="line">            oos.close();</span><br><span class="line"></span><br><span class="line">            ByteArrayInputStream bais = <span class="keyword">new</span> ByteArrayInputStream(baos.toByteArray());</span><br><span class="line">            ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(bais);</span><br><span class="line">            clonedObj = (T) ois.readObject();</span><br><span class="line">            ois.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> clonedObj;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>改变前m1:{list=[100, 200]}<br>改变前m2:{list=[100, 200]}<br>改变后m1:{list=[100, 200, 400]}<br>改变后m2:{list=[100, 200]}</p><h4 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h4><p>List 也存在深浅拷贝问题，可以参考HashMap</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;浅拷贝&quot;&gt;&lt;a href=&quot;#浅拷贝&quot; class=&quot;headerlink&quot; title=&quot;浅拷贝&quot;&gt;&lt;/a&gt;浅拷贝&lt;/h4&gt;&lt;p&gt;只复制对象的引用，两个引用仍然指向同一个对象，在内存中占用同一块内存；&lt;/p&gt;
+&lt;p&gt;被复制对象的所有变量都含有与原来的对象相同的值
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Android" scheme="http://example.com/tags/Android/"/>
+    
+      <category term="Java" scheme="http://example.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>位运算</title>
+    <link href="http://example.com/2019/02/17/%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6/"/>
+    <id>http://example.com/2019/02/17/位运算符/</id>
+    <published>2019-02-17T03:14:30.000Z</published>
+    <updated>2021-03-29T03:01:27.459Z</updated>
+    
+    <content type="html"><![CDATA[<p>下面的a和b都是整数类型，则：</p><table><thead><tr><th><strong>含义</strong></th><th><a href="https://baike.baidu.com/item/Pascal%E8%AF%AD%E8%A8%80" target="_blank" rel="noopener">Pascal语言</a></th><th>C语言</th><th style="text-align:left">C#语言</th><th>Java</th></tr></thead><tbody><tr><td>按位与</td><td>a and b</td><td>a &amp; b</td><td style="text-align:left">a &amp; b</td><td>a &amp; b</td></tr><tr><td>按位或</td><td>a or b</td><td>a &#124; b</td><td style="text-align:left">a &#124; b</td><td>a &#124; b</td></tr><tr><td>按位异或</td><td>a xor b</td><td>a ^ b</td><td style="text-align:left">a ^ b</td><td>a ^ b</td></tr><tr><td>按位取反</td><td>not a</td><td>~a</td><td style="text-align:left">~a</td><td>~a</td></tr><tr><td>左移</td><td>a shl b</td><td>a &lt;&lt; b</td><td style="text-align:left">a &lt;&lt; b</td><td>a &lt;&lt; b</td></tr><tr><td>带符号右移</td><td>a shr b</td><td>a &gt;&gt; b</td><td style="text-align:left">a &gt;&gt; b</td><td>a &gt;&gt; b</td></tr><tr><td>无符号右移</td><td></td><td></td><td style="text-align:left"></td><td>a&gt;&gt;&gt; b</td></tr></tbody></table><h2 id="运算说明"><a href="#运算说明" class="headerlink" title="运算说明"></a>运算说明</h2><p>=== 1. and运算 &amp; ===</p><p>and运算通常用于二进制的取位操作，例如一个数 and 1的结果就是取二进制的最末位。这可以用来判断一个整数的奇偶，二进制的最末位为0表示该数为偶数，最末位为1表示该数为奇数。</p><p>相同位的两个数字都为1，则为1；若有一个不为1，则为0。</p><p>00101</p><p>11100</p><p>（&amp;；或者and）</p><hr><p>00100</p><p>=== 2. or运算 | ===</p><p>or运算通常用于二进制特定位上的无条件赋值，例如一个数or 1的结果就是把二进制最末位强行变成1。如果需要把二进制最末位变成0，对这个数or 1之后再减一就可以了，其实际意义就是把这个数强行变成最接近的偶数。</p><p>相同位只要一个为1即为1。</p><p>00101</p><p>11100</p><p>（|或者or）</p><hr><p>11101</p><p>=== 3. xor运算 ^ ===</p><p>异或的符号是^。按位异或运算, 对等长二进制模式按位或二进制数的每一位执行逻辑按位异或操作. 操作的结果是如果某位不同则该位为1, 否则该位为0.</p><p>xor运算的逆运算是它本身，也就是说两次异或同一个数最后结果不变，即（a xor b) xor b = a。xor运算可以用于简单的加密，比如我想对我MM说1314520，但怕别人知道，于是双方约定拿我的生日19880516作为<a href="https://baike.baidu.com/item/%E5%AF%86%E9%92%A5" target="_blank" rel="noopener">密钥</a>。1314520 xor 19880516 = 20665500，我就把20665500告诉MM。MM再次计算20665500 xor 19880516的值，得到1314520。</p><p>相同位不同则为1，相同则为0。</p><p>00101</p><p>11100</p><p>（^或者xor）</p><hr><p>11001</p><p>运算结果</p><p>x &lt;- x # y</p><p>y &lt;- x @ y</p><p>x &lt;- x @ y</p><p>执行了第一句后x变成了x # y。那么第二句实质就是y &lt;- x # y @ y，由于#和@互为逆运算，那么此时的y变成了原来的x。第三句中x实际上被赋值为（x # y) @ x，如果#运算具有交换律，那么赋值后x就变成最初的y了。这三句话的结果是，x和y的位置互换了。</p><p>加法和减法互为逆运算，并且加法满足交换律。把#换成+，把@换成-，我们可以写出一个不需要临时变量的swap过程（Pascal）。</p><p>procedure swap(var a,b:longint);</p><p>begin</p><p>a:=a + b;</p><p>b:=a - b;</p><p>a:=a - b;</p><p>end;</p><p>好了，刚才不是说xor的逆运算是它本身吗？于是我们就有了一个看起来非常诡异的swap过程：</p><p>procedure swap(var a,b:longint);</p><p>begin</p><p>a:=a xor b;</p><p>b:=a xor b;</p><p>a:=a xor b;</p><p>end;</p><p>注意：位运算版本的交换两数不适用于一个数的自我交换。也就是说，如果上述程序的“b”改成“a”的话，其结果是变量a变成零。因此，在使用快速排序时，由于涉及到一个数的自我交换，因此如果要在其中使用位运算版的交换两数的话，应该先判断。具体的时间损耗在此略过。</p><p>=== 4. not运算 ~ ===</p><p>not运算的定义是把内存中的0和1全部取反。使用not运算时要格外小心，你需要注意整数类型有没有符号。如果not的对象是<a href="https://baike.baidu.com/item/%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0" target="_blank" rel="noopener">无符号整数</a>（不能表示负数），那么得到的值就是它与该类型上界的差，因为无符号类型的数是用00到$FFFF依次表示的。下面的两个程序（仅语言不同）均返回65435。</p><p>var</p><p>a:word;</p><p>begin</p><p>a:=100;</p><p>a:=not a;</p><p>writeln(a);</p><p>end.</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> short a=<span class="number">100</span>;</span><br><span class="line">    a=~a;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,a);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>如果not的对象是有符号的整数，情况就不一样了，稍后我们会在“整数类型的储存”小节中提到。</p><p>=== 5. shl运算 &lt;&lt; ===</p><p>a shl b就表示把a转为二进制后左移b位（在后面添b个0）。例如100的二进制为1100100，而110010000转成十进制是400，那么100 shl 2 = 400。可以看出，a shl b的值实际上就是a乘以2的b次方，因为在二进制数后添一个0就相当于该数乘以2。</p><p>通常认为a shl 1比a * 2更快，因为前者是更底层一些的操作。因此程序中乘以2的操作请尽量用左移一位来代替。</p><p>定义一些常量可能会用到shl运算。你可以方便地用1 shl 16 - 1来表示65535。很多算法和数据结构要求数据规模必须是2的幂，此时可以用shl来定义Max_N等常量。</p><p>=== 6. shr运算 &gt;&gt; ===</p><p>和shl相似，a shr b表示二进制右移b位（去掉末b位），相当于a除以2的b次方（取整）。我们也经常用shr 1来代替div 2，比如<a href="https://baike.baidu.com/item/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE" target="_blank" rel="noopener">二分查找</a>、堆的插入操作等等。想办法用shr代替除法运算可以使程序效率大大提高。最大公约数的二进制算法用除以2操作来代替慢得出奇的mod运算，效率可以提高60%。</p><h2 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h2><p>C语言中位运算符之间，按优先级顺序排列为</p><table><thead><tr><th>1</th><th>~</th></tr></thead><tbody><tr><td>2</td><td>&lt;&lt;、&gt;&gt;</td></tr><tr><td>3</td><td>&amp;</td></tr><tr><td>4</td><td>^</td></tr><tr><td>5</td><td>&#124;</td></tr><tr><td>6</td><td>&amp;=、^=、&#124;=、&lt;&lt;=、&gt;&gt;=</td></tr></tbody></table><h2 id="右移运算-gt-gt"><a href="#右移运算-gt-gt" class="headerlink" title="右移运算(&gt;&gt;)"></a>右移运算(&gt;&gt;)</h2><p>右移运算符是将一个二进制数按指定移动的位数向右移动。</p><p>移动过程中，正数最高位补0，负数最高位补1，无符号数最高位补0。</p><p><strong>补码</strong></p><p>在计算机系统中，数值一律用补码来表示和存储，其中最高位表示符号位，1表示负数，0表示正数。</p><p>· 正数的补码是原码自身。</p><p>· 负数补码是通过原码计算得到，计算过程为：符号位不变，其余位按照原码取反加1</p><p><strong>补码计算示例</strong></p><p>以计算十进制-100的补码为例，计算过程为：</p><p>-100的原码：                   10000000 00000000 00000000 01100100<br>符号位保持不变，取反：11111111 11111111 11111111 10011011<br>加1后，-100补码为：     11111111 11111111 11111111 10011100</p><p>下面右移都是以整数为例，不考虑小数情况。</p><p><strong>正数右移</strong></p><p>正数右移高位需补0，以100右移4位为例：</p><table><thead><tr><th><strong>操作</strong></th><th><strong>二进制</strong></th><th><strong>对应十进制</strong></th></tr></thead><tbody><tr><td>补码</td><td>00000000 00000000 00000000 01100100</td><td>100</td></tr><tr><td>右移4位</td><td>00000000 00000000 00000000 00000110</td><td>6</td></tr><tr><td>源码</td><td>00000000 00000000 00000000 00000110</td><td>6</td></tr></tbody></table><p>最后可得: 100 &gt;&gt; 4 = 6</p><p>正数的右移相当于除法，右移几位就除以2的几次方，如100&gt;&gt;4 等效 100/2^4</p><p><strong>负数右移</strong></p><p>负数右移高位需补1，以-100右移4位为例：</p><table><thead><tr><th><strong>操作</strong></th><th><strong>二进制</strong></th><th><strong>对应十进制</strong></th></tr></thead><tbody><tr><td>原码</td><td>10000000 00000000 00000000 01100100</td><td>-100</td></tr><tr><td>转换为补码</td><td>11111111 11111111 11111111 10011100</td><td>-100</td></tr><tr><td>右移4位，高位补1</td><td>11111111 11111111 11111111 11111001</td><td></td></tr><tr><td>保留符号位，按位取反</td><td>10000000 00000000 00000000 00000110</td><td></td></tr><tr><td>加1后转为源码</td><td>10000000 00000000 00000000 00000111</td><td>-7</td></tr></tbody></table><p>最后可得： -100 &gt;&gt; 4 = -7</p><p>负数的右移不等于除法，即负数右移不能按除以2的n次方计算（n表示移动位数）。</p><p><strong>无符号右移</strong></p><p>无符号右移和正数右移相同，都是高位补0，以-100右移4位为例：</p><table><thead><tr><th><strong>操作</strong></th><th><strong>二进制</strong></th><th><strong>对应十进制</strong></th></tr></thead><tbody><tr><td>原码</td><td>10000000 00000000 00000000 01100100</td><td>-100</td></tr><tr><td>转换为补码</td><td>11111111 11111111 11111111 10011100</td><td>-100</td></tr><tr><td>右移4位，高位补0</td><td>00001111 11111111 11111111 11111001</td><td></td></tr><tr><td>转为原码</td><td>00001111 11111111 11111111 11111001</td><td>268435449</td></tr></tbody></table><p>最后可得： -100 &gt;&gt;&gt; 4 = 268435449</p><p>右移28位后，最高位为0表示正数，所以原码即为补码本身。<br>“&gt;&gt;&gt;”是Java里的无符号右移操作符。</p><p>总结</p><p>正数的右移，负数的无符号右移，就是相应的补码移位所得，在高位补0即可。<br>负数的右移，就是补码高位补1,然后按位取反加1即可。</p><h2 id="左移运算-lt-lt"><a href="#左移运算-lt-lt" class="headerlink" title="左移运算(&lt;&lt;)"></a>左移运算(&lt;&lt;)</h2><p>运算规则：</p><p>按二进制形式把所有的数字向左移动对应的位数，高位移出(舍弃)，低位的空位补零。</p><p>语法格式：</p><p>需要移位的数字 &lt;&lt; 移位的次数</p><p>例如： 3 &lt;&lt; 2，则是将数字3左移2位</p><p>计算过程：</p><p>3 &lt;&lt; 2 首先把3转换为二进制数字0000 0011，然后把该数字高位(左侧)的两个零移出，其他的数字都朝左平移2位，最后在低位(右侧)的两个空位补零。则得到的最终结果是0000 1100，则转换为十进制是12。</p><p>数学意义：</p><p>在数字没有溢出的前提下，对于正数和负数，左移一位都相当于乘以2的1次方，左移n位就相当于乘以2的n次方。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;下面的a和b都是整数类型，则：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;strong&gt;含义&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;a href=&quot;https://baike.baidu.com/item/Pascal%E8%AF%AD%E8%A8%80&quot;
+      
+    
+    </summary>
+    
+      <category term="其它" scheme="http://example.com/categories/%E5%85%B6%E5%AE%83/"/>
+    
+    
+      <category term="位运算" scheme="http://example.com/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>The component for route must be a react component</title>
+    <link href="http://example.com/2019/02/16/react-native-problem2/"/>
+    <id>http://example.com/2019/02/16/react-native-problem2/</id>
+    <published>2019-02-16T03:11:24.000Z</published>
+    <updated>2021-03-29T03:01:27.449Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h4><p><img src="/picture/react-native.png" alt></p><h4 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h4><p><img src="/picture/react-native1.png" alt></p><h4 id="问题分析："><a href="#问题分析：" class="headerlink" title="问题分析："></a>问题分析：</h4><p>在路由中配置其它组件时必须要在前面先定义。</p><h4 id="更改后代码"><a href="#更改后代码" class="headerlink" title="更改后代码"></a>更改后代码</h4><p><img src="/picture/react-native2.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;问题描述：&quot;&gt;&lt;a href=&quot;#问题描述：&quot; class=&quot;headerlink&quot; title=&quot;问题描述：&quot;&gt;&lt;/a&gt;问题描述：&lt;/h4&gt;&lt;p&gt;&lt;img src=&quot;/picture/react-native.png&quot; alt&gt;&lt;/p&gt;
+&lt;h4 id=&quot;源代码&quot;
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="react-native" scheme="http://example.com/tags/react-native/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>图标库不显示问题</title>
+    <link href="http://example.com/2019/02/15/react-native-problem1/"/>
+    <id>http://example.com/2019/02/15/react-native-problem1/</id>
+    <published>2019-02-15T03:11:18.000Z</published>
+    <updated>2021-03-29T03:01:27.448Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h4><p>   在BottomTabNavigator中使用图标库，运行时图标不显示、不报错。</p><h4 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h4><p><img src="/picture/react-native3.png" alt></p><h4 id="问题分析："><a href="#问题分析：" class="headerlink" title="问题分析："></a>问题分析：</h4><p>在一个简写体中，只需要一个表达式，并附加一个隐式的返回值。在块体中，必须使用明确的<code>return</code>语句。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> func = <span class="function"><span class="params">x</span> =&gt;</span> x * x;                  </span><br><span class="line"><span class="comment">// 简写函数 省略return</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> func = <span class="function">(<span class="params">x, y</span>) =&gt;</span> &#123; <span class="keyword">return</span> x + y; &#125;; </span><br><span class="line"><span class="comment">//常规编写 明确的返回值</span></span><br></pre></td></tr></table></figure><h4 id="更改后代码"><a href="#更改后代码" class="headerlink" title="更改后代码"></a>更改后代码</h4><p><img src="/picture/react-native4.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;问题描述：&quot;&gt;&lt;a href=&quot;#问题描述：&quot; class=&quot;headerlink&quot; title=&quot;问题描述：&quot;&gt;&lt;/a&gt;问题描述：&lt;/h4&gt;&lt;p&gt;   在BottomTabNavigator中使用图标库，运行时图标不显示、不报错。&lt;/p&gt;
+&lt;h4 id=&quot;源代码
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="react-native" scheme="http://example.com/tags/react-native/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>InputStream数据读取</title>
+    <link href="http://example.com/2019/02/14/InputStream%E6%95%B0%E6%8D%AE%E8%AF%BB%E5%8F%96/"/>
+    <id>http://example.com/2019/02/14/InputStream数据读取/</id>
+    <published>2019-02-14T03:13:53.000Z</published>
+    <updated>2021-03-29T03:01:27.426Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> data0 = inputStream.read();</span><br></pre></td></tr></table></figure><p>· <strong><em>read()</em></strong> : 从(来源)输入流中(读取的内容)读取数据的下一个字节到(去处)java程序内部中返回值为0到255的int类型的值，返回值为字符的ASCII值(如a就返回97,n就返回110)。  如果没有可用的字节,因为已经到达流的末尾, -1返回的值。运行一次只读一个字节,所以经常与while((len = inputstream.read()) != -1)一起使用</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span>[] buffer=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">512</span>];</span><br><span class="line"><span class="keyword">int</span> size = mInputStream.read(buffer);</span><br></pre></td></tr></table></figure><p>· <strong><em>read(byte[] b)</em></strong>：从输入流中读取一定数量的字节，并将其存储在缓冲区数组b 中。以整数形式返回实际读取的字节数。在输入数据可用、检测到文件末尾或者抛出异常前，此方法一直阻塞。</p><p>· 如果 b 的长度为 0，则不读取任何字节并返回 0；否则，尝试读取至少一个字节。如果因为流位于文件末尾而没有可用的字节，则返回值 -1；否则，至少读取一个字节并将其存储在 b *中。</p><p>· 将读取的第一个字节存储在元素b[0] 中，下一个存储在 b[1] 中，依次类推。读取的字节数最多等于b 的长度。设 k为实际读取的字节数；这些字节将存储在b[0] 到 b[k-1] 的元素中，不影响 b[k] 到b[b.length-1] 的元素。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> newcount = inputStream.read(b, off, len);</span><br></pre></td></tr></table></figure><p>· <strong><em>read(byte[] b, int off, int len)</em></strong>：读取 len字节的数据从输入流到一个字节数组。</p><p>· 试图读取多达 len字节,但可能读取到少于len字节。返回实际读取的字节数为整数。</p><p>· 第一个字节存储读入元素b[off],下一个b[off+1],等等。读取的字节数是最多等于len。k被读取的字节数,这些字节将存储在元素通过b[off+k-1]b[off]，离开元素通过b[off+len-1]b[off+k]未受影响。</p><p>· read(byte[]b)就是相当于read(byte [] b , 0 , b.length).所以两者差不多，性质一样。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span clas
+      
+    
+    </summary>
+    
+      <category term="其它" scheme="http://example.com/categories/%E5%85%B6%E5%AE%83/"/>
+    
+    
+      <category term="Java" scheme="http://example.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>android模拟器与chrome进行Remote JS Debugging连接不上</title>
+    <link href="http://example.com/2019/01/24/Remote-JS-Debugging/"/>
+    <id>http://example.com/2019/01/24/Remote-JS-Debugging/</id>
+    <published>2019-01-24T06:59:09.000Z</published>
+    <updated>2021-03-29T03:01:27.433Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h4><p>在Android模拟器上进行 Debug JS Remotely时，Chrome浏览器会自动打开<a href="http://10.0.2.2:8081/debugger-ui" target="_blank" rel="noopener">http://10.0.2.2:8081/debugger-ui</a> ，但此网址无法访问。</p><h4 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h4><ol><li><p>在模拟器上<code>Ctrl + M</code> 进入开发者菜单</p></li><li><p>Dev settings &gt; Debug server host &amp; port for device</p></li><li><p>设置 <code>localhost:8081</code></p></li><li><p>重新运行 <code>react-native run-android</code></p></li></ol><h4 id="真机调试"><a href="#真机调试" class="headerlink" title="真机调试"></a>真机调试</h4><h5 id="在iOS上"><a href="#在iOS上" class="headerlink" title="在iOS上"></a>在iOS上</h5><p>打开RCTWebSocketExecutor.m文件，将“localhost”改为你的电脑IP，然后在Developer Menu下单机“Debug JS Remotely”启动JS远程调试。</p><h5 id="在Android上"><a href="#在Android上" class="headerlink" title="在Android上"></a>在Android上</h5><p>默认情况下不用进行设置就可以进行调试，当报错时进行以下方法。</p><p>方法一：在Android5.0以上设备，将手机通过usb连接到电脑上，然后输入以下adb命令来设置端口转发</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb reverse tcp:<span class="number">8081</span> tcp:<span class="number">8081</span></span><br></pre></td></tr></table></figure><p>方法二：通过在“Developer Menu”下的“Dev Settings”中设置你的电脑ip来进行调试（保证他们在同一个路由器下）</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;现象&quot;&gt;&lt;a href=&quot;#现象&quot; class=&quot;headerlink&quot; title=&quot;现象&quot;&gt;&lt;/a&gt;现象&lt;/h4&gt;&lt;p&gt;在Android模拟器上进行 Debug JS Remotely时，Chrome浏览器会自动打开&lt;a href=&quot;http://10.0.2
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="react-native" scheme="http://example.com/tags/react-native/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Android Uri和Path</title>
+    <link href="http://example.com/2019/01/19/Android-Uri%E5%92%8CPath/"/>
+    <id>http://example.com/2019/01/19/Android-Uri和Path/</id>
+    <published>2019-01-19T06:09:23.000Z</published>
+    <updated>2021-03-29T03:01:27.421Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>拍照后要保存图片，我们需要指定一个存储图片路径的Uri。此时需要将file path转换为Uri。</p><p>打开相册，选取本地的二维码图片识别，此时需要将Uri转Path，以获取图片路径。</p><h3 id="Android-Uri-to-Path"><a href="#Android-Uri-to-Path" class="headerlink" title="Android Uri to Path"></a>Android Uri to Path</h3><p>Android在4.4之后的版本(包括4.4)中，从相册中选取图片返回Uri进行了改动。所以我们无法通过该Uri来取得文件路径，从而解码图片，将其显示出来。</p><p>在4.4之后的，包括4.4的版本，返回的Uri有可能是以下的一种:</p><ul><li>content://com.android.providers.media.documents/document/image:642</li><li>content://com.android.providers.downloads.documents/document/</li><li>content://media/external/images/media/</li></ul><p>不能直接通过前两种Uri直接获取到对应的表，所以需要”翻译一下”:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleImageOnKitKat</span><span class="params">(Intent data)</span> </span>&#123;</span><br><span class="line">        String imagePath = <span class="keyword">null</span>;</span><br><span class="line">        Uri uri = data.getData();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (DocumentsContract.isDocumentUri(<span class="keyword">this</span>, uri)) &#123;</span><br><span class="line">            String docId = DocumentsContract.getDocumentId(uri);</span><br><span class="line">       <span class="keyword">if</span> (<span class="string">"com.android.providers.media.documents"</span>.equals(uri.getAuthority())) &#123;</span><br><span class="line">            <span class="comment">//Log.d(TAG, uri.toString());</span></span><br><span class="line">            String id = docId.split(<span class="string">":"</span>)[<span class="number">1</span>];</span><br><span class="line">            String selection = MediaStore.Images.Media._ID + <span class="string">"="</span> + id;</span><br><span class="line">            imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);</span><br><span class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"com.android.providers.downloads.documents"</span>.equals(uri.getAuthority())) &#123;</span><br><span class="line">             <span class="comment">//Log.d(TAG, uri.toString());</span></span><br><span class="line">             Uri contentUri = ContentUris.withAppendedId(</span><br><span class="line">                   Uri.parse(<span class="string">"content://downloads/public_downloads"</span>),</span><br><span class="line">                   Long.valueOf(docId));</span><br><span class="line">                   imagePath = getImagePath(contentUri, <span class="keyword">null</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"content"</span>.equalsIgnoreCase(uri.getScheme())) &#123;</span><br><span class="line">            <span class="comment">//Log.d(TAG, "content: " + uri.toString());</span></span><br><span class="line">            imagePath = getImagePath(uri, <span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getImagePath</span><span class="params">(Uri uri, String selection)</span> </span>&#123;</span><br><span class="line">        String path = <span class="keyword">null</span>;</span><br><span class="line">        Cursor cursor = getContentResolver().query(uri, <span class="keyword">null</span>, selection, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">if</span> (cursor != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (cursor.moveToFirst()) &#123;</span><br><span class="line">                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            cursor.close();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> path;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><h3 id="Android-Path-To-Uri"><a href="#Android-Path-To-Uri" class="headerlink" title="Android Path To Uri"></a>Android Path To Uri</h3><p>1.Uri.parse(path)</p><p>2.Uri.fromFile(new  File(path))</p><ol start="3"><li>File Path To Media Uri</li></ol><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Uri <span class="title">getMediaUriFromPath</span><span class="params">(Context context, String path)</span> </span>&#123;</span><br><span class="line">        Uri mediaUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;</span><br><span class="line">        Cursor cursor = context.getContentResolver().query(mediaUri,</span><br><span class="line">                <span class="keyword">null</span>,</span><br><span class="line">                MediaStore.Images.Media.DISPLAY_NAME + <span class="string">"= ?"</span>,</span><br><span class="line">                <span class="keyword">new</span> String[] &#123;path.substring(path.lastIndexOf(<span class="string">"/"</span>) + <span class="number">1</span>)&#125;,</span><br><span class="line">                <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">        Uri uri = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(cursor.moveToFirst()) &#123;</span><br><span class="line">            uri = ContentUris.withAppendedId(mediaUri,</span><br><span class="line">                    cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media._ID)));</span><br><span class="line">        &#125;</span><br><span class="line">        cursor.close();</span><br><span class="line">        <span class="keyword">return</span> uri;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>参考资料：</p><p><a href="https://www.jianshu.com/p/f9a63fcc0b91" target="_blank" rel="noopener">https://www.jianshu.com/p/f9a63fcc0b91</a></p><p><a href="https://www.jianshu.com/p/33bc363290e9" target="_blank" rel="noopener">https://www.jianshu.com/p/33bc363290e9</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h3&gt;&lt;p&gt;拍照后要保存图片，我们需要指定一个存储图片路径的Uri。此时需要将file path转换为Uri。&lt;/p&gt;
+&lt;p&gt;打开相册，选取本地的二维码
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Android" scheme="http://example.com/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Windows生成公钥和私钥</title>
+    <link href="http://example.com/2019/01/10/Windows%E7%94%9F%E6%88%90%E5%85%AC%E9%92%A5%E5%92%8C%E7%A7%81%E9%92%A5/"/>
+    <id>http://example.com/2019/01/10/Windows生成公钥和私钥/</id>
+    <published>2019-01-10T03:00:00.000Z</published>
+    <updated>2021-03-29T03:12:19.771Z</updated>
+    
+    <content type="html"><![CDATA[<p>Windows生成公钥和私钥</p><p>1.进入C:\Users\RH.ssh 目录</p><p>2.ssh-keygen -t rsa</p><p>3.<code>Enter</code></p><p>4.<code>Enter</code></p><p>5.<code>Enter</code></p><p>复制id_rsa.pub里的内容</p><p><img src="/picture/ssh-key.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Windows生成公钥和私钥&lt;/p&gt;
+&lt;p&gt;1.进入C:\Users\RH.ssh 目录&lt;/p&gt;
+&lt;p&gt;2.ssh-keygen -t rsa&lt;/p&gt;
+&lt;p&gt;3.&lt;code&gt;Enter&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;4.&lt;code&gt;Enter&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;5.
+      
+    
+    </summary>
+    
+      <category term="其它" scheme="http://example.com/categories/%E5%85%B6%E5%AE%83/"/>
+    
+    
+      <category term="Windows" scheme="http://example.com/tags/Windows/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>感知机</title>
+    <link href="http://example.com/2018/12/14/%E6%84%9F%E7%9F%A5%E6%9C%BA/"/>
+    <id>http://example.com/2018/12/14/感知机/</id>
+    <published>2018-12-14T11:54:53.000Z</published>
+    <updated>2021-03-29T03:01:27.461Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>感知机(percetron)算法是由美国学者Frank Roseenblatt在1957年提出，是神经网络(深度学习)起源的算法。</p></blockquote><h1 id="感知机是什么"><a href="#感知机是什么" class="headerlink" title="感知机是什么"></a>感知机是什么</h1><blockquote><p>感知机接受多个信号，输出一个信号。其中信号取值0/1，代表“传递/不传递”。</p><p>如下图，x1、x2是输入信号，y是输出信号，w1、w2是权重，圈是神经元。当输入信号传入神经元后，神经元会计算信号的总和，当总和超过阈值θ时输出1。</p></blockquote><p><img src="/picture/2018-12-14-01.png" alt="有两个输入的感知机"></p><blockquote><p>感知机运行原理通过数学方式表达如下，感知机多个输入信号都有各自的权重，权重越大，对应该权重的信号重要性越高。</p></blockquote><p><img src="/picture/2018-12-14-02.png" alt="公式1"></p><blockquote><p>将公式进行转化如下，其中b为偏置</p></blockquote><p><img src="/picture/2018-12-14-06.png" alt="公式1"></p><h1 id="感知机的实现"><a href="#感知机的实现" class="headerlink" title="感知机的实现"></a>感知机的实现</h1><blockquote><p>通过感知机的原理，我们能模拟简单的逻辑电路。</p><p>与门仅在两个输入均为1时输出1，其他的时候输出0。</p><p>与非门仅在两个输入同时为1时为0，其他的时候输出1。</p><p>或门在两个输入相同时为1，不同时为0。</p></blockquote><center><img src="/picture/2018-12-14-03.png" width="200"><img src="/picture/2018-12-14-04.png" width="200"><img src="/picture/2018-12-14-05.png" width="200"></center><blockquote><p>根据真值表中的四组值，我们能通过作图寻找满足公式的直线。如图阴影部分为小于0的部分。</p></blockquote><p><img src="/picture/2018-12-14-07.png" alt="感知机可视化1"></p><blockquote><p>这种能够满足感知机的直线有很多条，我们只选其中一条实现。</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"></span><br><span class="line">X = np.array([[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">1</span>]])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">AND</span><span class="params">(x)</span>:</span></span><br><span class="line">w = ([<span class="number">0.5</span>, <span class="number">0.5</span>])</span><br><span class="line">b = <span class="number">-0.7</span></span><br><span class="line">tmp = np.sum(w*x) + b</span><br><span class="line"><span class="keyword">if</span> tmp &gt; <span class="number">0</span>:</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">else</span>: </span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">NAND</span><span class="params">(x)</span>:</span></span><br><span class="line">w = ([<span class="number">-0.5</span>, <span class="number">-0.5</span>])</span><br><span class="line">b = <span class="number">0.7</span></span><br><span class="line">tmp = np.sum(w*x) + b</span><br><span class="line"><span class="keyword">if</span> tmp &gt; <span class="number">0</span>:</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">else</span>: </span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">OR</span><span class="params">(x)</span>:</span></span><br><span class="line">w = ([<span class="number">0.5</span>, <span class="number">0.5</span>])</span><br><span class="line">b = <span class="number">-0.2</span></span><br><span class="line">tmp = np.sum(w*x) + b</span><br><span class="line"><span class="keyword">if</span> tmp &gt; <span class="number">0</span>:</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">else</span>: </span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line"></span><br><span class="line">print(<span class="string">"AND:"</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]:</span><br><span class="line">print(AND(X[i]))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"NAND:"</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]:</span><br><span class="line">print(NAND(X[i]))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"OR:"</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]:</span><br><span class="line">print(OR(X[i]))</span><br></pre></td></tr></table></figure><h1 id="多层感知机"><a href="#多层感知机" class="headerlink" title="多层感知机"></a>多层感知机</h1><blockquote><p>根据公式我们了解感知机模板是线性关系的，只用改变w(权重)和b(偏置)就能实现各种线性关系。但现实中有许多情况是非线性的，比如异或门。<br>异或门在两个输入相同时为1，不同时为0。</p></blockquote><center><img src="/picture/2018-12-14-08.png" width="250"><img src="/picture/2018-12-14-09.png" width="250"></center><blockquote><p>在现实中，我们可以通过与门、与非门和或门可以组合成异或门</p></blockquote><p><img src="/picture/2018-12-14-10.png" alt="门"><br><img src="/picture/2018-12-14-11.png" alt="异或门"></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">XOR</span><span class="params">(x)</span>:</span></span><br><span class="line">s = np.array([NAND(x), OR(x)]) </span><br><span class="line">y = AND(s)</span><br><span class="line"><span class="keyword">return</span> y</span><br><span class="line"></span><br><span class="line">print(<span class="string">"XOR:"</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]:</span><br><span class="line">print(XOR(X[i]))</span><br></pre></td></tr></table></figure><blockquote><p>这样异或门的实现就完成，这种实现称为2层感知机，</p></blockquote><p><img src="/picture/2018-12-14-12.png" alt="感知机可视化2"></p><blockquote><p>叠加了多成的感知机也成为多层感知机。通过叠加的方式可以使感知机的线性关系转换成非线性关系。<br>多层感知机在理论上可以表示计算机。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;感知机(percetron)算法是由美国学者Frank Roseenblatt在1957年提出，是神经网络(深度学习)起源的算法。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;感知机是什么&quot;&gt;&lt;a href=&quot;#感知机是什么&quot; class=
+      
+    
+    </summary>
+    
+      <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+      <category term="Python" scheme="http://example.com/tags/Python/"/>
+    
+      <category term="深度学习" scheme="http://example.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="感知机" scheme="http://example.com/tags/%E6%84%9F%E7%9F%A5%E6%9C%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python入门</title>
+    <link href="http://example.com/2018/12/11/Python%E5%85%A5%E9%97%A8/"/>
+    <id>http://example.com/2018/12/11/Python入门/</id>
+    <published>2018-12-11T11:54:53.000Z</published>
+    <updated>2021-03-29T03:01:27.436Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Python是什么"><a href="#Python是什么" class="headerlink" title="Python是什么"></a>Python是什么</h1><blockquote><p> Python是一个简单、易读、易记的编程语言，而且而且是开源的，可以免费地自由使用。Python可以用类似英语的语法编写程序，编译起来也不费力，因此我们可以很轻松的使用Python。</p><p>此外，使用Python不仅可以写出可读性高的代码，还可以写出性能高的代码，在需要处理大规模数据或者要求快速强硬的情况下，使用Python可以稳妥的完成。</p><p> 再者，在科学领域，特别是机器学习、数据科学领域，Python也被大量使用。Python除了高性能之外，凭借NumPy、SciPy等优秀的数值计算、统计分析库，在数据科学领域再有不可动摇的地位。Caffe、TensorFlow、Chainer、Theano等深度学习框架也都提供了Python接口，因此，学习Python对使用深度学习框架大有益处。</p><p>综上，Python是最适合数据科学领域的编程语言，也是初学者学习深度学习最合适的工具。</p></blockquote><h1 id="Python安装"><a href="#Python安装" class="headerlink" title="Python安装"></a>Python安装</h1><blockquote><p>Python有Python2.x和Python3.x两个版本，两个版本都被大量的使用但不相兼容，安装时应当注意。</p><p>为了有效的促进深度学习的实现，需要安装并学习NumPy库和Matplotlib库的使用。NumPy是用于数值计算的库，提供了很多高级的数学算法和便利的数组(矩阵)操作方法。Matplotlib是用来画图的库，能将实验结果可视化。</p><p>Python的安装方法有很多种，这里推荐Anaconda Python3.x发行版。Anaconda是一个侧重于数据分析的发行版，其中集成NumPy，Matplotlib等有助于数据分析的库。</p></blockquote><h1 id="Python解释器"><a href="#Python解释器" class="headerlink" title="Python解释器"></a>Python解释器</h1><blockquote><p>完成Python的安装后，要确认Python的版本。打开cmd，输入Python –version。</p></blockquote><pre><code>python --versionPython 3.7.0</code></pre><blockquote><p>确认安装版本后，启动Python解释器。输入python。</p></blockquote><pre><code>pythonPython 3.7.0 (default, Jun 28 2018, 08:04:48) [MSC v.1912 64 bit (AMD64)] :: Anaconda, Inc. on win32Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.&gt;&gt;&gt;</code></pre><blockquote><p>Python解释器也被称为“对话模式”，用户能够以Python对话的方式进行编程。以下借助对话介绍Python基本语法。</p></blockquote><h2 id="1-算数计算"><a href="#1-算数计算" class="headerlink" title="1. 算数计算"></a>1. 算数计算</h2><blockquote><p>*表示乘法，/ 表示除法，** 表示乘方，注意整数除以整数，在Python2.x中为整数，Python3.x中为浮点数。</p><blockquote><blockquote><p>1 + 2<br>    3<br>1 - 2<br>    -1<br>4 * 5<br>    20<br>7 / 5<br>    1.4<br>3 ** 2<br>    9</p></blockquote></blockquote></blockquote><h2 id="2-数据类型"><a href="#2-数据类型" class="headerlink" title="2. 数据类型"></a>2. 数据类型</h2><blockquote><p>数据类型表示数据的性质，有整数、小数、字符串等类型，type()可以用来查看数据类型。</p><blockquote><blockquote><p>type(10)<br>    <class 'int'><br>type(2.718)<br>    <class 'float'><br>type(“hello”)<br>    <class 'str'></class></class></class></p></blockquote></blockquote></blockquote><h2 id="3-变量"><a href="#3-变量" class="headerlink" title="3. 变量"></a>3. 变量</h2><blockquote><p>Python是属于“动态类型语言”的编程语言，所谓动态，是指变量的类型是根据情况自动决定的。“#”为注释</p><blockquote><blockquote><p>x = 10      # 初始化<br>print(x)    # 输出x<br>    10<br>x = 100     # 赋值<br>print(x)<br>    100<br>y = 3.14<br>x <em> y<br>    314.0<br>type(x </em> y)<br>    <class 'float'></class></p></blockquote></blockquote></blockquote><h2 id="4-列表"><a href="#4-列表" class="headerlink" title="4. 列表"></a>4. 列表</h2><blockquote><p>列表(数组)用于汇总数据，可以通过索引(下标)访问元素。</p><blockquote><blockquote><p>a = [1, 2, 3, 4, 5]  # 生成列表<br>print(a)    # 输出列表内容<br>    [1, 2, 3, 4, 5]<br>len(a)      # 获取列表长度<br>    5<br>a[0]        # 访问第一个元素的值<br>    1<br>a[4]<br>    5<br>a[4] = 99   # 赋值<br>print(a)<br>    [1, 2, 3, 4, 99]<br>列表还提供了切片(slicing)标记法，切片不仅可以访问某个值，还可以访问子列表。</p><p>print(a)<br>    [1, 2, 3, 4, 99]<br>a[0:2]      # 获取索引为0到2（不包括2！）的元素<br>    [1, 2]<br>a[1:]       # 获取从索引为1的元素到最后一个元素<br>    [2, 3, 4, 99]<br>a[:3]       # 获取从第一个元素到索引为3（不包括3！）的元素<br>    [1, 2, 3]<br>a[:-1]      # 获取从第一个元素到最后一个元素的前一个元素之间的元素<br>    [1, 2, 3, 4]<br>a[:-2]      # 获取从第一个元素到最后一个元素的前二个元素之间的元素<br>    [1, 2, 3]</p></blockquote></blockquote></blockquote><h2 id="5-字典"><a href="#5-字典" class="headerlink" title="5. 字典"></a>5. 字典</h2><blockquote><p>列表以索引存储数据，字典以键值对形式存储数据。</p><blockquote><blockquote><p>me = {‘height’:180}  # 生成字典<br>me[‘height’]         # 访问字典<br>    180<br>me[‘weight’] = 70    # 添加新字典<br>print(me)<br>    {‘height’: 180, ‘weight’: 70}</p></blockquote></blockquote></blockquote><h2 id="6-布尔型"><a href="#6-布尔型" class="headerlink" title="6. 布尔型"></a>6. 布尔型</h2><blockquote><p>bool型取True或False中的一个值，针对bool型运算符包括and、or、not。</p><blockquote><blockquote><p>hungry = True     # 饿了<br>sleepy = False    # 困了<br>type(hungry)<br>    <class 'bool'><br>not hungry<br>    False<br>hungry and sleepy # 饿并且困<br>    False<br>hungry or sleepy  # 饿或者困<br>    True</class></p></blockquote></blockquote></blockquote><h2 id="7-if语句"><a href="#7-if语句" class="headerlink" title="7. if语句"></a>7. if语句</h2><blockquote><p>根据不同的条件选择不同的处理分支可使用if/else语句。使用时注意缩进，推荐使用4个空白字符。</p><blockquote><blockquote><p>hungry = True<br>if hungry:<br>    …     print(“I’m hungry”)<br>    …<br>    I’m hungry<br>hungry = False<br>if hungry:<br>    …     print(“I’m hungry”)<br>    … else:<br>    …     print(“I’m not hungry”)<br>    …     print(“I’m sleepy”)<br>    …<br>    I’m not hungry<br>    I’m sleepy</p></blockquote></blockquote></blockquote><h2 id="8-for语句"><a href="#8-for语句" class="headerlink" title="8. for语句"></a>8. for语句</h2><blockquote><p>进行循环处理可使用for语句</p><blockquote><blockquote><p>for i in [1, 2, 3]:<br>    …     print(i)<br>    …<br>    1<br>    2<br>    3</p></blockquote></blockquote></blockquote><h2 id="9-函数"><a href="#9-函数" class="headerlink" title="9. 函数"></a>9. 函数</h2><blockquote><p>将一连串的处理定义成函数(function)。字符串拼接可以用+。</p><blockquote><blockquote><p>def hello():<br>    …     print(“hello world!”)<br>    …<br>hello()<br>    hello world!</p><p>def hello(object):<br>    …     print(“Hello “ + object + “!”)<br>    …<br>hello(“cat”)<br>    Hello cat!</p></blockquote></blockquote></blockquote><h2 id="10-类"><a href="#10-类" class="headerlink" title="10. 类"></a>10. 类</h2><blockquote><p>之前int和str为系统内置的数据类型，我们可以自己定义新的类，并定义方法与属性。</p></blockquote><pre><code>class 类名：def __init__(self, 参数, …): # 构造函数...def 方法名1(self, 参数, …): # 方法1...def 方法名2(self, 参数, …): # 方法2...</code></pre><blockquote><p>__init__为初始化方法，也成为构造方法，此外，Python第一个参数需要以self表明自身。</p></blockquote><pre><code>class Man:    def __init__(self, name):        self.name = name        print(&quot;Initialized!&quot;)    def hello(self):        print(&quot;Hello &quot; + self.name + &quot;!&quot;)    def goodbye(self):        print(&quot;Good-bye &quot; +self.name + &quot;!&quot;)m = Man(&quot;David&quot;)m.hello()m.goodbye()Initialized!Hello David!Good-bye David!</code></pre><h1 id="Python脚本文件"><a href="#Python脚本文件" class="headerlink" title="Python脚本文件"></a>Python脚本文件</h1><blockquote><p>Python解释器能够以对话模式执行程序，非常便于进行简单的实验。但是进行一连串的处理并不方便，这时可将Python程序保存为文件，运行这个文件即可。这就是Python脚本文件。</p><p>打开文本编辑器，新建一个hungry.py文件，包含一条一句语句</p></blockquote><pre><code>print(&quot;I&apos;m hungry&quot;)</code></pre><blockquote><p>打开cmd终端，移动到文件目录下，执行python hungry.py命令</p></blockquote><pre><code>python hungry.pyI&apos;m hungry</code></pre><h1 id="NumPy"><a href="#NumPy" class="headerlink" title="NumPy"></a>NumPy</h1><blockquote><p>NumPy是Python的外部库，需要导入方可使用。</p></blockquote><pre><code>import numpy as np  # 将numpy作为np导入</code></pre><blockquote><p>深度学习中将经常用到NumPy数组类的操作。</p><blockquote><blockquote><p>x = np.array([1.0, 2.0, 3.0])<br>print(x)<br>    [1. 2. 3.]<br>type(x)<br>    <class 'numpy.ndarray'><br>NumPy数组之间可以进行算数运算。</class></p><p>x = np.array([1.0, 2.0, 3.0])<br>y = np.array([2.0, 4.0, 6.0])<br>x + y  # 对应元素加法<br>    array([3., 6., 9.])<br>x - y<br>    array([-1., -2., -3.])<br>x * y  # 对应元素乘法<br>    array([ 2.,  8., 18.])<br>x / y<br>    array([0.5, 0.5, 0.5])<br>NumPy可以实现多维数组，并执行多维数组之间的操作</p><p>A = np.array([[1, 2], [3, 4]])<br>print(A)<br>    [[1 2]<br>     [3 4]]<br>A.shape  # 查看数组形状<br>    (2, 2)<br>A.dtype  # 查看数组数据类型<br>    dtype(‘int32’)<br>B = np.array([[3, 0], [0, 6]])<br>A + B    # 对应元素加法<br>    array([[ 4,  2],<br>           [ 3, 10]])<br>A * B    # 对应元素乘法<br>    array([[ 3,  0],<br>           [ 0, 24]])<br>在NumPy中，形状不同的数组之间也可以进行运算，称之为广播。</p><p>A = np.array([[1, 2], [3, 4]])<br>A <em> 10<br>    array([[10, 20],<br>           [30, 40]])<br>B = np.array([10, 20])<br>A </em> B<br>    array([[10, 40],<br>           [30, 80]])<br><img src="/picture/2018-12-13-02.png" alt="png2"><br><img src="/picture/2018-12-13-01.png" alt="png1"><br>访问NumPy数组的元素需要通过索引、for循环或者标记法。</p><p>X = np.array([[51, 55], [14, 19], [0, 4]])<br>print(X)<br>    [[51 55]<br>     [14 19]<br>     [ 0  4]]<br>X[0]<br>    array([51, 55])<br>X[0][1]<br>    55</p><p>for row in X:<br>    …     print(row)<br>    …<br>    [51 55]<br>    [14 19]<br>    [0 4]</p><p>X &gt; 15<br>    array([[ True,  True],<br>           [False,  True],<br>           [False, False]])<br>X[X&gt;15]<br>    array([51, 55, 19])    </p></blockquote></blockquote></blockquote><h1 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h1><blockquote><p>Matplotlib是Python的外部库，可以轻松绘制图形和实现数据的可视化。</p><p>使用matplotlib的pyplot绘制sin函数曲线</p></blockquote><pre><code>import numpy as np import matplotlib.pyplot as plt # 生成数据x = np.arange(0, 6, 0.1) # 以0.1为单位，生成0到6的数据y = np.sin(x);# 绘制图形plt.plot(x, y);plt.show()</code></pre><p><img src="/picture/2018-12-13-03.png" alt="sin函数"></p><blockquote><p>通过pyplot实现追加cos函数、添加标题、x轴签名等功能。</p></blockquote><pre><code>import numpy as np import matplotlib.pyplot as plt # 生成数据x = np.arange(0, 6, 0.1) # 以0.1为单位，生成0到6的数据y1 = np.sin(x)y2 = np.cos(x)# 绘制图形plt.plot(x, y1, label=&quot;sin&quot;)plt.plot(x, y2, linestyle=&quot;--&quot;, label=&quot;cos&quot;) # 用虚线绘制plt.xlabel(&quot;x&quot;) # x轴标签plt.ylabel(&quot;y&quot;) # y轴标签plt.title(&quot;sin &amp; cos&quot;) # 标题plt.legend()plt.show()</code></pre><p><img src="/picture/2018-12-13-04.png" alt="sin函数和cos函数"></p><blockquote><p>pyplot中还提供了imshow()用于显示图像，image中imread()用于读入图像。</p></blockquote><pre><code>import matplotlib.pyplot as plt from matplotlib.image import imreadimg = imread(&quot;../img/3.jpg&quot;); # 读入图像(设置合适的路径！)plt.imshow(img)plt.show()</code></pre><p><img src="/picture/2018-12-13-05.png" alt="显示图像"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Python是什么&quot;&gt;&lt;a href=&quot;#Python是什么&quot; class=&quot;headerlink&quot; title=&quot;Python是什么&quot;&gt;&lt;/a&gt;Python是什么&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt; Python是一个简单、易读、易记的编程语言，而且而且是
+      
+    
+    </summary>
+    
+      <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+      <category term="Python" scheme="http://example.com/tags/Python/"/>
+    
+      <category term="深度学习" scheme="http://example.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+</feed>

@@ -1,0 +1,533 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="RH">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://example.com">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>Python入门 | RH</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="RH" type="application/atom+xml">
+
+
+    <link rel="icon" href="/img/avatar.jpg">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='RH'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 记录一下学习、工作笔记 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://example.com">RH</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/前端/"><i class="fa "></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/其它/"><i class="fa "></i>其它</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Python入门">
+            
+	            Python入门
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/后端">
+            后端
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/Python" title='Python'>
+                        Python
+                    </a>
+                
+                    <a href="/tags/深度学习" title='深度学习'>
+                        深度学习
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/12/11</span>
+        </span>
+        
+    
+</div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>838</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="Python是什么"><a href="#Python是什么" class="headerlink" title="Python是什么"></a>Python是什么</h1><blockquote>
+<p> Python是一个简单、易读、易记的编程语言，而且而且是开源的，可以免费地自由使用。Python可以用类似英语的语法编写程序，编译起来也不费力，因此我们可以很轻松的使用Python。</p>
+<p>此外，使用Python不仅可以写出可读性高的代码，还可以写出性能高的代码，在需要处理大规模数据或者要求快速强硬的情况下，使用Python可以稳妥的完成。</p>
+<p> 再者，在科学领域，特别是机器学习、数据科学领域，Python也被大量使用。Python除了高性能之外，凭借NumPy、SciPy等优秀的数值计算、统计分析库，在数据科学领域再有不可动摇的地位。Caffe、TensorFlow、Chainer、Theano等深度学习框架也都提供了Python接口，因此，学习Python对使用深度学习框架大有益处。</p>
+<p>综上，Python是最适合数据科学领域的编程语言，也是初学者学习深度学习最合适的工具。</p>
+</blockquote>
+<h1 id="Python安装"><a href="#Python安装" class="headerlink" title="Python安装"></a>Python安装</h1><blockquote>
+<p>Python有Python2.x和Python3.x两个版本，两个版本都被大量的使用但不相兼容，安装时应当注意。</p>
+<p>为了有效的促进深度学习的实现，需要安装并学习NumPy库和Matplotlib库的使用。NumPy是用于数值计算的库，提供了很多高级的数学算法和便利的数组(矩阵)操作方法。Matplotlib是用来画图的库，能将实验结果可视化。</p>
+<p>Python的安装方法有很多种，这里推荐Anaconda Python3.x发行版。Anaconda是一个侧重于数据分析的发行版，其中集成NumPy，Matplotlib等有助于数据分析的库。</p>
+</blockquote>
+<h1 id="Python解释器"><a href="#Python解释器" class="headerlink" title="Python解释器"></a>Python解释器</h1><blockquote>
+<p>完成Python的安装后，要确认Python的版本。打开cmd，输入Python –version。</p>
+</blockquote>
+<pre><code>python --version
+Python 3.7.0
+</code></pre><blockquote>
+<p>确认安装版本后，启动Python解释器。输入python。</p>
+</blockquote>
+<pre><code>python
+Python 3.7.0 (default, Jun 28 2018, 08:04:48) [MSC v.1912 64 bit (AMD64)] :: Anaconda, Inc. on win32
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt;
+</code></pre><blockquote>
+<p>Python解释器也被称为“对话模式”，用户能够以Python对话的方式进行编程。以下借助对话介绍Python基本语法。</p>
+</blockquote>
+<h2 id="1-算数计算"><a href="#1-算数计算" class="headerlink" title="1. 算数计算"></a>1. 算数计算</h2><blockquote>
+<p>*表示乘法，/ 表示除法，** 表示乘方，注意整数除以整数，在Python2.x中为整数，Python3.x中为浮点数。</p>
+<blockquote>
+<blockquote>
+<p>1 + 2<br>    3<br>1 - 2<br>    -1<br>4 * 5<br>    20<br>7 / 5<br>    1.4<br>3 ** 2<br>    9</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="2-数据类型"><a href="#2-数据类型" class="headerlink" title="2. 数据类型"></a>2. 数据类型</h2><blockquote>
+<p>数据类型表示数据的性质，有整数、小数、字符串等类型，type()可以用来查看数据类型。</p>
+<blockquote>
+<blockquote>
+<p>type(10)<br>    <class 'int'><br>type(2.718)<br>    <class 'float'><br>type(“hello”)<br>    <class 'str'></class></class></class></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="3-变量"><a href="#3-变量" class="headerlink" title="3. 变量"></a>3. 变量</h2><blockquote>
+<p>Python是属于“动态类型语言”的编程语言，所谓动态，是指变量的类型是根据情况自动决定的。“#”为注释</p>
+<blockquote>
+<blockquote>
+<p>x = 10      # 初始化<br>print(x)    # 输出x<br>    10<br>x = 100     # 赋值<br>print(x)<br>    100<br>y = 3.14<br>x <em> y<br>    314.0<br>type(x </em> y)<br>    <class 'float'></class></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="4-列表"><a href="#4-列表" class="headerlink" title="4. 列表"></a>4. 列表</h2><blockquote>
+<p>列表(数组)用于汇总数据，可以通过索引(下标)访问元素。</p>
+<blockquote>
+<blockquote>
+<p>a = [1, 2, 3, 4, 5]  # 生成列表<br>print(a)    # 输出列表内容<br>    [1, 2, 3, 4, 5]<br>len(a)      # 获取列表长度<br>    5<br>a[0]        # 访问第一个元素的值<br>    1<br>a[4]<br>    5<br>a[4] = 99   # 赋值<br>print(a)<br>    [1, 2, 3, 4, 99]<br>列表还提供了切片(slicing)标记法，切片不仅可以访问某个值，还可以访问子列表。</p>
+<p>print(a)<br>    [1, 2, 3, 4, 99]<br>a[0:2]      # 获取索引为0到2（不包括2！）的元素<br>    [1, 2]<br>a[1:]       # 获取从索引为1的元素到最后一个元素<br>    [2, 3, 4, 99]<br>a[:3]       # 获取从第一个元素到索引为3（不包括3！）的元素<br>    [1, 2, 3]<br>a[:-1]      # 获取从第一个元素到最后一个元素的前一个元素之间的元素<br>    [1, 2, 3, 4]<br>a[:-2]      # 获取从第一个元素到最后一个元素的前二个元素之间的元素<br>    [1, 2, 3]</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="5-字典"><a href="#5-字典" class="headerlink" title="5. 字典"></a>5. 字典</h2><blockquote>
+<p>列表以索引存储数据，字典以键值对形式存储数据。</p>
+<blockquote>
+<blockquote>
+<p>me = {‘height’:180}  # 生成字典<br>me[‘height’]         # 访问字典<br>    180<br>me[‘weight’] = 70    # 添加新字典<br>print(me)<br>    {‘height’: 180, ‘weight’: 70}</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="6-布尔型"><a href="#6-布尔型" class="headerlink" title="6. 布尔型"></a>6. 布尔型</h2><blockquote>
+<p>bool型取True或False中的一个值，针对bool型运算符包括and、or、not。</p>
+<blockquote>
+<blockquote>
+<p>hungry = True     # 饿了<br>sleepy = False    # 困了<br>type(hungry)<br>    <class 'bool'><br>not hungry<br>    False<br>hungry and sleepy # 饿并且困<br>    False<br>hungry or sleepy  # 饿或者困<br>    True</class></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="7-if语句"><a href="#7-if语句" class="headerlink" title="7. if语句"></a>7. if语句</h2><blockquote>
+<p>根据不同的条件选择不同的处理分支可使用if/else语句。使用时注意缩进，推荐使用4个空白字符。</p>
+<blockquote>
+<blockquote>
+<p>hungry = True<br>if hungry:<br>    …     print(“I’m hungry”)<br>    …<br>    I’m hungry<br>hungry = False<br>if hungry:<br>    …     print(“I’m hungry”)<br>    … else:<br>    …     print(“I’m not hungry”)<br>    …     print(“I’m sleepy”)<br>    …<br>    I’m not hungry<br>    I’m sleepy</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="8-for语句"><a href="#8-for语句" class="headerlink" title="8. for语句"></a>8. for语句</h2><blockquote>
+<p>进行循环处理可使用for语句</p>
+<blockquote>
+<blockquote>
+<p>for i in [1, 2, 3]:<br>    …     print(i)<br>    …<br>    1<br>    2<br>    3</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="9-函数"><a href="#9-函数" class="headerlink" title="9. 函数"></a>9. 函数</h2><blockquote>
+<p>将一连串的处理定义成函数(function)。字符串拼接可以用+。</p>
+<blockquote>
+<blockquote>
+<p>def hello():<br>    …     print(“hello world!”)<br>    …<br>hello()<br>    hello world!</p>
+<p>def hello(object):<br>    …     print(“Hello “ + object + “!”)<br>    …<br>hello(“cat”)<br>    Hello cat!</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="10-类"><a href="#10-类" class="headerlink" title="10. 类"></a>10. 类</h2><blockquote>
+<p>之前int和str为系统内置的数据类型，我们可以自己定义新的类，并定义方法与属性。</p>
+</blockquote>
+<pre><code>class 类名：
+def __init__(self, 参数, …): # 构造函数
+...
+def 方法名1(self, 参数, …): # 方法1
+...
+def 方法名2(self, 参数, …): # 方法2
+...
+</code></pre><blockquote>
+<p>__init__为初始化方法，也成为构造方法，此外，Python第一个参数需要以self表明自身。</p>
+</blockquote>
+<pre><code>class Man:
+    def __init__(self, name):
+        self.name = name
+        print(&quot;Initialized!&quot;)
+
+    def hello(self):
+        print(&quot;Hello &quot; + self.name + &quot;!&quot;)
+
+    def goodbye(self):
+        print(&quot;Good-bye &quot; +self.name + &quot;!&quot;)
+
+m = Man(&quot;David&quot;)
+m.hello()
+m.goodbye()
+
+Initialized!
+Hello David!
+Good-bye David!
+</code></pre><h1 id="Python脚本文件"><a href="#Python脚本文件" class="headerlink" title="Python脚本文件"></a>Python脚本文件</h1><blockquote>
+<p>Python解释器能够以对话模式执行程序，非常便于进行简单的实验。但是进行一连串的处理并不方便，这时可将Python程序保存为文件，运行这个文件即可。这就是Python脚本文件。</p>
+<p>打开文本编辑器，新建一个hungry.py文件，包含一条一句语句</p>
+</blockquote>
+<pre><code>print(&quot;I&apos;m hungry&quot;)
+</code></pre><blockquote>
+<p>打开cmd终端，移动到文件目录下，执行python hungry.py命令</p>
+</blockquote>
+<pre><code>python hungry.py
+I&apos;m hungry
+</code></pre><h1 id="NumPy"><a href="#NumPy" class="headerlink" title="NumPy"></a>NumPy</h1><blockquote>
+<p>NumPy是Python的外部库，需要导入方可使用。</p>
+</blockquote>
+<pre><code>import numpy as np  # 将numpy作为np导入
+</code></pre><blockquote>
+<p>深度学习中将经常用到NumPy数组类的操作。</p>
+<blockquote>
+<blockquote>
+<p>x = np.array([1.0, 2.0, 3.0])<br>print(x)<br>    [1. 2. 3.]<br>type(x)<br>    <class 'numpy.ndarray'><br>NumPy数组之间可以进行算数运算。</class></p>
+<p>x = np.array([1.0, 2.0, 3.0])<br>y = np.array([2.0, 4.0, 6.0])<br>x + y  # 对应元素加法<br>    array([3., 6., 9.])<br>x - y<br>    array([-1., -2., -3.])<br>x * y  # 对应元素乘法<br>    array([ 2.,  8., 18.])<br>x / y<br>    array([0.5, 0.5, 0.5])<br>NumPy可以实现多维数组，并执行多维数组之间的操作</p>
+<p>A = np.array([[1, 2], [3, 4]])<br>print(A)<br>    [[1 2]<br>     [3 4]]<br>A.shape  # 查看数组形状<br>    (2, 2)<br>A.dtype  # 查看数组数据类型<br>    dtype(‘int32’)<br>B = np.array([[3, 0], [0, 6]])<br>A + B    # 对应元素加法<br>    array([[ 4,  2],<br>           [ 3, 10]])<br>A * B    # 对应元素乘法<br>    array([[ 3,  0],<br>           [ 0, 24]])<br>在NumPy中，形状不同的数组之间也可以进行运算，称之为广播。</p>
+<p>A = np.array([[1, 2], [3, 4]])<br>A <em> 10<br>    array([[10, 20],<br>           [30, 40]])<br>B = np.array([10, 20])<br>A </em> B<br>    array([[10, 40],<br>           [30, 80]])<br><img src="/picture/2018-12-13-02.png" alt="png2"><br><img src="/picture/2018-12-13-01.png" alt="png1"><br>访问NumPy数组的元素需要通过索引、for循环或者标记法。</p>
+<p>X = np.array([[51, 55], [14, 19], [0, 4]])<br>print(X)<br>    [[51 55]<br>     [14 19]<br>     [ 0  4]]<br>X[0]<br>    array([51, 55])<br>X[0][1]<br>    55</p>
+<p>for row in X:<br>    …     print(row)<br>    …<br>    [51 55]<br>    [14 19]<br>    [0 4]</p>
+<p>X &gt; 15<br>    array([[ True,  True],<br>           [False,  True],<br>           [False, False]])<br>X[X&gt;15]<br>    array([51, 55, 19])    </p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h1 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h1><blockquote>
+<p>Matplotlib是Python的外部库，可以轻松绘制图形和实现数据的可视化。</p>
+<p>使用matplotlib的pyplot绘制sin函数曲线</p>
+</blockquote>
+<pre><code>import numpy as np 
+import matplotlib.pyplot as plt 
+
+# 生成数据
+x = np.arange(0, 6, 0.1) # 以0.1为单位，生成0到6的数据
+y = np.sin(x);
+
+# 绘制图形
+plt.plot(x, y);
+plt.show()
+</code></pre><p><img src="/picture/2018-12-13-03.png" alt="sin函数"></p>
+<blockquote>
+<p>通过pyplot实现追加cos函数、添加标题、x轴签名等功能。</p>
+</blockquote>
+<pre><code>import numpy as np 
+import matplotlib.pyplot as plt 
+
+# 生成数据
+x = np.arange(0, 6, 0.1) # 以0.1为单位，生成0到6的数据
+y1 = np.sin(x)
+y2 = np.cos(x)
+
+# 绘制图形
+plt.plot(x, y1, label=&quot;sin&quot;)
+plt.plot(x, y2, linestyle=&quot;--&quot;, label=&quot;cos&quot;) # 用虚线绘制
+plt.xlabel(&quot;x&quot;) # x轴标签
+plt.ylabel(&quot;y&quot;) # y轴标签
+plt.title(&quot;sin &amp; cos&quot;) # 标题
+plt.legend()
+plt.show()
+</code></pre><p><img src="/picture/2018-12-13-04.png" alt="sin函数和cos函数"></p>
+<blockquote>
+<p>pyplot中还提供了imshow()用于显示图像，image中imread()用于读入图像。</p>
+</blockquote>
+<pre><code>import matplotlib.pyplot as plt 
+from matplotlib.image import imread
+
+img = imread(&quot;../img/3.jpg&quot;); # 读入图像(设置合适的路径！)
+plt.imshow(img)
+
+plt.show()
+</code></pre><p><img src="/picture/2018-12-13-05.png" alt="显示图像"></p>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/ali.png"><b>支付宝</b>
+                </span>
+            
+            
+        </div>
+    </div>
+    <p class="reward-tip">扫上面二维码，领支付宝红包</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">RH</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/12/14/感知机/" class="pre-post btn btn-default" title='感知机'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">感知机</span>
+        </a>
+    
+    
+        <a href="/2018/12/01/HashMap-Bundle/" class="next-post btn btn-default" title='HashMap和Bundle'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">HashMap和Bundle</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+    
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'tpqT2XsfMpVPjR2x4Ou2Hfgk-gzGzoHsz',
+            appKey: 'zVoewkC4BTgyKYFCxAG8V2tO',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-CN'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python是什么"><span class="toc-text">Python是什么</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python安装"><span class="toc-text">Python安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python解释器"><span class="toc-text">Python解释器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-算数计算"><span class="toc-text">1. 算数计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-数据类型"><span class="toc-text">2. 数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-变量"><span class="toc-text">3. 变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-列表"><span class="toc-text">4. 列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-字典"><span class="toc-text">5. 字典</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-布尔型"><span class="toc-text">6. 布尔型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-if语句"><span class="toc-text">7. if语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-for语句"><span class="toc-text">8. for语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-函数"><span class="toc-text">9. 函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-类"><span class="toc-text">10. 类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python脚本文件"><span class="toc-text">Python脚本文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NumPy"><span class="toc-text">NumPy</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Matplotlib"><span class="toc-text">Matplotlib</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

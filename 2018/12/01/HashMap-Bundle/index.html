@@ -1,0 +1,407 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="RH">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://example.com">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>HashMap和Bundle | RH</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="RH" type="application/atom+xml">
+
+
+    <link rel="icon" href="/img/avatar.jpg">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='RH'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 记录一下学习、工作笔记 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://example.com">RH</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/前端/"><i class="fa "></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/其它/"><i class="fa "></i>其它</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="HashMap和Bundle">
+            
+	            HashMap和Bundle
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/前端">
+            前端
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/HashMap" title='HashMap'>
+                        HashMap
+                    </a>
+                
+                    <a href="/tags/Bundle" title='Bundle'>
+                        Bundle
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/12/01</span>
+        </span>
+        
+    
+</div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>849</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="HashMap-JAVA"><a href="#HashMap-JAVA" class="headerlink" title="HashMap(JAVA)"></a>HashMap(JAVA)</h2><p>HashMap 是一个散列表，它存储的内容是键值对(key-value)映射。</p>
+<p>HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。</p>
+<p>HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。</p>
+<p>HashMap主要是用Entry数组来存储数据的，我们都知道它会对key进行哈希运算，哈系运算会有重复的哈希值，对于哈希值的冲突，HashMap采用链表来解决的。</p>
+<p>HashMap 的实例有两个参数影响其性能：“初始容量” 和 “加载因子”。容量 是哈希表中桶的数量，初始容量 只是哈希表在创建时的容量。加载因子 是哈希表在其容量自动增加之前可以达到多满的一种尺度。当哈希表中的条目数超出了加载因子与当前容量的乘积时，则要对该哈希表进行 rehash 操作（即重建内部数据结构），从而哈希表将具有大约两倍的桶数。</p>
+<p>通常，默认加载因子是 0.75, 这是在时间和空间成本上寻求一种折衷。加载因子过高虽然减少了空间开销，但同时也增加了查询成本（在大多数 HashMap 类的操作中，包括 get 和 put 操作，都反映了这一点）。在设置初始容量时应该考虑到映射中所需的条目数及其加载因子，以便最大限度地减少 rehash 操作次数。如果初始容量大于最大条目数除以加载因子，则不会发生 rehash 操作。</p>
+<p><strong>HashMap的API</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void</td>
+<td>clear()</td>
+</tr>
+<tr>
+<td>Object</td>
+<td>clone()</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>containsKey(Object key)</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>containsValue(Object value)</td>
+</tr>
+<tr>
+<td>Set&lt;Entry&lt;K, V&gt;&gt;</td>
+<td>entrySet()</td>
+</tr>
+<tr>
+<td>V</td>
+<td>get(Object key)</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>isEmpty()</td>
+</tr>
+<tr>
+<td>Set<k></k></td>
+<td>keySet()</td>
+</tr>
+<tr>
+<td>V</td>
+<td>put(K key, V value)</td>
+</tr>
+<tr>
+<td>void</td>
+<td>putAll(Map&lt;? extends K, ? extends V&gt; map)</td>
+</tr>
+<tr>
+<td>V</td>
+<td>remove(Object key)</td>
+</tr>
+<tr>
+<td>int</td>
+<td>size()</td>
+</tr>
+<tr>
+<td>Collection<v></v></td>
+<td>values()</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testHashMapAPIs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 初始化随机种子</span></span><br><span class="line">    Random r = <span class="keyword">new</span> Random();</span><br><span class="line">    <span class="comment">// 新建HashMap</span></span><br><span class="line">    HashMap map = <span class="keyword">new</span> HashMap();</span><br><span class="line">    <span class="comment">// 添加操作</span></span><br><span class="line">    map.put(<span class="string">"one"</span>, r.nextInt(<span class="number">10</span>));</span><br><span class="line">    map.put(<span class="string">"two"</span>, r.nextInt(<span class="number">10</span>));</span><br><span class="line">    map.put(<span class="string">"three"</span>, r.nextInt(<span class="number">10</span>));</span><br><span class="line">    <span class="comment">// 打印出map</span></span><br><span class="line">    System.out.println(<span class="string">"map:"</span>+map );</span><br><span class="line">    <span class="comment">// 通过Iterator遍历key-value</span></span><br><span class="line">    Iterator iter = map.entrySet().iterator();</span><br><span class="line">    <span class="keyword">while</span>(iter.hasNext()) &#123;</span><br><span class="line">        Map.Entry entry = (Map.Entry)iter.next();</span><br><span class="line">        System.out.println(<span class="string">"next : "</span>+ entry.getKey() +<span class="string">" - "</span>+entry.getValue());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// HashMap的键值对个数        </span></span><br><span class="line">    System.out.println(<span class="string">"size:"</span>+map.size());</span><br><span class="line">    <span class="comment">// containsKey(Object key) :是否包含键key</span></span><br><span class="line">    System.out.println(<span class="string">"contains key two : "</span>+map.containsKey(<span class="string">"two"</span>));</span><br><span class="line">    System.out.println(<span class="string">"contains key five : "</span>+map.containsKey(<span class="string">"five"</span>));</span><br><span class="line">    <span class="comment">// containsValue(Object value) :是否包含值value</span></span><br><span class="line">    System.out.println(<span class="string">"contains value 0 : "</span>+map.containsValue(<span class="keyword">new</span> Integer(<span class="number">0</span>)));</span><br><span class="line">    <span class="comment">// remove(Object key) ： 删除键key对应的键值对</span></span><br><span class="line">    map.remove(<span class="string">"three"</span>);</span><br><span class="line">    System.out.println(<span class="string">"map:"</span>+map );</span><br><span class="line">    <span class="comment">// clear() ： 清空HashMap</span></span><br><span class="line">    map.clear();</span><br><span class="line">    <span class="comment">// isEmpty() : HashMap是否为空</span></span><br><span class="line">    System.out.println((map.isEmpty()?<span class="string">"map is empty"</span>:<span class="string">"map is not empty"</span>) );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Bundle（Android）"><a href="#Bundle（Android）" class="headerlink" title="Bundle（Android）"></a>Bundle（Android）</h2><p>一种存放字符串和Parcelable类型数据的map类型的容器类，通过存放数据键（key）获取对应的各种类型的值（value），而且必须通过键（key）获取。</p>
+<p><strong>代码示例</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//TestBundle.java</span></span><br><span class="line">Bundle bundle = <span class="keyword">new</span> Bundle();<span class="comment">//创建一个句柄</span></span><br><span class="line">bundle.putString(<span class="string">"name"</span>, nameinfo);<span class="comment">//将nameinfo填充入句柄</span></span><br><span class="line">Intent mIntent = <span class="keyword">new</span> Intent(TestBundle.<span class="keyword">this</span>,TestBundle_getvalue<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">mIntent.putExtras(bundle);</span><br><span class="line">startActivity(mIntent);</span><br><span class="line"></span><br><span class="line"><span class="comment">//TestBundle_getvalue.java</span></span><br><span class="line">Bundle bundle = getIntent().getExtras();<span class="comment">//获取一个句柄</span></span><br><span class="line">String nameString=bundle.get(<span class="string">"name"</span>);<span class="comment">//通过key为“name”来获取value即 nameString.</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Android为什么要设计出Bundle而不是直接使用HashMap来进行数据传递？"><a href="#Android为什么要设计出Bundle而不是直接使用HashMap来进行数据传递？" class="headerlink" title="Android为什么要设计出Bundle而不是直接使用HashMap来进行数据传递？"></a>Android为什么要设计出Bundle而不是直接使用HashMap来进行数据传递？</h2><ol>
+<li>Bundle内部是由ArrayMap实现的，ArrayMap的内部实现是两个数组，一个int数组是存储对象数据对应下标，一个对象数组保存key和value，内部使用二分法对key进行排序，所以在添加、删除、查找数据的时候，都会使用二分法查找，只适合于小数据量操作，如果在数据量比较大的情况下，那么它的性能将退化。而HashMap内部则是数组+链表结构，所以在数据量较少的时候，HashMap的Entry Array比ArrayMap占用更多的内存。因为使用Bundle的场景大多数为小数据量，我没见过在两个Activity之间传递10个以上数据的场景，所以相比之下，在这种情况下使用ArrayMap保存数据，在操作速度和内存占用上都具有优势，因此使用Bundle来传递数据，可以保证更快的速度和更少的内存占用。</li>
+<li>另外一个原因，则是在Android中如果使用Intent来携带数据的话，需要数据是基本类型或者是可序列化类型，HashMap使用Serializable进行序列化，而Bundle则是使用Parcelable进行序列化。而在Android平台中，更推荐使用Parcelable实现序列化，虽然写法复杂，但是开销更小，所以为了更加快速的进行数据的序列化和反序列化，系统封装了Bundle类，方便我们进行数据的传输。</li>
+</ol>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/ali.png"><b>支付宝</b>
+                </span>
+            
+            
+        </div>
+    </div>
+    <p class="reward-tip">扫上面二维码，领支付宝红包</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">RH</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/12/11/Python入门/" class="pre-post btn btn-default" title='Python入门'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Python入门</span>
+        </a>
+    
+    
+        <a href="/2018/11/28/http-socket-websocket-webservice/" class="next-post btn btn-default" title='HTTP、Socket、WebSocket、WebService'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">HTTP、Socket、WebSocket、WebService</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+    
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'tpqT2XsfMpVPjR2x4Ou2Hfgk-gzGzoHsz',
+            appKey: 'zVoewkC4BTgyKYFCxAG8V2tO',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-CN'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HashMap-JAVA"><span class="toc-text">HashMap(JAVA)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bundle（Android）"><span class="toc-text">Bundle（Android）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android为什么要设计出Bundle而不是直接使用HashMap来进行数据传递？"><span class="toc-text">Android为什么要设计出Bundle而不是直接使用HashMap来进行数据传递？</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

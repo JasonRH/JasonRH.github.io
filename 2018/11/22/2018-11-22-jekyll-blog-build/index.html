@@ -1,0 +1,398 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="RH">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://example.com">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>使用Jekyll + GitHub Pages搭建个人博客 | RH</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="RH" type="application/atom+xml">
+
+
+    <link rel="icon" href="/img/avatar.jpg">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='RH'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 记录一下学习、工作笔记 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://example.com">RH</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/前端/"><i class="fa "></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/其它/"><i class="fa "></i>其它</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="使用Jekyll + GitHub Pages搭建个人博客">
+            
+	            使用Jekyll + GitHub Pages搭建个人博客
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/其它">
+            其它
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/Jekyll" title='Jekyll'>
+                        Jekyll
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/11/22</span>
+        </span>
+        
+    
+</div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>858</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>一直就想搭建一个属于自己的博客网站，但是一直拖着没有执行，在一次偶然的机会看到了鸿洋大神的 <a href="http://blog.csdn.net/lmj623565791/article/details/51319147" target="_blank">如何利用github打造博客专属域名</a>，就心血来潮，马上自己动手做了一个，耗时了近一个星期，终于差不多完成了，特意记录下来，供他人参考。</p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><ul>
+<li><p><a href="#about-jekyll">关于Jekyll</a></p>
+</li>
+<li><p><a href="#about-github_pages">关于GitHub Pages</a></p>
+</li>
+<li><p><a href="#local-environment">本地环境搭建</a></p>
+<ul>
+<li><p><a href="#install-ruby">安装Ruby</a></p>
+</li>
+<li><p><a href="#clone-blog">获取博客模板</a></p>
+</li>
+<li><p><a href="#install-bundler">安装Bundler</a></p>
+</li>
+</ul>
+</li>
+<li><p><a href="#create-myblog">创建自己的GitHub Pages</a></p>
+</li>
+<li><p><a href="#push-to-server">修改模板，上传至服务器</a></p>
+</li>
+<li><p><a href="#install-error">安装异常问题处理</a></p>
+</li>
+<li><p><a href="#writing">编写文章</a></p>
+</li>
+<li><p><a href="#reference-data">参考资源</a></p>
+</li>
+</ul>
+<h4 id="关于Jekyll"><a href="#关于Jekyll" class="headerlink" title="关于Jekyll"></a><a name="about-jekyll"></a>关于Jekyll</h4><p>　Jekyll 是一个免费的生成静态网页的工具，不需要数据库支持。它有一个模版目录，其中包含原始文本格式的文档，通过 Markdown （或者 Textile） 以及 Liquid 转化成一个完整的可发布的静态网站，可以配合第三方服务例如： Disqus（评论）、多说(评论) 以及分享 等等扩展功能，Jekyll 可以直接部署在 Github（国外） 或 Coding（国内） 上，可以绑定自己的域名。<a href="http://jekyll.bootcss.com/" target="_blank">Jekyll中文文档</a>、<a href="https://jekyllrb.com/" target="_blank">Jekyll英文文档</a>、<a href="http://jekyllthemes.org/" target="_blank"></a>。</p>
+<h4 id="关于GitHub-Pages"><a href="#关于GitHub-Pages" class="headerlink" title="关于GitHub Pages"></a><a name="about-github_pages"></a>关于GitHub Pages</h4><p>　官方说法是Websites for you and your projects.<a href="https://pages.github.com/" target="_blank"></a>是一个免费的静态网站托管平台，由github提供，它具有以下特点：</p>
+<ol>
+<li><p>GitHub Pages 有 300M 免费空间，资料自己管理，保存可靠；</p>
+</li>
+<li><p>学着用 GitHub，享受 GitHub 的便利，上面有很多大牛，眼界会开阔很多；</p>
+</li>
+<li><p>顺便看看 GitHub 工作原理，最好的团队协作流程；</p>
+</li>
+<li><p>GitHub 是趋势；</p>
+</li>
+<li><p>可以自定义域名</p>
+</li>
+</ol>
+<h4 id="本地环境搭建"><a href="#本地环境搭建" class="headerlink" title="本地环境搭建"></a><a name="local-environment"></a>本地环境搭建</h4><p>如果你只是想使用本主题，而不想搭建本地环境，那么可以直接跳过这部分，不搭建本地环境则不能实现本地预览，以下安装操作都是在Windows系统环境下进行。</p>
+<h5 id="安装Ruby"><a href="#安装Ruby" class="headerlink" title="安装Ruby"></a><a name="install-ruby"></a>安装Ruby</h5><p>jekyll本身基于Ruby开发，因此，想要在本地构建一个测试环境需要具有Ruby的开发和运行环境。在windows下，可以使用<a href="http://rubyinstaller.org/downloads/" target="_blank">Rubyinstaller</a>安装（选择带有DEVKIT的安装包）<a href="http://www.ruby-lang.org/zh_cn/downloads/" target="_blank"></a>，Windows下只需要保持默认状态一路下一步就可以了。</p>
+<h5 id="获取博客模板"><a href="#获取博客模板" class="headerlink" title="获取博客模板"></a><a name="clone-blog"></a>获取博客模板</h5><p>$ git clone <a href="https://github.com/JasonRH/Blog-Jekyll.git" target="_blank" rel="noopener">https://github.com/JasonRH/Blog-Jekyll.git</a></p>
+<h5 id="安装Bundler"><a href="#安装Bundler" class="headerlink" title="安装Bundler"></a><a name="install-bundler"></a>安装Bundler</h5><p>建议使用<a href="http://bundler.io/" target="_blank"></a>来安装和运行Jekyll。</p>
+<p>进入仓库中，直接使用下面命令即可：</p>
+<p><code>$ gem install bundler</code></p>
+<p><code>$ bundle install</code><br> 命令会根据当前目录下的Gemfile（当无法下载时可将source源修改），安装所需要的所有软件。这一步所安装的东西，可以说跟github本身的环境是完全一致的，所以可以确保本地如果没有错误，上传后也不会有错误。而且可以在将来使用下面命令，随时更新环境，十分方便</p>
+<p><code>$ bundle update</code><br> 使用下面命令，启动转化和本地服务；（每次重新clone下仓库后都需要update）</p>
+<p><code>$ bundle exec jekyll server</code><br> 在浏览器里输入： <a href="http://localhost:4000" target="_blank">http://localhost:4000</a>，就可以看到博客效果了。</p>
+<h5 id="创建自己的GitHub-Pages"><a href="#创建自己的GitHub-Pages" class="headerlink" title="创建自己的GitHub Pages"></a><a name="create-myblog"></a>创建自己的GitHub Pages</h5><p>在你的github里创建一个username.github.io的仓库，username指的是你的github的用户名。</p>
+<h5 id="修改模板，上传至服务器"><a href="#修改模板，上传至服务器" class="headerlink" title="修改模板，上传至服务器"></a><a name="push-to-server"></a>修改模板，上传至服务器</h5><p>将获取的模板复制，放到你自己的仓库中。</p>
+<p>在仓库中进行以下操作：</p>
+<p>1.把 _posts/ 目录下的文章都去掉。</p>
+<p>2.修改 _config.yml 文件里面的内容为你自己的。</p>
+<p>3.本地预览: 进入仓库 $ bundle update，然后在浏览器输入：<a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a></p>
+<p>4.确认修改完成后直接push到服务器即可。</p>
+<p>然后你在浏览器里输入 username.github.io ，就可以访问你自己的博客了。</p>
+<h5 id="安装异常问题处理"><a href="#安装异常问题处理" class="headerlink" title="安装异常问题处理"></a><a name="install-error"></a>安装异常问题处理</h5><p><img src="/picture/2018-11-22.png" alt></p>
+<p>解决方案：</p>
+<p>在ruby的安装目录下找到engine.rb文件，目录格式如<code>C:\Ruby25-x64\lib\ruby\gems\2.5.0\gems\sass-3.7.2\lib\sass在文件中添加一行</code>Encoding.default_external = Encoding.find(‘utf-8’)<br>`在require语句结束处，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">require &apos;sass/media&apos;</span><br><span class="line">require &apos;sass/supports&apos;</span><br><span class="line">module Sass   </span><br><span class="line">Encoding.default_external = Encoding.find(&apos;utf-8&apos;)</span><br></pre></td></tr></table></figure>
+<p>目录结构</p>
+<p>　Jekyll 的核心其实是一个文本转换引擎。它的概念其实就是： 你用你最喜欢的标记语言来写文章，可以是 Markdown，也可以是 Textile,或者就是简单的 HTML, 然后 Jekyll 就会帮你套入一个或一系列的布局中。在整个过程中你可以设置URL路径, 你的文本在布局中的显示样式等等。这些都可以通过纯文本编辑来实现，最终生成的静态页面就是你的成品了。</p>
+<p>一个基本的 Jekyll 网站的目录结构一般是像这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml  </span><br><span class="line">├── _includes  </span><br><span class="line">|   ├── footer.html  </span><br><span class="line">|   └── header.html  </span><br><span class="line">├── _layouts  </span><br><span class="line">|   ├── default.html  </span><br><span class="line">|   ├── post.html  </span><br><span class="line">|   └── page.html  </span><br><span class="line">├── _posts  </span><br><span class="line">|   └── 2017-08-01-welcome-to-jekyll.markdown  </span><br><span class="line">├── _sass  </span><br><span class="line">|   ├── _base.scss  </span><br><span class="line">|   ├── _layout.scss  </span><br><span class="line">|   └── _syntax-highlighting.scss  </span><br><span class="line">├── about.md  </span><br><span class="line">├── css  </span><br><span class="line">|   └── main.scss  </span><br><span class="line">├── feed.xml  </span><br><span class="line">└── index.html</span><br></pre></td></tr></table></figure>
+<p>这些目录结构以及具体的作用可以参考 <a href="http://jekyll.com.cn/docs/structure/" target="_blank"></a></p>
+<p>进入 _config.yml 里面，修改成你想看到的信息，重新 jekyll server ，刷新浏览器就可以看到你刚刚修改的信息了。</p>
+<p>到此，博客初步搭建算是完成了，</p>
+<h3 id="编写文章"><a href="#编写文章" class="headerlink" title="编写文章"></a><a name="writing"></a>编写文章</h3><p>　　所有的文章都是 _posts 目录下面，文章格式为 mardown 格式，文章文件名可以是 .mardown 或者 .md。</p>
+<p>　　编写一篇新文章很简单，你可以直接从 _posts/ 目录下复制一份出来 <code>2017-08-01-welcome-to-myblog.md</code> ，修改名字为 2017-08-01-article1.markdown ，注意：文章名的格式前面必须为 2017-08-01- ，日期可以修改，但必须为 年-月-日- 格式，后面的 article1 是整个文章的连接 URL，如果文章名为中文，那么文章的连接URL就会变成这样的：%E6%90%AD%E5， 所以建议文章名最好是英文的或者阿拉伯数字。 双击 2017-08-01-article1.markdown 打开</p>
+<h3 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a><a name="reference-data"></a>参考资源</h3><ul>
+<li><p><a href="http://baixin.io/2016/10/jekyll_tutorials1/" target="_blank">潘柏信-Jekyll搭建个人博客</a></p>
+</li>
+<li><p><a href="https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/" target="_blank">GitHub Pages官方文档</a></p>
+</li>
+<li><p><a href="http://www.pchou.info/ssgithubPage/2014-07-04-build-github-blog-page-08.html" target="_blank">一步步在GitHub上创建博客主页</a></p>
+</li>
+</ul>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/ali.png"><b>支付宝</b>
+                </span>
+            
+            
+        </div>
+    </div>
+    <p class="reward-tip">扫上面二维码，领支付宝红包</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">RH</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/11/23/hexo-blog-build/" class="pre-post btn btn-default" title='使用hexo搭建个人博客'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">使用hexo搭建个人博客</span>
+        </a>
+    
+    
+</div>
+
+
+    <div id="comments">
+        
+    
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'tpqT2XsfMpVPjR2x4Ou2Hfgk-gzGzoHsz',
+            appKey: 'zVoewkC4BTgyKYFCxAG8V2tO',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-CN'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#目录"><span class="toc-text">目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#关于Jekyll"><span class="toc-text">关于Jekyll</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于GitHub-Pages"><span class="toc-text">关于GitHub Pages</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#本地环境搭建"><span class="toc-text">本地环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#安装Ruby"><span class="toc-text">安装Ruby</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#获取博客模板"><span class="toc-text">获取博客模板</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#安装Bundler"><span class="toc-text">安装Bundler</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#创建自己的GitHub-Pages"><span class="toc-text">创建自己的GitHub Pages</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#修改模板，上传至服务器"><span class="toc-text">修改模板，上传至服务器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#安装异常问题处理"><span class="toc-text">安装异常问题处理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编写文章"><span class="toc-text">编写文章</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资源"><span class="toc-text">参考资源</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
