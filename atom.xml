@@ -42,6 +42,164 @@
   </entry>
   
   <entry>
+    <title>Retrofit + okhttp 下载问题</title>
+    <link href="http://example.com/2020/08/05/Retrofit%20%20%20okhttp%20%E4%B8%8B%E8%BD%BD%E9%97%AE%E9%A2%98/"/>
+    <id>http://example.com/2020/08/05/Retrofit   okhttp 下载问题/</id>
+    <published>2020-08-05T09:45:00.000Z</published>
+    <updated>2021-04-07T08:46:03.837Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p> 使用retrofit，添加okhttp拦截器，平常的json返回正常，但下载文件时，文件不准确。</p><h4 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h4><p> 原先：return response.newBuilder()<br>                    .body(okhttp3.ResponseBody.create(mediaType, content))<br>                    .build();</p><p> 建议：直接返回chain.request()不做其它操作没有问题，不能更改return，后续会出问题。建议不打印response.body()或者暂时取消拦截器。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">private static  Interceptor MY_LOGGING_INTERCEPTOR = new Interceptor() &#123;</span><br><span class="line">       private String TAG = &quot;MY_LOGGING_INTERCEPTOR&quot;;</span><br><span class="line"></span><br><span class="line">       @Override</span><br><span class="line">       public okhttp3.Response intercept(Chain chain) throws IOException &#123;</span><br><span class="line">           Request request = chain.request();</span><br><span class="line">           long t1 = System.nanoTime();</span><br><span class="line">           okhttp3.Response response = chain.proceed(chain.request());</span><br><span class="line">           long t2 = System.nanoTime();</span><br><span class="line">           okhttp3.MediaType mediaType = response.body().contentType();</span><br><span class="line">           Log.d(TAG, &quot;intercept:返回的类型为： &quot; + mediaType);</span><br><span class="line">           String content = response.body().string();</span><br><span class="line">           //printParams(request.body());</span><br><span class="line">           Log.d(TAG, &quot;-----LoggingInterceptor----- :\nrequest url:&quot; + request.url() + &quot;\ntime:&quot; + (t2 - t1) / 1e6d + &quot;\nbody:&quot; + content + &quot;\n&quot;);</span><br><span class="line">           </span><br><span class="line">           //下载文件会有问题</span><br><span class="line">           /*return response.newBuilder()</span><br><span class="line">                   .body(okhttp3.ResponseBody.create(mediaType, content))</span><br><span class="line">                   .build();*/</span><br><span class="line">       &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h4&gt;&lt;p&gt; 使用retrofit，添加okhttp拦截器，平常的json返回正常，但下载文件时，文件不准确。&lt;/p&gt;
+&lt;h4 id=&quot;解决&quot;&gt;&lt;a h
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Android" scheme="http://example.com/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>okhttp 连续两次请求踩坑</title>
+    <link href="http://example.com/2020/08/05/okhttp%20%E8%BF%9E%E7%BB%AD%E4%B8%A4%E6%AC%A1%E8%AF%B7%E6%B1%82%E8%B8%A9%E5%9D%91/"/>
+    <id>http://example.com/2020/08/05/okhttp 连续两次请求踩坑/</id>
+    <published>2020-08-05T09:30:00.000Z</published>
+    <updated>2021-03-30T10:30:33.680Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.现象</p><p>APP只请求了一次，服务器显示有两次请求，回复了两次。结果网络拦截器中显示的服务器返回的response.body()是正确的，而retrofit2实际回调的response.body()是另一个返回结果。</p><p>2.原因<br>okhttp拦截器中使用了两次chain.process()。这就请求了两次。 第二次返回其它的结果可能是因为你已经取过一次body用于打印log，因为body只能取一次，取了之后就置空了。真想提前查看body可以用peekbody方法，也可以使用httpLoggingIntercept这个库打印。</p><p>3.错误示例</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">private static Interceptor MY_LOGGING_INTERCEPTOR = new Interceptor() &#123;</span><br><span class="line">        private String TAG = &quot;MY_LOGGING_INTERCEPTOR&quot;;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public okhttp3.Response intercept(Chain chain) throws IOException &#123;</span><br><span class="line">            Request request = chain.request();</span><br><span class="line">            long t1 = System.nanoTime();</span><br><span class="line">            okhttp3.Response response = chain.proceed(chain.request());</span><br><span class="line">            long t2 = System.nanoTime();</span><br><span class="line">            okhttp3.MediaType mediaType = response.body().contentType();</span><br><span class="line">            Log.d(TAG, &quot;intercept:返回的类型为： &quot; + mediaType);</span><br><span class="line">            String content = response.body().string();</span><br><span class="line">            printParams(request.body());</span><br><span class="line">            Log.d(TAG, &quot;-----LoggingInterceptor----- :\nrequest url:&quot; + request.url() + &quot;\ntime:&quot; + (t2 - t1) / 1e6d + &quot;\nbody:&quot; + content + &quot;\n&quot;);</span><br><span class="line">            return chain.proceed(chain.request());</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure><p>4.正确示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">private static Interceptor MY_LOGGING_INTERCEPTOR = new Interceptor() &#123;</span><br><span class="line">        private String TAG = &quot;MY_LOGGING_INTERCEPTOR&quot;;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public okhttp3.Response intercept(Chain chain) throws IOException &#123;</span><br><span class="line">            Request request = chain.request();</span><br><span class="line">            long t1 = System.nanoTime();</span><br><span class="line">            okhttp3.Response response = chain.proceed(chain.request());</span><br><span class="line">            long t2 = System.nanoTime();</span><br><span class="line">            okhttp3.MediaType mediaType = response.body().contentType();</span><br><span class="line">            Log.d(TAG, &quot;intercept:返回的类型为： &quot; + mediaType);</span><br><span class="line">            String content = response.body().string();</span><br><span class="line">            printParams(request.body());</span><br><span class="line">            Log.d(TAG, &quot;-----LoggingInterceptor----- :\nrequest url:&quot; + request.url() + &quot;\ntime:&quot; + (t2 - t1) / 1e6d + &quot;\nbody:&quot; + content + &quot;\n&quot;);</span><br><span class="line">            return response.newBuilder()</span><br><span class="line">                    .body(okhttp3.ResponseBody.create(mediaType, content))</span><br><span class="line">                    .build();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1.现象&lt;/p&gt;
+&lt;p&gt;APP只请求了一次，服务器显示有两次请求，回复了两次。结果网络拦截器中显示的服务器返回的response.body()是正确的，而retrofit2实际回调的response.body()是另一个返回结果。&lt;/p&gt;
+&lt;p&gt;2.原因&lt;br&gt;okhttp
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Android" scheme="http://example.com/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SVN分支合并</title>
+    <link href="http://example.com/2020/04/15/SVN%E5%88%86%E6%94%AF%E5%90%88%E5%B9%B6/"/>
+    <id>http://example.com/2020/04/15/SVN分支合并/</id>
+    <published>2020-04-15T09:11:23.000Z</published>
+    <updated>2021-04-07T08:47:23.122Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.SVN想要使用分支标记功能，需要在创建项目的时候创建三个文件夹</p><ul><li>trunk (主干)</li><li>branches (分支，主要用于新功能的开发)</li><li>tags  (标记，主要用于项目开发中的里程碑，比如开发到一定阶段可以单独一个版本作为发布等，它往往代表一个可以固定的完整的版本)</li></ul><p>注意事项：</p><ul><li>开发时为了避免branch和trunk冲突，需要branch不停地和trunk保持同步，即不停的合并trunk到branch。</li><li>正式合并前一定要先进行测试合并</li><li>合并branch到主干，只能进行一次。</li><li>分支主干合并的来源和Git使用相反，需要理解</li></ul><h4 id="合并trunk到branch"><a href="#合并trunk到branch" class="headerlink" title="合并trunk到branch"></a>合并trunk到branch</h4><p>需要当前处于branch仓库目录中。<br>右键-合并-合并一个版本范围-合并的源选择trunk路径（所有版本，指定范围根据需要）-测试合并-合并</p><pre><code>需要经常合并</code></pre><h4 id="合并branch到trunk"><a href="#合并branch到trunk" class="headerlink" title="合并branch到trunk"></a>合并branch到trunk</h4><p>需要当前处于trunk仓库目录。<br>右键-合并-合并一个版本范围-合并的源选择branch路径（所有版本，指定范围根据需要）-测试合并-合并</p><pre><code>此合并只可进行一次</code></pre><h3 id="合并分支步骤"><a href="#合并分支步骤" class="headerlink" title="合并分支步骤"></a>合并分支步骤</h3><p>右键-TortoiseSVN-合并-合并一个版本范围-合并的源（输入你想要获取的代码的仓库地址，合并trunk到branch时选择trunk）-所有版本和指定范围根据需要选择-测试合并，有冲突时解决本地冲突，或删文件-合并</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1.SVN想要使用分支标记功能，需要在创建项目的时候创建三个文件夹&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;trunk (主干)&lt;/li&gt;
+&lt;li&gt;branches (分支，主要用于新功能的开发)&lt;/li&gt;
+&lt;li&gt;tags  (标记，主要用于项目开发中的里程碑，比如开发到一定阶段可以单
+      
+    
+    </summary>
+    
+      <category term="其它" scheme="http://example.com/categories/%E5%85%B6%E5%AE%83/"/>
+    
+    
+      <category term="代码" scheme="http://example.com/tags/%E4%BB%A3%E7%A0%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx服务器搭建</title>
+    <link href="http://example.com/2019/12/25/Nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/"/>
+    <id>http://example.com/2019/12/25/Nginx服务器编译安装/</id>
+    <published>2019-12-25T12:42:08.000Z</published>
+    <updated>2021-03-30T10:30:43.479Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.下载<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://nginx.org/download/nginx-1.18.0.tar.gz</span><br></pre></td></tr></table></figure></p><p>2.复制，解压<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp nginx-1.18.0.tar.gz /usr/local/</span><br><span class="line">tar -xzf nginx-1.18.0.tar.gz</span><br><span class="line">cd nginx-1.18.0</span><br></pre></td></tr></table></figure></p><p>3.安装编译环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum update</span><br><span class="line">yum install -y gcc gcc-c++ pcre pcre-devel zlib zlib-devel openssl openssl-devel</span><br></pre></td></tr></table></figure></p><p>4.编译安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#添加用户和组</span><br><span class="line">groupadd www</span><br><span class="line">useradd -g www www</span><br><span class="line">#配置</span><br><span class="line">./configure --prefix=/usr/local/nginx-1.18.0  --user=qgydevops  --group=qgydevops  --with-http_ssl_module --with-http_gzip_static_module --with-http_sub_module --with-http_stub_status_module</span><br><span class="line">（用户组可以不添加，不配置）</span><br><span class="line"></span><br><span class="line">#编译，安装</span><br><span class="line">make &amp;&amp; make instal</span><br></pre></td></tr></table></figure></p><p>5.配置环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile.d/nginx.sh</span><br><span class="line">文件内写入：</span><br><span class="line">export NGINX_HOME=/usr/local/nginx</span><br><span class="line">export PATH=$NGINX_HOME/sbin:$PATH</span><br><span class="line">保存文件退出执行：</span><br><span class="line">chmod +x /etc/profile.d/nginx.sh</span><br><span class="line">source /etc/profile.d/nginx.sh</span><br></pre></td></tr></table></figure></p><p>6.修改配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/local/nginx/conf/nginx.conf</span><br></pre></td></tr></table></figure></p><p>7.文件内添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">user    www;</span><br><span class="line">worker_processes  8;  </span><br><span class="line">pid      /usr/local/nginx/nginx.pid;</span><br><span class="line">worker_rlimit_nofile 65535;</span><br><span class="line">error_log /data/wwwlog/error_nginx.log crit;</span><br><span class="line">events &#123;</span><br><span class="line">    use  epoll;</span><br><span class="line">    worker_connections  65535;</span><br><span class="line">    multi_accept on;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;</span><br><span class="line">    limit_conn_zone $binary_remote_addr zone=addr:10m;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</span><br><span class="line">                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</span><br><span class="line">                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</span><br><span class="line">    server_names_hash_bucket_size 128;</span><br><span class="line">    client_header_buffer_size    512k;</span><br><span class="line">    client_max_body_size  100m;</span><br><span class="line">    client_body_buffer_size 10m;</span><br><span class="line">    large_client_header_buffers  4 512k;</span><br><span class="line">    sendfile       on;</span><br><span class="line">    tcp_nopush     on;</span><br><span class="line">    tcp_nodelay    on;</span><br><span class="line">    server_tokens off;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">    send_timeout        10;</span><br><span class="line">    client_body_timeout  10;</span><br><span class="line">    client_header_timeout  10;</span><br><span class="line">    </span><br><span class="line">    fastcgi_connect_timeout 300;</span><br><span class="line">    fastcgi_send_timeout 300;</span><br><span class="line">    fastcgi_read_timeout 300;</span><br><span class="line">    fastcgi_buffer_size 64k;</span><br><span class="line">    fastcgi_buffers 4 64k;</span><br><span class="line">    fastcgi_busy_buffers_size 128k;</span><br><span class="line">    fastcgi_temp_file_write_size 128k;</span><br><span class="line">    fastcgi_intercept_errors on;</span><br><span class="line"></span><br><span class="line">    gzip on;</span><br><span class="line">    gzip_min_length 256k;</span><br><span class="line">    gzip_buffers    16  8k;</span><br><span class="line">    gzip_http_version  1.1;</span><br><span class="line">    gzip_comp_level  6;</span><br><span class="line">    gzip_proxied any;</span><br><span class="line">    gzip_vary  on;</span><br><span class="line">    gzip_types</span><br><span class="line">    text/xml application/xml application/atom+xml application/rss+xml application/xhtml+xml image/svg+xml</span><br><span class="line">    text/javascript application/javascript application/x-javascript</span><br><span class="line">    text/x-json application/json application/x-web-app-manifest+json</span><br><span class="line">    text/css text/plain text/x-component</span><br><span class="line">    font/opentype application/x-font-ttf application/vnd.ms-fontobject</span><br><span class="line">    image/x-icon;</span><br><span class="line">    gzip_disable &quot;MSIE [1-6]\.(?!.*SV1)&quot;;</span><br><span class="line">    open_file_cache max=65535 inactive=20s;</span><br><span class="line">    open_file_cache_valid 30s;</span><br><span class="line">    open_file_cache_min_uses 2;</span><br><span class="line">    open_file_cache_errors on;</span><br><span class="line">    include vhost/*.conf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p> 8.http{}配置中添加<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">      listen <span class="number">80</span>;</span><br><span class="line">      server_name 你的IP地址;</span><br><span class="line">      root /home/RH;</span><br><span class="line">      index index.html;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure></p><p>9.重启服务，配置生效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx –s reload</span><br></pre></td></tr></table></figure></p><p>10.访问nginx，现在你可以通过公网ip (本地可以通过 localhost /或 127.0.0.1 ) 查看nginx 服务返回的信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i localhost</span><br></pre></td></tr></table></figure></p><p>11.修改文件夹权限，否则无法访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 RH</span><br></pre></td></tr></table></figure></p><p>12.。浏览器访问 http://你的IP地址</p><h3 id="设置开机启动"><a href="#设置开机启动" class="headerlink" title="设置开机启动"></a>设置开机启动</h3><p>13.在系统服务目录里创建nginx.service文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /usr/lib/systemd/system/nginx.service</span><br></pre></td></tr></table></figure></p><p>14.写入内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#服务的说明</span><br><span class="line">[Unit]</span><br><span class="line">#描述服务</span><br><span class="line">Description=nginx</span><br><span class="line">#描述服务类别</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">#服务运行参数的设置  </span><br><span class="line">[Service]</span><br><span class="line">#forking是后台运行的形式</span><br><span class="line">Type=forking</span><br><span class="line">#服务的具体运行命令</span><br><span class="line">ExecStart=/usr/local/nginx/sbin/nginx</span><br><span class="line">#重启命令</span><br><span class="line">ExecReload=/usr/local/nginx/sbin/nginx -s reload</span><br><span class="line">#停止命令</span><br><span class="line">ExecStop=/usr/local/nginx/sbin/nginx -s quit</span><br><span class="line">#表示给服务分配独立的临时空间</span><br><span class="line">PrivateTmp=true</span><br><span class="line"></span><br><span class="line">#运行级别下服务安装的相关设置，可设置为多用户，即系统运行级别为3  </span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure></p><p>15.设置开机自启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable nginx.service</span><br></pre></td></tr></table></figure></p><p>16.查看nginx状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status nginx.service</span><br></pre></td></tr></table></figure></p><p>17.重启nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pkill -9 nginx</span><br><span class="line">ps aux | grep nginx</span><br><span class="line">systemctl start nginx</span><br></pre></td></tr></table></figure></p><p>18.查看服务状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status nginx.service</span><br></pre></td></tr></table></figure></p><h4 id="备案访问问题："><a href="#备案访问问题：" class="headerlink" title="备案访问问题："></a>备案访问问题：</h4><p>1.域名需要实名认证、</p><p>2.购买的国内云服务器。默认访问80端口，服务器需要备案，否则无法访问；访问非80端口不需要备案。</p><p>3.购买的国外云服务器。不需要备案。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1.下载&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pr
+      
+    
+    </summary>
+    
+      <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+      <category term="服务器" scheme="http://example.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Android Studio新建Module异常</title>
+    <link href="http://example.com/2019/12/10/Android%20Studio%E6%96%B0%E5%BB%BAModule%E5%BC%82%E5%B8%B8/"/>
+    <id>http://example.com/2019/12/10/Android Studio新建Module异常/</id>
+    <published>2019-12-10T01:40:23.000Z</published>
+    <updated>2021-04-06T07:39:45.608Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h4><p>新建module后，上面显示 Gradle sync 同步失败，build窗口一直卡在同步中，卸载重装 更换sdk，删除.gradle和 android配置文件夹都没有用</p><h3 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h3><p>由于开启了渐变同步导致，到设置界面：   File → Settings → Experimental → Gradle 把Only sync the active variant 的勾去掉即可</p><p><img src="https://img-blog.csdnimg.cn/20191210093212747.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dQUjEzMDA1NjU1OTg5,size_16,color_FFFFFF,t_70" alt="取消打勾"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;问题：&quot;&gt;&lt;a href=&quot;#问题：&quot; class=&quot;headerlink&quot; title=&quot;问题：&quot;&gt;&lt;/a&gt;问题：&lt;/h4&gt;&lt;p&gt;新建module后，上面显示 Gradle sync 同步失败，build窗口一直卡在同步中，卸载重装 更换sdk，删除.gradl
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Android Studio" scheme="http://example.com/tags/Android-Studio/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git乱码</title>
+    <link href="http://example.com/2019/08/06/Git%E4%B9%B1%E7%A0%81/"/>
+    <id>http://example.com/2019/08/06/Git乱码/</id>
+    <published>2019-08-06T01:40:23.000Z</published>
+    <updated>2021-04-06T07:39:45.609Z</updated>
+    
+    <content type="html"><![CDATA[<p>解决git bash 终端显示中文乱码<br>要注意的是，这样设置后，你的git bash终端也要设置成中文和utf-8编码。才能正确显示中文，例如对比如下：</p><p>在git bash的界面中右击空白处，弹出菜单，选择选项-&gt;文本-&gt;本地Locale，设置为zh_CN，而旁边的字符集选框选为UTF-8。</p><p>英文显示则是：<br>Options-&gt;Text-&gt;Locale改为zh_CN，Character set改为UTF-8</p><p>通过修改配置文件来解决中文乱码<br>如果你的git bash终端没有菜单选项显示，还可以通过直接修改配置文件的方式来解决中文乱码问题。</p><p>进入git的安装目录</p><p>编辑etc\gitconfig文件，也有些windows系统是存放在C:\Users\Administrator.gitconfig路径或安装盘符:\Git\mingw64\etc\gitconfig，在文件末尾增加以下内容：<br>[gui]<br>    encoding = utf-8  </p><pre><code># 代码库统一使用utf-8  </code></pre><p>[i18n]<br>    commitencoding = utf-8  </p><pre><code># log编码  </code></pre><p>[svn]<br>    pathnameencoding = utf-8  </p><pre><code># 支持中文路径  </code></pre><p>[core]<br>    quotepath = false </p><pre><code># status引用路径不再是八进制（反过来说就是允许显示中文了）</code></pre><hr><p>版权声明：本文为CSDN博主「铁乐与猫」的原创文章，遵循CC 4.0 by-sa版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/u012145252/article/details/81775362" target="_blank" rel="noopener">https://blog.csdn.net/u012145252/article/details/81775362</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;解决git bash 终端显示中文乱码&lt;br&gt;要注意的是，这样设置后，你的git bash终端也要设置成中文和utf-8编码。才能正确显示中文，例如对比如下：&lt;/p&gt;
+&lt;p&gt;在git bash的界面中右击空白处，弹出菜单，选择选项-&amp;gt;文本-&amp;gt;本地Locale，设
+      
+    
+    </summary>
+    
+      <category term="其他" scheme="http://example.com/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+      <category term="git" scheme="http://example.com/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Android和PHP，字符压缩和编码</title>
     <link href="http://example.com/2019/07/11/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81/"/>
     <id>http://example.com/2019/07/11/字符串压缩编码/</id>
@@ -378,172 +536,6 @@ git push origin v2.0.88
     
     
       <category term="react-native" scheme="http://example.com/tags/react-native/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>InputStream数据读取</title>
-    <link href="http://example.com/2019/02/14/InputStream%E6%95%B0%E6%8D%AE%E8%AF%BB%E5%8F%96/"/>
-    <id>http://example.com/2019/02/14/InputStream数据读取/</id>
-    <published>2019-02-14T03:13:53.000Z</published>
-    <updated>2021-03-29T03:01:27.426Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> data0 = inputStream.read();</span><br></pre></td></tr></table></figure><p>· <strong><em>read()</em></strong> : 从(来源)输入流中(读取的内容)读取数据的下一个字节到(去处)java程序内部中返回值为0到255的int类型的值，返回值为字符的ASCII值(如a就返回97,n就返回110)。  如果没有可用的字节,因为已经到达流的末尾, -1返回的值。运行一次只读一个字节,所以经常与while((len = inputstream.read()) != -1)一起使用</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span>[] buffer=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">512</span>];</span><br><span class="line"><span class="keyword">int</span> size = mInputStream.read(buffer);</span><br></pre></td></tr></table></figure><p>· <strong><em>read(byte[] b)</em></strong>：从输入流中读取一定数量的字节，并将其存储在缓冲区数组b 中。以整数形式返回实际读取的字节数。在输入数据可用、检测到文件末尾或者抛出异常前，此方法一直阻塞。</p><p>· 如果 b 的长度为 0，则不读取任何字节并返回 0；否则，尝试读取至少一个字节。如果因为流位于文件末尾而没有可用的字节，则返回值 -1；否则，至少读取一个字节并将其存储在 b *中。</p><p>· 将读取的第一个字节存储在元素b[0] 中，下一个存储在 b[1] 中，依次类推。读取的字节数最多等于b 的长度。设 k为实际读取的字节数；这些字节将存储在b[0] 到 b[k-1] 的元素中，不影响 b[k] 到b[b.length-1] 的元素。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> newcount = inputStream.read(b, off, len);</span><br></pre></td></tr></table></figure><p>· <strong><em>read(byte[] b, int off, int len)</em></strong>：读取 len字节的数据从输入流到一个字节数组。</p><p>· 试图读取多达 len字节,但可能读取到少于len字节。返回实际读取的字节数为整数。</p><p>· 第一个字节存储读入元素b[off],下一个b[off+1],等等。读取的字节数是最多等于len。k被读取的字节数,这些字节将存储在元素通过b[off+k-1]b[off]，离开元素通过b[off+len-1]b[off+k]未受影响。</p><p>· read(byte[]b)就是相当于read(byte [] b , 0 , b.length).所以两者差不多，性质一样。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span clas
-      
-    
-    </summary>
-    
-      <category term="其它" scheme="http://example.com/categories/%E5%85%B6%E5%AE%83/"/>
-    
-    
-      <category term="Java" scheme="http://example.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>android模拟器与chrome进行Remote JS Debugging连接不上</title>
-    <link href="http://example.com/2019/01/24/Remote-JS-Debugging/"/>
-    <id>http://example.com/2019/01/24/Remote-JS-Debugging/</id>
-    <published>2019-01-24T06:59:09.000Z</published>
-    <updated>2021-03-29T03:01:27.433Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h4><p>在Android模拟器上进行 Debug JS Remotely时，Chrome浏览器会自动打开<a href="http://10.0.2.2:8081/debugger-ui" target="_blank" rel="noopener">http://10.0.2.2:8081/debugger-ui</a> ，但此网址无法访问。</p><h4 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h4><ol><li><p>在模拟器上<code>Ctrl + M</code> 进入开发者菜单</p></li><li><p>Dev settings &gt; Debug server host &amp; port for device</p></li><li><p>设置 <code>localhost:8081</code></p></li><li><p>重新运行 <code>react-native run-android</code></p></li></ol><h4 id="真机调试"><a href="#真机调试" class="headerlink" title="真机调试"></a>真机调试</h4><h5 id="在iOS上"><a href="#在iOS上" class="headerlink" title="在iOS上"></a>在iOS上</h5><p>打开RCTWebSocketExecutor.m文件，将“localhost”改为你的电脑IP，然后在Developer Menu下单机“Debug JS Remotely”启动JS远程调试。</p><h5 id="在Android上"><a href="#在Android上" class="headerlink" title="在Android上"></a>在Android上</h5><p>默认情况下不用进行设置就可以进行调试，当报错时进行以下方法。</p><p>方法一：在Android5.0以上设备，将手机通过usb连接到电脑上，然后输入以下adb命令来设置端口转发</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb reverse tcp:<span class="number">8081</span> tcp:<span class="number">8081</span></span><br></pre></td></tr></table></figure><p>方法二：通过在“Developer Menu”下的“Dev Settings”中设置你的电脑ip来进行调试（保证他们在同一个路由器下）</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h4 id=&quot;现象&quot;&gt;&lt;a href=&quot;#现象&quot; class=&quot;headerlink&quot; title=&quot;现象&quot;&gt;&lt;/a&gt;现象&lt;/h4&gt;&lt;p&gt;在Android模拟器上进行 Debug JS Remotely时，Chrome浏览器会自动打开&lt;a href=&quot;http://10.0.2
-      
-    
-    </summary>
-    
-      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
-    
-    
-      <category term="react-native" scheme="http://example.com/tags/react-native/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Android Uri和Path</title>
-    <link href="http://example.com/2019/01/19/Android-Uri%E5%92%8CPath/"/>
-    <id>http://example.com/2019/01/19/Android-Uri和Path/</id>
-    <published>2019-01-19T06:09:23.000Z</published>
-    <updated>2021-03-29T03:01:27.421Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>拍照后要保存图片，我们需要指定一个存储图片路径的Uri。此时需要将file path转换为Uri。</p><p>打开相册，选取本地的二维码图片识别，此时需要将Uri转Path，以获取图片路径。</p><h3 id="Android-Uri-to-Path"><a href="#Android-Uri-to-Path" class="headerlink" title="Android Uri to Path"></a>Android Uri to Path</h3><p>Android在4.4之后的版本(包括4.4)中，从相册中选取图片返回Uri进行了改动。所以我们无法通过该Uri来取得文件路径，从而解码图片，将其显示出来。</p><p>在4.4之后的，包括4.4的版本，返回的Uri有可能是以下的一种:</p><ul><li>content://com.android.providers.media.documents/document/image:642</li><li>content://com.android.providers.downloads.documents/document/</li><li>content://media/external/images/media/</li></ul><p>不能直接通过前两种Uri直接获取到对应的表，所以需要”翻译一下”:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleImageOnKitKat</span><span class="params">(Intent data)</span> </span>&#123;</span><br><span class="line">        String imagePath = <span class="keyword">null</span>;</span><br><span class="line">        Uri uri = data.getData();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (DocumentsContract.isDocumentUri(<span class="keyword">this</span>, uri)) &#123;</span><br><span class="line">            String docId = DocumentsContract.getDocumentId(uri);</span><br><span class="line">       <span class="keyword">if</span> (<span class="string">"com.android.providers.media.documents"</span>.equals(uri.getAuthority())) &#123;</span><br><span class="line">            <span class="comment">//Log.d(TAG, uri.toString());</span></span><br><span class="line">            String id = docId.split(<span class="string">":"</span>)[<span class="number">1</span>];</span><br><span class="line">            String selection = MediaStore.Images.Media._ID + <span class="string">"="</span> + id;</span><br><span class="line">            imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);</span><br><span class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"com.android.providers.downloads.documents"</span>.equals(uri.getAuthority())) &#123;</span><br><span class="line">             <span class="comment">//Log.d(TAG, uri.toString());</span></span><br><span class="line">             Uri contentUri = ContentUris.withAppendedId(</span><br><span class="line">                   Uri.parse(<span class="string">"content://downloads/public_downloads"</span>),</span><br><span class="line">                   Long.valueOf(docId));</span><br><span class="line">                   imagePath = getImagePath(contentUri, <span class="keyword">null</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"content"</span>.equalsIgnoreCase(uri.getScheme())) &#123;</span><br><span class="line">            <span class="comment">//Log.d(TAG, "content: " + uri.toString());</span></span><br><span class="line">            imagePath = getImagePath(uri, <span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getImagePath</span><span class="params">(Uri uri, String selection)</span> </span>&#123;</span><br><span class="line">        String path = <span class="keyword">null</span>;</span><br><span class="line">        Cursor cursor = getContentResolver().query(uri, <span class="keyword">null</span>, selection, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">if</span> (cursor != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (cursor.moveToFirst()) &#123;</span><br><span class="line">                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            cursor.close();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> path;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><h3 id="Android-Path-To-Uri"><a href="#Android-Path-To-Uri" class="headerlink" title="Android Path To Uri"></a>Android Path To Uri</h3><p>1.Uri.parse(path)</p><p>2.Uri.fromFile(new  File(path))</p><ol start="3"><li>File Path To Media Uri</li></ol><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Uri <span class="title">getMediaUriFromPath</span><span class="params">(Context context, String path)</span> </span>&#123;</span><br><span class="line">        Uri mediaUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;</span><br><span class="line">        Cursor cursor = context.getContentResolver().query(mediaUri,</span><br><span class="line">                <span class="keyword">null</span>,</span><br><span class="line">                MediaStore.Images.Media.DISPLAY_NAME + <span class="string">"= ?"</span>,</span><br><span class="line">                <span class="keyword">new</span> String[] &#123;path.substring(path.lastIndexOf(<span class="string">"/"</span>) + <span class="number">1</span>)&#125;,</span><br><span class="line">                <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">        Uri uri = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(cursor.moveToFirst()) &#123;</span><br><span class="line">            uri = ContentUris.withAppendedId(mediaUri,</span><br><span class="line">                    cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media._ID)));</span><br><span class="line">        &#125;</span><br><span class="line">        cursor.close();</span><br><span class="line">        <span class="keyword">return</span> uri;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>参考资料：</p><p><a href="https://www.jianshu.com/p/f9a63fcc0b91" target="_blank" rel="noopener">https://www.jianshu.com/p/f9a63fcc0b91</a></p><p><a href="https://www.jianshu.com/p/33bc363290e9" target="_blank" rel="noopener">https://www.jianshu.com/p/33bc363290e9</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h3&gt;&lt;p&gt;拍照后要保存图片，我们需要指定一个存储图片路径的Uri。此时需要将file path转换为Uri。&lt;/p&gt;
-&lt;p&gt;打开相册，选取本地的二维码
-      
-    
-    </summary>
-    
-      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
-    
-    
-      <category term="Android" scheme="http://example.com/tags/Android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Windows生成公钥和私钥</title>
-    <link href="http://example.com/2019/01/10/Windows%E7%94%9F%E6%88%90%E5%85%AC%E9%92%A5%E5%92%8C%E7%A7%81%E9%92%A5/"/>
-    <id>http://example.com/2019/01/10/Windows生成公钥和私钥/</id>
-    <published>2019-01-10T03:00:00.000Z</published>
-    <updated>2021-03-29T03:12:19.771Z</updated>
-    
-    <content type="html"><![CDATA[<p>Windows生成公钥和私钥</p><p>1.进入C:\Users\RH.ssh 目录</p><p>2.ssh-keygen -t rsa</p><p>3.<code>Enter</code></p><p>4.<code>Enter</code></p><p>5.<code>Enter</code></p><p>复制id_rsa.pub里的内容</p><p><img src="/picture/ssh-key.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Windows生成公钥和私钥&lt;/p&gt;
-&lt;p&gt;1.进入C:\Users\RH.ssh 目录&lt;/p&gt;
-&lt;p&gt;2.ssh-keygen -t rsa&lt;/p&gt;
-&lt;p&gt;3.&lt;code&gt;Enter&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;4.&lt;code&gt;Enter&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;5.
-      
-    
-    </summary>
-    
-      <category term="其它" scheme="http://example.com/categories/%E5%85%B6%E5%AE%83/"/>
-    
-    
-      <category term="Windows" scheme="http://example.com/tags/Windows/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>感知机</title>
-    <link href="http://example.com/2018/12/14/%E6%84%9F%E7%9F%A5%E6%9C%BA/"/>
-    <id>http://example.com/2018/12/14/感知机/</id>
-    <published>2018-12-14T11:54:53.000Z</published>
-    <updated>2021-03-29T03:01:27.461Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>感知机(percetron)算法是由美国学者Frank Roseenblatt在1957年提出，是神经网络(深度学习)起源的算法。</p></blockquote><h1 id="感知机是什么"><a href="#感知机是什么" class="headerlink" title="感知机是什么"></a>感知机是什么</h1><blockquote><p>感知机接受多个信号，输出一个信号。其中信号取值0/1，代表“传递/不传递”。</p><p>如下图，x1、x2是输入信号，y是输出信号，w1、w2是权重，圈是神经元。当输入信号传入神经元后，神经元会计算信号的总和，当总和超过阈值θ时输出1。</p></blockquote><p><img src="/picture/2018-12-14-01.png" alt="有两个输入的感知机"></p><blockquote><p>感知机运行原理通过数学方式表达如下，感知机多个输入信号都有各自的权重，权重越大，对应该权重的信号重要性越高。</p></blockquote><p><img src="/picture/2018-12-14-02.png" alt="公式1"></p><blockquote><p>将公式进行转化如下，其中b为偏置</p></blockquote><p><img src="/picture/2018-12-14-06.png" alt="公式1"></p><h1 id="感知机的实现"><a href="#感知机的实现" class="headerlink" title="感知机的实现"></a>感知机的实现</h1><blockquote><p>通过感知机的原理，我们能模拟简单的逻辑电路。</p><p>与门仅在两个输入均为1时输出1，其他的时候输出0。</p><p>与非门仅在两个输入同时为1时为0，其他的时候输出1。</p><p>或门在两个输入相同时为1，不同时为0。</p></blockquote><center><img src="/picture/2018-12-14-03.png" width="200"><img src="/picture/2018-12-14-04.png" width="200"><img src="/picture/2018-12-14-05.png" width="200"></center><blockquote><p>根据真值表中的四组值，我们能通过作图寻找满足公式的直线。如图阴影部分为小于0的部分。</p></blockquote><p><img src="/picture/2018-12-14-07.png" alt="感知机可视化1"></p><blockquote><p>这种能够满足感知机的直线有很多条，我们只选其中一条实现。</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"></span><br><span class="line">X = np.array([[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">1</span>]])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">AND</span><span class="params">(x)</span>:</span></span><br><span class="line">w = ([<span class="number">0.5</span>, <span class="number">0.5</span>])</span><br><span class="line">b = <span class="number">-0.7</span></span><br><span class="line">tmp = np.sum(w*x) + b</span><br><span class="line"><span class="keyword">if</span> tmp &gt; <span class="number">0</span>:</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">else</span>: </span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">NAND</span><span class="params">(x)</span>:</span></span><br><span class="line">w = ([<span class="number">-0.5</span>, <span class="number">-0.5</span>])</span><br><span class="line">b = <span class="number">0.7</span></span><br><span class="line">tmp = np.sum(w*x) + b</span><br><span class="line"><span class="keyword">if</span> tmp &gt; <span class="number">0</span>:</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">else</span>: </span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">OR</span><span class="params">(x)</span>:</span></span><br><span class="line">w = ([<span class="number">0.5</span>, <span class="number">0.5</span>])</span><br><span class="line">b = <span class="number">-0.2</span></span><br><span class="line">tmp = np.sum(w*x) + b</span><br><span class="line"><span class="keyword">if</span> tmp &gt; <span class="number">0</span>:</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">else</span>: </span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line"></span><br><span class="line">print(<span class="string">"AND:"</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]:</span><br><span class="line">print(AND(X[i]))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"NAND:"</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]:</span><br><span class="line">print(NAND(X[i]))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"OR:"</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]:</span><br><span class="line">print(OR(X[i]))</span><br></pre></td></tr></table></figure><h1 id="多层感知机"><a href="#多层感知机" class="headerlink" title="多层感知机"></a>多层感知机</h1><blockquote><p>根据公式我们了解感知机模板是线性关系的，只用改变w(权重)和b(偏置)就能实现各种线性关系。但现实中有许多情况是非线性的，比如异或门。<br>异或门在两个输入相同时为1，不同时为0。</p></blockquote><center><img src="/picture/2018-12-14-08.png" width="250"><img src="/picture/2018-12-14-09.png" width="250"></center><blockquote><p>在现实中，我们可以通过与门、与非门和或门可以组合成异或门</p></blockquote><p><img src="/picture/2018-12-14-10.png" alt="门"><br><img src="/picture/2018-12-14-11.png" alt="异或门"></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">XOR</span><span class="params">(x)</span>:</span></span><br><span class="line">s = np.array([NAND(x), OR(x)]) </span><br><span class="line">y = AND(s)</span><br><span class="line"><span class="keyword">return</span> y</span><br><span class="line"></span><br><span class="line">print(<span class="string">"XOR:"</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]:</span><br><span class="line">print(XOR(X[i]))</span><br></pre></td></tr></table></figure><blockquote><p>这样异或门的实现就完成，这种实现称为2层感知机，</p></blockquote><p><img src="/picture/2018-12-14-12.png" alt="感知机可视化2"></p><blockquote><p>叠加了多成的感知机也成为多层感知机。通过叠加的方式可以使感知机的线性关系转换成非线性关系。<br>多层感知机在理论上可以表示计算机。</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;感知机(percetron)算法是由美国学者Frank Roseenblatt在1957年提出，是神经网络(深度学习)起源的算法。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;感知机是什么&quot;&gt;&lt;a href=&quot;#感知机是什么&quot; class=
-      
-    
-    </summary>
-    
-      <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
-    
-    
-      <category term="Python" scheme="http://example.com/tags/Python/"/>
-    
-      <category term="深度学习" scheme="http://example.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="感知机" scheme="http://example.com/tags/%E6%84%9F%E7%9F%A5%E6%9C%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python入门</title>
-    <link href="http://example.com/2018/12/11/Python%E5%85%A5%E9%97%A8/"/>
-    <id>http://example.com/2018/12/11/Python入门/</id>
-    <published>2018-12-11T11:54:53.000Z</published>
-    <updated>2021-03-29T03:01:27.436Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Python是什么"><a href="#Python是什么" class="headerlink" title="Python是什么"></a>Python是什么</h1><blockquote><p> Python是一个简单、易读、易记的编程语言，而且而且是开源的，可以免费地自由使用。Python可以用类似英语的语法编写程序，编译起来也不费力，因此我们可以很轻松的使用Python。</p><p>此外，使用Python不仅可以写出可读性高的代码，还可以写出性能高的代码，在需要处理大规模数据或者要求快速强硬的情况下，使用Python可以稳妥的完成。</p><p> 再者，在科学领域，特别是机器学习、数据科学领域，Python也被大量使用。Python除了高性能之外，凭借NumPy、SciPy等优秀的数值计算、统计分析库，在数据科学领域再有不可动摇的地位。Caffe、TensorFlow、Chainer、Theano等深度学习框架也都提供了Python接口，因此，学习Python对使用深度学习框架大有益处。</p><p>综上，Python是最适合数据科学领域的编程语言，也是初学者学习深度学习最合适的工具。</p></blockquote><h1 id="Python安装"><a href="#Python安装" class="headerlink" title="Python安装"></a>Python安装</h1><blockquote><p>Python有Python2.x和Python3.x两个版本，两个版本都被大量的使用但不相兼容，安装时应当注意。</p><p>为了有效的促进深度学习的实现，需要安装并学习NumPy库和Matplotlib库的使用。NumPy是用于数值计算的库，提供了很多高级的数学算法和便利的数组(矩阵)操作方法。Matplotlib是用来画图的库，能将实验结果可视化。</p><p>Python的安装方法有很多种，这里推荐Anaconda Python3.x发行版。Anaconda是一个侧重于数据分析的发行版，其中集成NumPy，Matplotlib等有助于数据分析的库。</p></blockquote><h1 id="Python解释器"><a href="#Python解释器" class="headerlink" title="Python解释器"></a>Python解释器</h1><blockquote><p>完成Python的安装后，要确认Python的版本。打开cmd，输入Python –version。</p></blockquote><pre><code>python --versionPython 3.7.0</code></pre><blockquote><p>确认安装版本后，启动Python解释器。输入python。</p></blockquote><pre><code>pythonPython 3.7.0 (default, Jun 28 2018, 08:04:48) [MSC v.1912 64 bit (AMD64)] :: Anaconda, Inc. on win32Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.&gt;&gt;&gt;</code></pre><blockquote><p>Python解释器也被称为“对话模式”，用户能够以Python对话的方式进行编程。以下借助对话介绍Python基本语法。</p></blockquote><h2 id="1-算数计算"><a href="#1-算数计算" class="headerlink" title="1. 算数计算"></a>1. 算数计算</h2><blockquote><p>*表示乘法，/ 表示除法，** 表示乘方，注意整数除以整数，在Python2.x中为整数，Python3.x中为浮点数。</p><blockquote><blockquote><p>1 + 2<br>    3<br>1 - 2<br>    -1<br>4 * 5<br>    20<br>7 / 5<br>    1.4<br>3 ** 2<br>    9</p></blockquote></blockquote></blockquote><h2 id="2-数据类型"><a href="#2-数据类型" class="headerlink" title="2. 数据类型"></a>2. 数据类型</h2><blockquote><p>数据类型表示数据的性质，有整数、小数、字符串等类型，type()可以用来查看数据类型。</p><blockquote><blockquote><p>type(10)<br>    <class 'int'><br>type(2.718)<br>    <class 'float'><br>type(“hello”)<br>    <class 'str'></class></class></class></p></blockquote></blockquote></blockquote><h2 id="3-变量"><a href="#3-变量" class="headerlink" title="3. 变量"></a>3. 变量</h2><blockquote><p>Python是属于“动态类型语言”的编程语言，所谓动态，是指变量的类型是根据情况自动决定的。“#”为注释</p><blockquote><blockquote><p>x = 10      # 初始化<br>print(x)    # 输出x<br>    10<br>x = 100     # 赋值<br>print(x)<br>    100<br>y = 3.14<br>x <em> y<br>    314.0<br>type(x </em> y)<br>    <class 'float'></class></p></blockquote></blockquote></blockquote><h2 id="4-列表"><a href="#4-列表" class="headerlink" title="4. 列表"></a>4. 列表</h2><blockquote><p>列表(数组)用于汇总数据，可以通过索引(下标)访问元素。</p><blockquote><blockquote><p>a = [1, 2, 3, 4, 5]  # 生成列表<br>print(a)    # 输出列表内容<br>    [1, 2, 3, 4, 5]<br>len(a)      # 获取列表长度<br>    5<br>a[0]        # 访问第一个元素的值<br>    1<br>a[4]<br>    5<br>a[4] = 99   # 赋值<br>print(a)<br>    [1, 2, 3, 4, 99]<br>列表还提供了切片(slicing)标记法，切片不仅可以访问某个值，还可以访问子列表。</p><p>print(a)<br>    [1, 2, 3, 4, 99]<br>a[0:2]      # 获取索引为0到2（不包括2！）的元素<br>    [1, 2]<br>a[1:]       # 获取从索引为1的元素到最后一个元素<br>    [2, 3, 4, 99]<br>a[:3]       # 获取从第一个元素到索引为3（不包括3！）的元素<br>    [1, 2, 3]<br>a[:-1]      # 获取从第一个元素到最后一个元素的前一个元素之间的元素<br>    [1, 2, 3, 4]<br>a[:-2]      # 获取从第一个元素到最后一个元素的前二个元素之间的元素<br>    [1, 2, 3]</p></blockquote></blockquote></blockquote><h2 id="5-字典"><a href="#5-字典" class="headerlink" title="5. 字典"></a>5. 字典</h2><blockquote><p>列表以索引存储数据，字典以键值对形式存储数据。</p><blockquote><blockquote><p>me = {‘height’:180}  # 生成字典<br>me[‘height’]         # 访问字典<br>    180<br>me[‘weight’] = 70    # 添加新字典<br>print(me)<br>    {‘height’: 180, ‘weight’: 70}</p></blockquote></blockquote></blockquote><h2 id="6-布尔型"><a href="#6-布尔型" class="headerlink" title="6. 布尔型"></a>6. 布尔型</h2><blockquote><p>bool型取True或False中的一个值，针对bool型运算符包括and、or、not。</p><blockquote><blockquote><p>hungry = True     # 饿了<br>sleepy = False    # 困了<br>type(hungry)<br>    <class 'bool'><br>not hungry<br>    False<br>hungry and sleepy # 饿并且困<br>    False<br>hungry or sleepy  # 饿或者困<br>    True</class></p></blockquote></blockquote></blockquote><h2 id="7-if语句"><a href="#7-if语句" class="headerlink" title="7. if语句"></a>7. if语句</h2><blockquote><p>根据不同的条件选择不同的处理分支可使用if/else语句。使用时注意缩进，推荐使用4个空白字符。</p><blockquote><blockquote><p>hungry = True<br>if hungry:<br>    …     print(“I’m hungry”)<br>    …<br>    I’m hungry<br>hungry = False<br>if hungry:<br>    …     print(“I’m hungry”)<br>    … else:<br>    …     print(“I’m not hungry”)<br>    …     print(“I’m sleepy”)<br>    …<br>    I’m not hungry<br>    I’m sleepy</p></blockquote></blockquote></blockquote><h2 id="8-for语句"><a href="#8-for语句" class="headerlink" title="8. for语句"></a>8. for语句</h2><blockquote><p>进行循环处理可使用for语句</p><blockquote><blockquote><p>for i in [1, 2, 3]:<br>    …     print(i)<br>    …<br>    1<br>    2<br>    3</p></blockquote></blockquote></blockquote><h2 id="9-函数"><a href="#9-函数" class="headerlink" title="9. 函数"></a>9. 函数</h2><blockquote><p>将一连串的处理定义成函数(function)。字符串拼接可以用+。</p><blockquote><blockquote><p>def hello():<br>    …     print(“hello world!”)<br>    …<br>hello()<br>    hello world!</p><p>def hello(object):<br>    …     print(“Hello “ + object + “!”)<br>    …<br>hello(“cat”)<br>    Hello cat!</p></blockquote></blockquote></blockquote><h2 id="10-类"><a href="#10-类" class="headerlink" title="10. 类"></a>10. 类</h2><blockquote><p>之前int和str为系统内置的数据类型，我们可以自己定义新的类，并定义方法与属性。</p></blockquote><pre><code>class 类名：def __init__(self, 参数, …): # 构造函数...def 方法名1(self, 参数, …): # 方法1...def 方法名2(self, 参数, …): # 方法2...</code></pre><blockquote><p>__init__为初始化方法，也成为构造方法，此外，Python第一个参数需要以self表明自身。</p></blockquote><pre><code>class Man:    def __init__(self, name):        self.name = name        print(&quot;Initialized!&quot;)    def hello(self):        print(&quot;Hello &quot; + self.name + &quot;!&quot;)    def goodbye(self):        print(&quot;Good-bye &quot; +self.name + &quot;!&quot;)m = Man(&quot;David&quot;)m.hello()m.goodbye()Initialized!Hello David!Good-bye David!</code></pre><h1 id="Python脚本文件"><a href="#Python脚本文件" class="headerlink" title="Python脚本文件"></a>Python脚本文件</h1><blockquote><p>Python解释器能够以对话模式执行程序，非常便于进行简单的实验。但是进行一连串的处理并不方便，这时可将Python程序保存为文件，运行这个文件即可。这就是Python脚本文件。</p><p>打开文本编辑器，新建一个hungry.py文件，包含一条一句语句</p></blockquote><pre><code>print(&quot;I&apos;m hungry&quot;)</code></pre><blockquote><p>打开cmd终端，移动到文件目录下，执行python hungry.py命令</p></blockquote><pre><code>python hungry.pyI&apos;m hungry</code></pre><h1 id="NumPy"><a href="#NumPy" class="headerlink" title="NumPy"></a>NumPy</h1><blockquote><p>NumPy是Python的外部库，需要导入方可使用。</p></blockquote><pre><code>import numpy as np  # 将numpy作为np导入</code></pre><blockquote><p>深度学习中将经常用到NumPy数组类的操作。</p><blockquote><blockquote><p>x = np.array([1.0, 2.0, 3.0])<br>print(x)<br>    [1. 2. 3.]<br>type(x)<br>    <class 'numpy.ndarray'><br>NumPy数组之间可以进行算数运算。</class></p><p>x = np.array([1.0, 2.0, 3.0])<br>y = np.array([2.0, 4.0, 6.0])<br>x + y  # 对应元素加法<br>    array([3., 6., 9.])<br>x - y<br>    array([-1., -2., -3.])<br>x * y  # 对应元素乘法<br>    array([ 2.,  8., 18.])<br>x / y<br>    array([0.5, 0.5, 0.5])<br>NumPy可以实现多维数组，并执行多维数组之间的操作</p><p>A = np.array([[1, 2], [3, 4]])<br>print(A)<br>    [[1 2]<br>     [3 4]]<br>A.shape  # 查看数组形状<br>    (2, 2)<br>A.dtype  # 查看数组数据类型<br>    dtype(‘int32’)<br>B = np.array([[3, 0], [0, 6]])<br>A + B    # 对应元素加法<br>    array([[ 4,  2],<br>           [ 3, 10]])<br>A * B    # 对应元素乘法<br>    array([[ 3,  0],<br>           [ 0, 24]])<br>在NumPy中，形状不同的数组之间也可以进行运算，称之为广播。</p><p>A = np.array([[1, 2], [3, 4]])<br>A <em> 10<br>    array([[10, 20],<br>           [30, 40]])<br>B = np.array([10, 20])<br>A </em> B<br>    array([[10, 40],<br>           [30, 80]])<br><img src="/picture/2018-12-13-02.png" alt="png2"><br><img src="/picture/2018-12-13-01.png" alt="png1"><br>访问NumPy数组的元素需要通过索引、for循环或者标记法。</p><p>X = np.array([[51, 55], [14, 19], [0, 4]])<br>print(X)<br>    [[51 55]<br>     [14 19]<br>     [ 0  4]]<br>X[0]<br>    array([51, 55])<br>X[0][1]<br>    55</p><p>for row in X:<br>    …     print(row)<br>    …<br>    [51 55]<br>    [14 19]<br>    [0 4]</p><p>X &gt; 15<br>    array([[ True,  True],<br>           [False,  True],<br>           [False, False]])<br>X[X&gt;15]<br>    array([51, 55, 19])    </p></blockquote></blockquote></blockquote><h1 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h1><blockquote><p>Matplotlib是Python的外部库，可以轻松绘制图形和实现数据的可视化。</p><p>使用matplotlib的pyplot绘制sin函数曲线</p></blockquote><pre><code>import numpy as np import matplotlib.pyplot as plt # 生成数据x = np.arange(0, 6, 0.1) # 以0.1为单位，生成0到6的数据y = np.sin(x);# 绘制图形plt.plot(x, y);plt.show()</code></pre><p><img src="/picture/2018-12-13-03.png" alt="sin函数"></p><blockquote><p>通过pyplot实现追加cos函数、添加标题、x轴签名等功能。</p></blockquote><pre><code>import numpy as np import matplotlib.pyplot as plt # 生成数据x = np.arange(0, 6, 0.1) # 以0.1为单位，生成0到6的数据y1 = np.sin(x)y2 = np.cos(x)# 绘制图形plt.plot(x, y1, label=&quot;sin&quot;)plt.plot(x, y2, linestyle=&quot;--&quot;, label=&quot;cos&quot;) # 用虚线绘制plt.xlabel(&quot;x&quot;) # x轴标签plt.ylabel(&quot;y&quot;) # y轴标签plt.title(&quot;sin &amp; cos&quot;) # 标题plt.legend()plt.show()</code></pre><p><img src="/picture/2018-12-13-04.png" alt="sin函数和cos函数"></p><blockquote><p>pyplot中还提供了imshow()用于显示图像，image中imread()用于读入图像。</p></blockquote><pre><code>import matplotlib.pyplot as plt from matplotlib.image import imreadimg = imread(&quot;../img/3.jpg&quot;); # 读入图像(设置合适的路径！)plt.imshow(img)plt.show()</code></pre><p><img src="/picture/2018-12-13-05.png" alt="显示图像"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;Python是什么&quot;&gt;&lt;a href=&quot;#Python是什么&quot; class=&quot;headerlink&quot; title=&quot;Python是什么&quot;&gt;&lt;/a&gt;Python是什么&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt; Python是一个简单、易读、易记的编程语言，而且而且是
-      
-    
-    </summary>
-    
-      <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
-    
-    
-      <category term="Python" scheme="http://example.com/tags/Python/"/>
-    
-      <category term="深度学习" scheme="http://example.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
