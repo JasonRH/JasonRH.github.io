@@ -27,7 +27,7 @@
     <!--Title-->
 
 
-<title>Git乱码 | RH</title>
+<title>搭建FTP服务器 | RH</title>
 
 
     <link rel="alternate" href="/atom.xml" title="RH" type="application/atom+xml">
@@ -132,9 +132,9 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="Git乱码">
+        <h1 id="搭建FTP服务器">
             
-	            Git乱码
+	            搭建FTP服务器
             
         </h1>
         <div class="post-meta">
@@ -142,8 +142,8 @@
     
     <span class="categories-meta fa-wrap">
         <i class="fa fa-folder-open-o"></i>
-        <a href="/categories/其他">
-            其他
+        <a href="/categories/后端">
+            后端
         </a>
     </span>
     
@@ -154,8 +154,8 @@
         <span class="tags-meta">
             
                 
-                    <a href="/tags/git" title='git'>
-                        git
+                    <a href="/tags/服务器" title='服务器'>
+                        服务器
                     </a>
                 
             
@@ -167,7 +167,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/08/06</span>
+            <span class="date-meta">2019/12/25</span>
         </span>
         
     
@@ -176,28 +176,19 @@
             
             
             <p class="fa fa-exclamation-triangle warning">
-                本文于<strong>612</strong>天之前发表，文中内容可能已经过时。
+                本文于<strong>470</strong>天之前发表，文中内容可能已经过时。
             </p>
         
     </div>
     
     <div class="post-body post-content">
-        <p>解决git bash 终端显示中文乱码<br>要注意的是，这样设置后，你的git bash终端也要设置成中文和utf-8编码。才能正确显示中文，例如对比如下：</p>
-<p>在git bash的界面中右击空白处，弹出菜单，选择选项-&gt;文本-&gt;本地Locale，设置为zh_CN，而旁边的字符集选框选为UTF-8。</p>
-<p>英文显示则是：<br>Options-&gt;Text-&gt;Locale改为zh_CN，Character set改为UTF-8</p>
-<p>通过修改配置文件来解决中文乱码<br>如果你的git bash终端没有菜单选项显示，还可以通过直接修改配置文件的方式来解决中文乱码问题。</p>
-<p>进入git的安装目录</p>
-<p>编辑etc\gitconfig文件，也有些windows系统是存放在C:\Users\Administrator.gitconfig路径或安装盘符:\Git\mingw64\etc\gitconfig，在文件末尾增加以下内容：<br>[gui]<br>    encoding = utf-8  </p>
-<pre><code># 代码库统一使用utf-8  
-</code></pre><p>[i18n]<br>    commitencoding = utf-8  </p>
-<pre><code># log编码  
-</code></pre><p>[svn]<br>    pathnameencoding = utf-8  </p>
-<pre><code># 支持中文路径  
-</code></pre><p>[core]<br>    quotepath = false </p>
-<pre><code># status引用路径不再是八进制（反过来说就是允许显示中文了）
-</code></pre><hr>
-<p>版权声明：本文为CSDN博主「铁乐与猫」的原创文章，遵循CC 4.0 by-sa版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/u012145252/article/details/81775362" target="_blank" rel="noopener">https://blog.csdn.net/u012145252/article/details/81775362</a></p>
-
+        <p>1.安装<br>[root@Sungeek ~]# yum -y install vsftpd</p>
+<p>1.编辑配置<br>[root@Sungeek ~]# cd /etc/vsftpd<br>[root@Sungeek ~]# vim vsftpd.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//本地用户访问</span><br><span class="line">local_enable=YES</span><br><span class="line">#本地用户访问目录</span><br><span class="line">local_root=/home/FTP/</span><br><span class="line">#只允许在主目录下活动</span><br><span class="line">chroot_local_user=YES</span><br><span class="line"></span><br><span class="line">#匿名用户不能访问</span><br><span class="line">anonymous_enable=NO</span><br><span class="line">#匿名用户访问目录</span><br><span class="line">anon_root=/home/RH/JasonRH.github.io/index.html</span><br></pre></td></tr></table></figure>
+<p>3.<br>添加FTP用户命令：useradd XXX<br>设置FTP用户密码：passwd XXX<br>设置用户目录访问权限：<br>[root@Sungeek vsftpd]# chown -R ftpuser /home/ftp</p>
+<p>3、设置vsftpd服务开机启动<br>[root@Sungeek ~]# systemctl enable vsftpd.service</p>
+<p>//设置开机自启动<br>systemctl enable vsftpd.service<br>//启动ftp服务<br>systemctl start vsftpd.service<br>//暂停ftp服务<br>systemctl status vsftpd.service<br>//查看ftp服务端口<br>netstat -antup | grep ftp<br>重启服务<br>service vsftpd restart</p>
+<h3 id="开启被动模式"><a href="#开启被动模式" class="headerlink" title="开启被动模式"></a>开启被动模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pasv_enable=YES # 是否允许数据传输时使用PASV模式（默认值为 YES）</span><br><span class="line">pasv_min_port=port port_number # PASV 模式下，数据传输使用的端口下界（0 表示任意。默认值为 0）把端口范围设在比较高的一段范围内，比如 50000-60000，将有助于安全性的提高.</span><br><span class="line">pasv_max_port=port_number # PASV 模式下，数据传输使用的端口上界（0 表示任意。默认值为 0）</span><br><span class="line">pasv_promiscuous=NO # 是否屏蔽对 PASV 进行安全检查，默认值为 NO（当有安全隧道时可禁用）</span><br><span class="line">pasv_address # PASV 模式中服务器传回的 ip 地址。默认值为 none，即地址是从呼入的连接套接字中获取。</span><br></pre></td></tr></table></figure>
     </div>
     
         <div class="reward">
@@ -230,15 +221,15 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/2019/09/07/Android Studio 配置签名和编译自命名/" class="pre-post btn btn-default" title='Android Studio 配置签名和编译自命名'>
+        <a href="/2019/12/25/Nginx服务器编译安装/" class="pre-post btn btn-default" title='Nginx服务器搭建'>
             <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">Android Studio 配置签名和编译自命名</span>
+            <span class="hidden-xs">Nginx服务器搭建</span>
         </a>
     
     
-        <a href="/2019/07/11/字符串压缩编码/" class="next-post btn btn-default" title='Android和PHP，字符压缩和编码'>
+        <a href="/2019/12/10/Android Studio新建Module异常/" class="next-post btn btn-default" title='Android Studio新建Module异常'>
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">Android和PHP，字符压缩和编码</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">Android Studio新建Module异常</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>
@@ -281,7 +272,7 @@
     <div class="widget">
         <h3 class="title">文章目录</h3>
         
-            <p>暂无目录</p>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#开启被动模式"><span class="toc-text">开启被动模式</span></a></li></ol>
         
     </div>
 </aside>
