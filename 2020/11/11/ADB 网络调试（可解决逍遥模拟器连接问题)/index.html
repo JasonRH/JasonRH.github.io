@@ -27,7 +27,7 @@
     <!--Title-->
 
 
-<title>Android和PHP，字符压缩和编码 | RH</title>
+<title>ADB 网络调试（可解决逍遥模拟器连接问题） | RH</title>
 
 
     <link rel="alternate" href="/atom.xml" title="RH" type="application/atom+xml">
@@ -132,9 +132,9 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="Android和PHP，字符压缩和编码">
+        <h1 id="ADB 网络调试（可解决逍遥模拟器连接问题）">
             
-	            Android和PHP，字符压缩和编码
+	            ADB 网络调试（可解决逍遥模拟器连接问题）
             
         </h1>
         <div class="post-meta">
@@ -142,8 +142,8 @@
     
     <span class="categories-meta fa-wrap">
         <i class="fa fa-folder-open-o"></i>
-        <a href="/categories/ ">
-             
+        <a href="/categories/其它">
+            其它
         </a>
     </span>
     
@@ -154,8 +154,8 @@
         <span class="tags-meta">
             
                 
-                    <a href="/tags/数据压缩" title='数据压缩'>
-                        数据压缩
+                    <a href="/tags/Android" title='Android'>
+                        Android
                     </a>
                 
             
@@ -167,7 +167,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/07/11</span>
+            <span class="date-meta">2020/11/11</span>
         </span>
         
     
@@ -175,21 +175,10 @@
 
             
             
-            <p class="fa fa-exclamation-triangle warning">
-                本文于<strong>643</strong>天之前发表，文中内容可能已经过时。
-            </p>
-        
     </div>
     
     <div class="post-body post-content">
-        <p>base64_encode(gzdeflate(源字符串))</p>
-<p>Android字符压缩<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] deflater(String data) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//ByteArrayInputStream inputStream = new ByteArrayInputStream(data.getBytes());</span></span><br><span class="line">        <span class="comment">//内存输出流</span></span><br><span class="line">        ByteArrayOutputStream outputStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 要使用no_wrap的Deflater，php才能解压，9是最高的压缩级别，可以设置为1-9的级别，1速度最快</span></span><br><span class="line">        DeflaterOutputStream deflaterOut = <span class="keyword">new</span> DeflaterOutputStream(outputStream, <span class="keyword">new</span> Deflater(<span class="number">9</span>, <span class="keyword">true</span>));</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            deflaterOut.write(data.getBytes());</span><br><span class="line">            <span class="comment">//一定要finish否则长度为0</span></span><br><span class="line">            deflaterOut.finish();</span><br><span class="line">            outputStream.flush();</span><br><span class="line"></span><br><span class="line">            <span class="comment">//String str = outputStream.toString();</span></span><br><span class="line">            <span class="keyword">byte</span>[] byteArray = outputStream.toByteArray();</span><br><span class="line">            <span class="keyword">return</span> byteArray;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">//inputStream.close();</span></span><br><span class="line">                deflaterOut.close();</span><br><span class="line">                outputStream.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>Android Base64编码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">enncode</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">byte</span>[] bytes;</span><br><span class="line">    String encodeString = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        bytes = s.getBytes(<span class="string">"UTF-8"</span>);</span><br><span class="line">        encodeString = Base64.encodeToString(bytes, Base64.NO_WRAP)</span><br><span class="line">        <span class="comment">//java中使用（需要jdk8）</span></span><br><span class="line">        <span class="comment">//Base64.getEncoder().encodeToString("some string".getBytes("utf-8"));</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> encodeString;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>PHP 解码与解压缩</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$Code = <span class="string">'这里填写要解密的编码'</span>; <span class="comment">// base64编码 </span></span><br><span class="line">$Temp = base64_decode($Code); </span><br><span class="line">$postStr = gzinflate($Temp);</span><br></pre></td></tr></table></figure>
-<p>参考网址：<a href="https://blog.csdn.net/hdgcx/article/details/53916837" target="_blank" rel="noopener">https://blog.csdn.net/hdgcx/article/details/53916837</a></p>
-<hr>
-
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.数据线连接手机到电脑（确保手机打开了USB调试功能，逍遥模拟器需要连接成功一次）</span><br><span class="line"></span><br><span class="line">2.AS Terminal中输入命令 adb tcpip 5555 ,执行成功后可以断开数据线（确保命令行中可以调用到adb,可能需要配置环境变量）</span><br><span class="line"></span><br><span class="line">3.AS Terminal中输入命  adb connect 手机ip:5555 ,  例如我的是：adb connect 172.16.55.24:5555</span><br><span class="line"></span><br><span class="line">关机开启时仍然有效（IP未变的前提下）</span><br></pre></td></tr></table></figure>
     </div>
     
         <div class="reward">
@@ -222,15 +211,15 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/2019/08/06/Git乱码/" class="pre-post btn btn-default" title='Git乱码'>
+        <a href="/2021/03/29/博客发布后自定义域名失效/" class="pre-post btn btn-default" title='博客发布后自定义域名失效'>
             <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">Git乱码</span>
+            <span class="hidden-xs">博客发布后自定义域名失效</span>
         </a>
     
     
-        <a href="/2019/07/10/json数据/" class="next-post btn btn-default" title='json数据'>
+        <a href="/2020/08/05/Retrofit   okhttp 下载问题/" class="next-post btn btn-default" title='Retrofit + okhttp 下载问题'>
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">json数据</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">Retrofit + okhttp 下载问题</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>
