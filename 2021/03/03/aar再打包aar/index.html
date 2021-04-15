@@ -27,7 +27,7 @@
     <!--Title-->
 
 
-<title>SVN分支合并 | RH</title>
+<title>Android生成aar包时,引用的其它aar无法打包问题 | RH</title>
 
 
     <link rel="alternate" href="/atom.xml" title="RH" type="application/atom+xml">
@@ -132,9 +132,9 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="SVN分支合并">
+        <h1 id="Android生成aar包时,引用的其它aar无法打包问题">
             
-	            SVN分支合并
+	            Android生成aar包时,引用的其它aar无法打包问题
             
         </h1>
         <div class="post-meta">
@@ -142,8 +142,8 @@
     
     <span class="categories-meta fa-wrap">
         <i class="fa fa-folder-open-o"></i>
-        <a href="/categories/其它">
-            其它
+        <a href="/categories/前端">
+            前端
         </a>
     </span>
     
@@ -154,8 +154,8 @@
         <span class="tags-meta">
             
                 
-                    <a href="/tags/代码" title='代码'>
-                        代码
+                    <a href="/tags/Android" title='Android'>
+                        Android
                     </a>
                 
             
@@ -167,7 +167,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2020/04/15</span>
+            <span class="date-meta">2021/03/03</span>
         </span>
         
     
@@ -175,31 +175,14 @@
 
             
             
-            <p class="fa fa-exclamation-triangle warning">
-                本文于<strong>364</strong>天之前发表，文中内容可能已经过时。
-            </p>
-        
     </div>
     
     <div class="post-body post-content">
-        <p>1.SVN想要使用分支标记功能，需要在创建项目的时候创建三个文件夹</p>
-<ul>
-<li>trunk (主干)</li>
-<li>branches (分支，主要用于新功能的开发)</li>
-<li>tags  (标记，主要用于项目开发中的里程碑，比如开发到一定阶段可以单独一个版本作为发布等，它往往代表一个可以固定的完整的版本)</li>
-</ul>
-<p>注意事项：</p>
-<ul>
-<li>开发时为了避免branch和trunk冲突，需要branch不停地和trunk保持同步，即不停的合并trunk到branch。</li>
-<li>正式合并前一定要先进行测试合并</li>
-<li>合并branch到主干，只能进行一次。</li>
-<li>分支主干合并的来源和Git使用相反，需要理解</li>
-</ul>
-<h4 id="合并trunk到branch"><a href="#合并trunk到branch" class="headerlink" title="合并trunk到branch"></a>合并trunk到branch</h4><p>需要当前处于branch仓库目录中。<br>右键-合并-合并一个版本范围-合并的源选择trunk路径（所有版本，指定范围根据需要）-测试合并-合并</p>
-<pre><code>需要经常合并
-</code></pre><h4 id="合并branch到trunk"><a href="#合并branch到trunk" class="headerlink" title="合并branch到trunk"></a>合并branch到trunk</h4><p>需要当前处于trunk仓库目录。<br>右键-合并-合并一个版本范围-合并的源选择branch路径（所有版本，指定范围根据需要）-测试合并-合并</p>
-<pre><code>此合并只可进行一次
-</code></pre><h3 id="合并分支步骤"><a href="#合并分支步骤" class="headerlink" title="合并分支步骤"></a>合并分支步骤</h3><p>右键-TortoiseSVN-合并-合并一个版本范围-合并的源（输入你想要获取的代码的仓库地址，合并trunk到branch时选择trunk）-所有版本和指定范围根据需要选择-测试合并，有冲突时解决本地冲突，或删文件-合并</p>
+        <p>Add snippet below to your root build script file:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath &apos;com.kezong:fat-aar:1.3.4&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Add snippet below to the build.gradle of your android library:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &apos;com.kezong.fat-aar&apos;</span><br></pre></td></tr></table></figure></p>
+<p>Step 2: Embed dependencies<br>Declare embed for the dependencies you want to merge in build.gradle.</p>
+<p>The usage is similar to implementation, like this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    implementation fileTree(dir: &apos;libs&apos;, include: &apos;*.jar&apos;)</span><br><span class="line">    // java dependency</span><br><span class="line">    embed project(&apos;:lib-java&apos;)</span><br><span class="line">    // aar dependency</span><br><span class="line">    embed project(&apos;:lib-aar&apos;)</span><br><span class="line">    // aar dependency</span><br><span class="line">    embed project(&apos;:lib-aar2&apos;)</span><br><span class="line">    // local full aar dependency, just build in flavor1</span><br><span class="line">    flavor1Embed project(&apos;:lib-aar-local&apos;)</span><br><span class="line">    // local full aar dependency, just build in debug</span><br><span class="line">    debugEmbed (name:&apos;lib-aar-local2&apos;, ext:&apos;aar&apos;)</span><br><span class="line">    // remote jar dependency</span><br><span class="line">    embed &apos;com.google.guava:guava:20.0&apos;</span><br><span class="line">    // remote aar dependency</span><br><span class="line">    embed &apos;com.facebook.fresco:fresco:1.11.0&apos;</span><br><span class="line">    // don&apos;t want to embed in</span><br><span class="line">    implementation(&apos;androidx.appcompat:appcompat:1.2.0&apos;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>地址：<a href="https://github.com/kezong/fat-aar-android" target="_blank" rel="noopener">https://github.com/kezong/fat-aar-android</a></p>
 
     </div>
     
@@ -233,15 +216,15 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/2020/08/05/okhttp 连续两次请求踩坑/" class="pre-post btn btn-default" title='okhttp 连续两次请求踩坑'>
+        <a href="/2021/03/29/博客发布后自定义域名失效/" class="pre-post btn btn-default" title='博客发布后自定义域名失效'>
             <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">okhttp 连续两次请求踩坑</span>
+            <span class="hidden-xs">博客发布后自定义域名失效</span>
         </a>
     
     
-        <a href="/2019/12/25/Nginx服务器编译安装/" class="next-post btn btn-default" title='Nginx服务器搭建'>
+        <a href="/2021/01/18/Android共享文件（FileProvider）/" class="next-post btn btn-default" title='Android共享文件（FileProvider）'>
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">Nginx服务器搭建</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">Android共享文件（FileProvider）</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>
@@ -284,7 +267,7 @@
     <div class="widget">
         <h3 class="title">文章目录</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#合并trunk到branch"><span class="toc-text">合并trunk到branch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#合并branch到trunk"><span class="toc-text">合并branch到trunk</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#合并分支步骤"><span class="toc-text">合并分支步骤</span></a>
+            <p>暂无目录</p>
         
     </div>
 </aside>
