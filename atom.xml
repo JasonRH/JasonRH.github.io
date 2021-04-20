@@ -65,6 +65,134 @@
   </entry>
   
   <entry>
+    <title>Replugin插件化</title>
+    <link href="http://example.com/2021/03/24/Replugin%E6%8F%92%E4%BB%B6%E5%8C%96/"/>
+    <id>http://example.com/2021/03/24/Replugin插件化/</id>
+    <published>2021-03-24T03:37:00.000Z</published>
+    <updated>2021-03-30T10:28:51.949Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-概念及技术分析"><a href="#1-概念及技术分析" class="headerlink" title="1.概念及技术分析"></a>1.概念及技术分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Atlas:功能强大，完善。学习成本，接入成本比较高，适合门户型大型应用。</span><br><span class="line"></span><br><span class="line">Replugin：轻量级可快速使用的插件化框架，适合中小型应用。</span><br><span class="line">优点：API接近原生应用，只有一个hook点，兼容性好，不需要随着Android系统的升级进行后续的兼容。</span><br></pre></td></tr></table></figure><h3 id="2-学习总结"><a href="#2-学习总结" class="headerlink" title="2.学习总结"></a>2.学习总结</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">1.getMergeAssetTask()不到</span><br><span class="line">解决： android-gradle-plugin:3.5.3</span><br><span class="line">       replugin-host-gradle:2.3.3</span><br><span class="line"></span><br><span class="line">2.插件生成步骤:</span><br><span class="line">          1.正确配置repluginPluginConfig&#123;&#125;</span><br><span class="line">          2.Activity的正确继承</span><br><span class="line">          3../gradlew :rh_login:assembleDebug</span><br><span class="line">          4.改名为rh_login.jar</span><br><span class="line">          5.放到宿主工程中正确的位置</span><br><span class="line"></span><br><span class="line">3.宿主跳转插件activity</span><br><span class="line">      Intent intent = RePlugin.createIntent(&quot;rh_login&quot;,&quot;com.example.LoginActivity&quot;);</span><br><span class="line">      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line">      RePlugin.startActivity(this,intent);</span><br><span class="line"></span><br><span class="line">4.插件化开发广播发送和接收：与普通app开发完全一样，唯一要注意的是数据的传递</span><br><span class="line"></span><br><span class="line">5.插件间AIDL接口通讯：</span><br><span class="line">             1.AIDL接口中本身注意的一些事项</span><br><span class="line">             2.AIDL接口实现在对应的插件application中注册</span><br><span class="line">             3.通过RePlugin.fetchBinde获取对象去使用</span><br><span class="line"></span><br><span class="line">6.插件中启动前台services？RePlugin2.3.3版本还不支持,后台service正常，未来会提供</span><br><span class="line"></span><br><span class="line">7.插件间activity跳转不支持转场动画</span><br><span class="line"></span><br><span class="line">8.插件间fragment调用，直接通过RePlugin查找会报ClassCastException</span><br><span class="line">原因：不同classloader加载同一份类字节码，还是不同的class，所以他们的实例无法强转</span><br><span class="line">解决：通过compileOnly欺骗编译器，最总都使用宿主工程引入的类</span><br><span class="line"></span><br><span class="line">9.插件间无法去直接对外暴露View</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;1-概念及技术分析&quot;&gt;&lt;a href=&quot;#1-概念及技术分析&quot; class=&quot;headerlink&quot; title=&quot;1.概念及技术分析&quot;&gt;&lt;/a&gt;1.概念及技术分析&lt;/h3&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;t
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Android" scheme="http://example.com/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Moudle library中添加aar</title>
+    <link href="http://example.com/2021/03/13/Moudle%20library%E4%B8%AD%E6%B7%BB%E5%8A%A0aar/"/>
+    <id>http://example.com/2021/03/13/Moudle library中添加aar/</id>
+    <published>2021-03-13T06:29:00.000Z</published>
+    <updated>2021-04-19T07:59:44.102Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.所在模块的build.gradle文件中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        flatDir &#123;</span><br><span class="line">            dirs &apos;libs&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    implementation(name: &apos;lfilepickerlibrary-release&apos;, ext: &apos;aar&apos;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>2.多个模块引用时，项目的根build.gradle中统一添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        google()</span><br><span class="line">        jcenter()</span><br><span class="line">        maven &#123; url &quot;https://jitpack.io&quot; &#125;</span><br><span class="line">        flatDir &#123;</span><br><span class="line">            dirs &apos;../dr_home/libs&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1.所在模块的build.gradle文件中&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Android" scheme="http://example.com/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ButterKnife在lib中R2方式使用及配置</title>
+    <link href="http://example.com/2021/03/08/ButterKnife%E5%9C%A8lib%E4%B8%ADR2%E6%96%B9%E5%BC%8F%E4%BD%BF%E7%94%A8%E5%8F%8A%E9%85%8D%E7%BD%AE/"/>
+    <id>http://example.com/2021/03/08/ButterKnife在lib中R2方式使用及配置/</id>
+    <published>2021-03-08T11:02:00.000Z</published>
+    <updated>2021-04-19T07:59:44.094Z</updated>
+    
+    <content type="html"><![CDATA[<p>配置ButterKnife</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1.在全局的build.gradle中dependencies配置如下代码</span><br><span class="line"> classpath &apos;com.jakewharton:butterknife-gradle-plugin:*.*.*&apos;</span><br><span class="line"></span><br><span class="line">2.在lib build.gradle头部中添加如下代码：</span><br><span class="line">apply plugin: &apos;com.jakewharton.butterknife&apos;</span><br><span class="line"></span><br><span class="line">3.在lib build.gradle 中添加如下依赖，版本根据自己依赖而定，不是唯一</span><br><span class="line"> compile &apos;com.jakewharton:butterknife:*.*.*&apos;</span><br><span class="line"> annotationProcessor &apos;com.jakewharton:butterknife-compiler:*.*.*&apos;</span><br><span class="line"></span><br><span class="line">4.在lib中是使用ButterKnife ，手动把@bind中的R改成R2，这时候会报红，我们进行rebuild即 可。</span><br></pre></td></tr></table></figure><p>注意点：library中switch-case的使用，在library中是不能使用switch- case 找id的，解决方法就是用if-else代替。</p><p><img src="https://upload-images.jianshu.io/upload_images/6335486-8d2edabe194ba552.png?imageMogr2/auto-orient/strip|imageView2/2/w/378/format/webp" alt="image"></p><p>使用switch-case会报错。<br>使用if-else还有一点注意。如图</p><p><img src="https://upload-images.jianshu.io/upload_images/6335486-6b52caacc75d79ee.png?imageMogr2/auto-orient/strip|imageView2/2/w/425/format/webp" alt="image"></p><p>使用体验：不推荐使用butterknife</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;配置ButterKnife&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Android" scheme="http://example.com/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Android特殊文字，形式</title>
+    <link href="http://example.com/2021/03/08/Android%E7%89%B9%E6%AE%8A%E6%96%87%E5%AD%97%EF%BC%8C%E5%BD%A2%E5%BC%8F/"/>
+    <id>http://example.com/2021/03/08/Android特殊文字，形式/</id>
+    <published>2021-03-08T07:00:00.000Z</published>
+    <updated>2021-04-19T07:59:44.102Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.同一个字符串不同字体、颜色，SpannableString</p><p>2.自适应字体大小和文本宽度<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android:autoSizeMaxTextSize=&quot;80dp&quot;</span><br><span class="line">android:autoSizeMinTextSize=&quot;2dp&quot;</span><br><span class="line">android:autoSizeTextType=&quot;uniform&quot;</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1.同一个字符串不同字体、颜色，SpannableString&lt;/p&gt;
+&lt;p&gt;2.自适应字体大小和文本宽度&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Android" scheme="http://example.com/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>String特殊引用类型</title>
+    <link href="http://example.com/2021/03/05/String%20%E7%89%B9%E6%AE%8A%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B/"/>
+    <id>http://example.com/2021/03/05/String 特殊引用类型/</id>
+    <published>2021-03-05T03:25:00.000Z</published>
+    <updated>2021-04-19T07:59:44.102Z</updated>
+    
+    <content type="html"><![CDATA[<p>String为值类型还是引用类型？</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//值类型</span><br><span class="line">int a = 1;</span><br><span class="line">int b = a;</span><br><span class="line">a = 2;</span><br><span class="line">Console.WriteLine(&quot;a is &#123;0&#125;,b is &#123;1&#125;&quot;, a, b);</span><br><span class="line"></span><br><span class="line">//字符串</span><br><span class="line">string str1 = &quot;ab&quot;;</span><br><span class="line">string str2 = str1;</span><br><span class="line">str1 = &quot;abc&quot;;</span><br><span class="line">Console.WriteLine(&quot;str1 is &#123;0&#125;,str2 is &#123;1&#125;&quot;, str1, str2);</span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">//a is 2,b is 1</span><br><span class="line">//str1 is abc,str2 is ab</span><br><span class="line">str2依然是ab,并没有随str1的改变而改变。</span><br><span class="line"></span><br><span class="line">如果string是引用类型，按理Str1和Str指针都指向同一内存地址，如果Str的内容发生改变，Str1应该也会相应变化。</span><br><span class="line"></span><br><span class="line">此例子，看着string更像是值类型。</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">引用类型例子：</span><br><span class="line"></span><br><span class="line">String aa = new String(&quot;AA&quot;);这样定义，aa就是一个引用</span><br><span class="line">StringBuilder strb2 = new StringBuilder(&quot;BB&quot;);</span><br></pre></td></tr></table></figure><p>结论：</p><p>String是引用类型，只是编译器对其做了特殊处理。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;String为值类型还是引用类型？&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line
+      
+    
+    </summary>
+    
+      <category term="前端" scheme="http://example.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="Java" scheme="http://example.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Android生成aar包时,引用的其它aar无法打包问题</title>
     <link href="http://example.com/2021/03/03/aar%E5%86%8D%E6%89%93%E5%8C%85aar/"/>
     <id>http://example.com/2021/03/03/aar再打包aar/</id>
@@ -398,133 +526,6 @@
     
     
       <category term="json" scheme="http://example.com/tags/json/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>FFmpeg视频工具</title>
-    <link href="http://example.com/2019/06/10/FFmpeg/"/>
-    <id>http://example.com/2019/06/10/FFmpeg/</id>
-    <published>2019-06-10T05:00:00.000Z</published>
-    <updated>2021-03-29T03:01:27.423Z</updated>
-    
-    <content type="html"><![CDATA[<p>FFmpeg是非常强大的多媒体视频处理工具。<br>功能包括视频采集功能、视频格式转换、视频抓图、给视频加水印等。<br>下载地址：<a href="https://ffmpeg.org/" target="_blank" rel="noopener">https://ffmpeg.org/</a></p><h4 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h4><p>1080P转720P</p><pre><code>./ffmpeg -i A.mp4 -c copy -c:v libx264 -vf scale=-2:720 B.mp4</code></pre><p>mp3转换pcm</p><pre><code>./ffmpeg -y -i test.mp3 -acodec pcm_s16le -f s16le -ac 1 -ar 16000 16k.pcm</code></pre><table><thead><tr><th>参数</th><th>说明</th></tr></thead><tbody><tr><td>-y</td><td>允许覆盖</td></tr><tr><td>-i test.mp3</td><td>源文件</td></tr><tr><td>-acodec pcm_s16le</td><td>编码器</td></tr><tr><td>-f s16le</td><td>强制文件格式</td></tr><tr><td>-ac 2</td><td>双声道</td></tr><tr><td>-ar 16000</td><td>采样率</td></tr></tbody></table><p>pcm转mp3    </p><pre><code>ffmpeg -y -f s16be -ac 2 -ar 16000 -acodec pcm_s16le -i 16k.pcm new_mp3.mp3</code></pre><p>pcm播放</p><pre><code>./ffplay -ar 16000 -channels 1 -f s16le -i xxx.pcm</code></pre><p>MP3截取</p><pre><code>ffmpeg -y -i test.mp3 -ss 00:00:00 -t 00:00:03 -acodec copy output_mp3.mp3    </code></pre><table><thead><tr><th>参数</th><th>说明</th></tr></thead><tbody><tr><td>-y</td><td>允许覆盖</td></tr><tr><td>-i test.mp3</td><td>源文件</td></tr><tr><td>-ss 00:00:00</td><td>开始时间</td></tr><tr><td>-t 00:00:03</td><td>结束时间</td></tr><tr><td>-acodec copy</td><td>编码格式复制    </td></tr></tbody></table>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;FFmpeg是非常强大的多媒体视频处理工具。&lt;br&gt;功能包括视频采集功能、视频格式转换、视频抓图、给视频加水印等。&lt;br&gt;下载地址：&lt;a href=&quot;https://ffmpeg.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://ff
-      
-    
-    </summary>
-    
-    
-      <category term="视频" scheme="http://example.com/tags/%E8%A7%86%E9%A2%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux scp命令</title>
-    <link href="http://example.com/2019/05/22/Linux%20scp%E5%91%BD%E4%BB%A4/"/>
-    <id>http://example.com/2019/05/22/Linux scp命令/</id>
-    <published>2019-05-22T05:00:00.000Z</published>
-    <updated>2021-03-29T03:01:27.428Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Linux-scp命令"><a href="#Linux-scp命令" class="headerlink" title="Linux scp命令"></a>Linux scp命令</h2><p>Linux scp命令用于Linux之间复制文件和目录。</p><p>scp是 secure copy的缩写, scp是linux系统下基于ssh登陆进行安全的远程文件拷贝命令。</p><pre><code>scp [-1246BCpqrv] [-c cipher] [-F ssh_config] [-i identity_file][-l limit] [-o ssh_option] [-P port] [-S program][[user@]host1:]file1 [...] [[user@]host2:]file2</code></pre><p>简易写法:</p><pre><code>scp [可选参数] file_source file_target </code></pre><p>参数说明：</p><pre><code>-1： 强制scp命令使用协议ssh1-2： 强制scp命令使用协议ssh2-4： 强制scp命令只使用IPv4寻址-6： 强制scp命令只使用IPv6寻址-B： 使用批处理模式（传输过程中不询问传输口令或短语）-C： 允许压缩。（将-C标志传递给ssh，从而打开压缩功能）-p：保留原文件的修改时间，访问时间和访问权限。-q： 不显示传输进度条。-r： 递归复制整个目录。-v：详细方式显示输出。scp和ssh(1)会显示出整个过程的调试信息。这些信息用于调试连接，验证和配置问题。-c cipher： 以cipher将数据传输进行加密，这个选项将直接传递给ssh。-F ssh_config： 指定一个替代的ssh配置文件，此参数直接传递给ssh。-i identity_file： 从指定文件中读取传输时使用的密钥文件，此参数直接传递给ssh。-l limit： 限定用户所能使用的带宽，以Kbit/s为单位。-o ssh_option： 如果习惯于使用ssh_config(5)中的参数传递方式，-P port：注意是大写的P, port是指定数据传输用到的端口号-S program： 指定加密传输时所使用的程序。此程序必须能够理解ssh(1)的选项。    </code></pre><p>1.将文件从中间服务器拷贝到远程Android设备</p><pre><code>scp local_file remote_username@remote_ip:remote_folder或scp local_file remote_ip:remote_folder例：scp -i /root/id_rsa -P 60048 /root/RH/v2.0.75.apk root@127.0.0.1:/sdcard/Box/apk/  </code></pre><p>2.将文件从远程Android设备拷贝到中间Linux服务器（调换后面两个参数位置）</p><pre><code>scp -i /root/id_rsa -P 2313 root@127.0.0.1:/data/data/com.example.test/databases/test.db /root/RH/</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;Linux-scp命令&quot;&gt;&lt;a href=&quot;#Linux-scp命令&quot; class=&quot;headerlink&quot; title=&quot;Linux scp命令&quot;&gt;&lt;/a&gt;Linux scp命令&lt;/h2&gt;&lt;p&gt;Linux scp命令用于Linux之间复制文件和目录。&lt;/p&gt;
-&lt;
-      
-    
-    </summary>
-    
-    
-      <category term="指令" scheme="http://example.com/tags/%E6%8C%87%E4%BB%A4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Android,Linux常用指令</title>
-    <link href="http://example.com/2019/05/20/%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/"/>
-    <id>http://example.com/2019/05/20/常用指令/</id>
-    <published>2019-05-20T06:20:00.000Z</published>
-    <updated>2021-03-29T03:01:27.461Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h4><p>adb 查看文件详细信息： </p><pre><code>ls –l</code></pre><p>pull文件</p><pre><code>adb pull sdcard/Box/log/log_2019-04-24.log 2019-01-24.log</code></pre><p>push文件：</p><pre><code>adb push C:/Users/EDZ/Desktop/test.db data/data/com.example.test/databases/</code></pre><p>查看文件：</p><pre><code>cat file</code></pre><p>修改文件别名</p><pre><code>adb shell ln -s [源文件] [目标文件]</code></pre><p>删除system/avi.apk:</p><pre><code>adb shell rm /system/avi.apk</code></pre><p>删除文件夹及其下面所有文件：</p><pre><code>adb shell rm -r &lt;folder&gt;</code></pre><p>强制删除当前目录下的所有文件及目录</p><pre><code>adb shell rm -rf *</code></pre><p>设置文件权限：</p><pre><code>adb shell chmod 777 /system/fonts/DroidSansFallback.ttf</code></pre><p>新建文件夹：</p><pre><code>adb shell mkdir path/foldelname</code></pre><p>新建文件夹 上层目录不存在则创建上层目录(path)</p><pre><code>adb shell mkdir -p path/foldelname</code></pre><p>查看文件内容：</p><pre><code>adb shell cat &lt;file&gt;</code></pre><p>创建了一个空文本文件</p><pre><code>touch text.txt</code></pre><p>查看wifi密码：</p><pre><code>adb shell cat /data/misc/wifi/*.conf</code></pre><h4 id="vim编辑文件"><a href="#vim编辑文件" class="headerlink" title="vim编辑文件"></a>vim编辑文件</h4><p>创建并打开编辑一个文件（android系统下需要安装busybox才能使用vi编辑）</p><pre><code>busybox-armv7l vi 1.txt </code></pre><p>退出编辑模式 </p><pre><code>esc   </code></pre><p>保存并退出</p><pre><code>:wq</code></pre><p>不保存强制退出</p><pre><code>:q!</code></pre><hr><h4 id="APK操作"><a href="#APK操作" class="headerlink" title="APK操作"></a>APK操作</h4><p>查看log：</p><pre><code>adb logcat</code></pre><p>安装apk</p><pre><code>adb install C:/Users/EDZ/Desktop/Android_sign.apk</code></pre><p>卸载apk</p><pre><code>adb uninstall com.example.test</code></pre><p>启动应用：</p><pre><code>adb shell am start &lt;package_name&gt;/&lt;activity_class_name&gt;</code></pre><p>覆盖安装</p><pre><code>adb install -r xxx.apk</code></pre><p>查看apk详细信息</p><pre><code>adb shell dumpsys package com.example.test</code></pre><hr><h4 id="pm指令"><a href="#pm指令" class="headerlink" title="pm指令"></a>pm指令</h4><p>安装</p><pre><code>pm install sdcard/Box/apk/v2.0.75.apk</code></pre><p>卸载</p><pre><code>pm uninstall com.example.test</code></pre><p>静默安装</p><pre><code>pm install -r /xx/xxx.apk</code></pre><p>查看已有程序包名</p><pre><code>adb shell pm list packages</code></pre><p>清除APK数据</p><pre><code>adb shell pm clear &lt;PACKAGE&gt;</code></pre><hr><h4 id="am指令"><a href="#am指令" class="headerlink" title="am指令"></a>am指令</h4><pre><code>am start com.example.test/com.example.test.activity.LaunchActivityam force-stop com.example.testam start com.example.test/com.example.test.activity.LaunchActivityam force-stop com.example.testam start com.example.test/com.example.test.activity.LaunchActivity</code></pre><h4 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h4><p>可读写权限</p><pre><code>mount -o remount,rw /system</code></pre><p>只读权限    </p><pre><code>mount -o remount,ro /system</code></pre><h4 id="python"><a href="#python" class="headerlink" title="python"></a>python</h4><pre><code class="python"><span class="keyword">import</span> os<span class="keyword">import</span> timeos.system(<span class="string">'adb root'</span>);time.sleep(<span class="number">2</span>);<span class="comment">#将 '/system' 部分置于可写入的模式</span>os.system(<span class="string">'adb remount'</span>);</code></pre><p>//查看系统信息<br>adb shell cat /system/build.prop</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h4 id=&quot;文件操作&quot;&gt;&lt;a href=&quot;#文件操作&quot; class=&quot;headerlink&quot; title=&quot;文件操作&quot;&gt;&lt;/a&gt;文件操作&lt;/h4&gt;&lt;p&gt;adb 查看文件详细信息： &lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;ls –l
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;pull文件&lt;/p&gt;
-      
-    
-    </summary>
-    
-    
-      <category term="指令" scheme="http://example.com/tags/%E6%8C%87%E4%BB%A4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git</title>
-    <link href="http://example.com/2019/05/13/Git/"/>
-    <id>http://example.com/2019/05/13/Git/</id>
-    <published>2019-05-13T08:00:00.000Z</published>
-    <updated>2021-03-29T03:01:27.424Z</updated>
-    
-    <content type="html"><![CDATA[<p>打 tag </p><pre><code>git tag v2.0.88git push origin v2.0.88</code></pre><p>创建分支</p><pre><code>git branch gravity_test</code></pre><p>查看分支</p><pre><code>git branch</code></pre><p>切换分支</p><pre><code>git checkout gravity_test</code></pre><p>提交代码</p><pre><code>1.git add .(git add -A)2.git commit -m &quot;&quot;3.git push origin gravity_test</code></pre><p>git commit 编写提交信息</p><p>1.<code>Insert</code>+信息</p><p>2.<code>Esc</code> : wq <code>Enter</code></p><p>暂存</p><pre><code>#储藏git stashgit stash list#释放最后一次stash的数据并将其从list中移除git stash pop#将你指定版本号为stash@{1}的工作取出来git stash pop stash@{1} </code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;打 tag &lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git tag v2.0.88
-git push origin v2.0.88
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;创建分支&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;git branch gravity_test
-&lt;/code&gt;&lt;/pre&gt;&lt;p
-      
-    
-    </summary>
-    
-    
-      <category term="git" scheme="http://example.com/tags/git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Windows路由删除后出现的问题</title>
-    <link href="http://example.com/2019/04/24/Windows%E8%B7%AF%E7%94%B1%E5%88%A0%E9%99%A4%E5%90%8E%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
-    <id>http://example.com/2019/04/24/Windows路由删除后出现的问题/</id>
-    <published>2019-04-24T03:08:30.000Z</published>
-    <updated>2021-03-29T03:21:39.799Z</updated>
-    
-    <content type="html"><![CDATA[<p>错误:Protocol family unavailable和connect:network is unreachable</p><p>原由：在Windows中 进行路由重置操作 route -f</p><p>现象：<br>1.Android Studio 项目无法编译，报错 ERROR: Protocol family unavailable<br>2.路由删除后重新连上网，Shadowsocks无法翻墙，国内网络可以上</p><p>解决：<br>1.参照网上经验 关防火墙，然后重启as，没用。<br>2.在环境变量添加：_JAVA_OPTIONS  值为：-Djava.net.preferIPv4Stack=true<br>此时Android Studio出现新的错误connect: network is unreachable ,还是无法翻墙<br>3.以管理员身份运行 命令提示符，键入netsh winsock reset，再重启电脑 。正解，问题解决！</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;错误:Protocol family unavailable和connect:network is unreachable&lt;/p&gt;
-&lt;p&gt;原由：在Windows中 进行路由重置操作 route -f&lt;/p&gt;
-&lt;p&gt;现象：&lt;br&gt;1.Android Studio 项目无法编译
-      
-    
-    </summary>
-    
-      <category term="其它" scheme="http://example.com/categories/%E5%85%B6%E5%AE%83/"/>
-    
-    
-      <category term="Android" scheme="http://example.com/tags/Android/"/>
     
   </entry>
   
