@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="RH">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://example.com">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>NFC触碰连接蓝牙 | RH</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="RH" type="application/atom+xml">
+
+
+    <link rel="icon" href="/img/avatar.jpg">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='RH'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 记录一下学习、工作笔记 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://example.com">RH</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/前端/"><i class="fa "></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/其它/"><i class="fa "></i>其它</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="NFC触碰连接蓝牙">
+            
+	            NFC触碰连接蓝牙
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/前端">
+            前端
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/Android" title='Android'>
+                        Android
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2021/03/25</span>
+        </span>
+        
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>工具类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br></pre></td><td class="code"><pre><span class="line">package com.southgnss.survx.device.nfc;</span><br><span class="line"></span><br><span class="line">import android.app.Activity;</span><br><span class="line">import android.app.PendingIntent;</span><br><span class="line">import android.content.Intent;</span><br><span class="line">import android.content.IntentFilter;</span><br><span class="line">import android.nfc.NdefMessage;</span><br><span class="line">import android.nfc.NdefRecord;</span><br><span class="line">import android.nfc.NfcAdapter;</span><br><span class="line">import android.nfc.tech.MifareClassic;</span><br><span class="line">import android.nfc.tech.NfcA;</span><br><span class="line">import android.os.Parcelable;</span><br><span class="line">import android.os.SystemClock;</span><br><span class="line">import android.text.TextUtils;</span><br><span class="line">import android.util.Log;</span><br><span class="line"></span><br><span class="line">import com.southgnss.library.device.ConnectListener;</span><br><span class="line">import com.southgnss.library.device.DeviceParManage;</span><br><span class="line">import com.southgnss.library.device.DeviceType;</span><br><span class="line">import com.southgnss.library.device.TopDataIOFactory;</span><br><span class="line">import com.southgnss.library.device.TopDeviceManage;</span><br><span class="line">import com.southgnss.library.device.message.FunctionEnablePar;</span><br><span class="line">import com.southgnss.library.util.ProgramConfigWrapper;</span><br><span class="line">import com.southgnss.survx.device.setting.StringManage;</span><br><span class="line"></span><br><span class="line">public class NfcUtils &#123;</span><br><span class="line">    private NfcAdapter mNfcAdapter;</span><br><span class="line">    private IntentFilter[] mIntentFilter = null;</span><br><span class="line">    private PendingIntent mPendingIntent = null;</span><br><span class="line">    private String[][] mTechList = null;</span><br><span class="line">    private long lSetLocationSysTime = 0L;</span><br><span class="line"></span><br><span class="line">    private static NfcUtils nfcUtils;</span><br><span class="line"></span><br><span class="line">    public static NfcUtils getInstance(Activity activity) &#123;</span><br><span class="line">        if (nfcUtils == null) &#123;</span><br><span class="line">            synchronized (NfcUtils.class) &#123;</span><br><span class="line">                if (nfcUtils == null) &#123;</span><br><span class="line">                    nfcUtils = new NfcUtils(activity);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return nfcUtils;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public NfcUtils(Activity activity) &#123;</span><br><span class="line">        NfcInit(activity);</span><br><span class="line">        mNfcAdapter = NfcAdapter.getDefaultAdapter(activity);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 首先，检查NFC是否打开</span><br><span class="line">     */</span><br><span class="line">    public boolean isEnabled() &#123;</span><br><span class="line">        return mNfcAdapter != null &amp;&amp; mNfcAdapter.isEnabled();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 初始化nfc设置</span><br><span class="line">     */</span><br><span class="line">    private void NfcInit(Activity activity) &#123;</span><br><span class="line">        Intent intent = new Intent(activity, activity.getClass());</span><br><span class="line">        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);</span><br><span class="line">        mPendingIntent = PendingIntent.getActivity(activity, 0, intent, 0);</span><br><span class="line">        //做一个IntentFilter过滤你想要的action 这里过滤的是ndef</span><br><span class="line">        IntentFilter filter = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);</span><br><span class="line">        try &#123;</span><br><span class="line">            filter.addDataType(&quot;*/*&quot;);</span><br><span class="line">        &#125; catch (IntentFilter.MalformedMimeTypeException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        mTechList = new String[][]&#123;&#123;MifareClassic.class.getName()&#125;, &#123;NfcA.class.getName()&#125;&#125;;</span><br><span class="line">        //生成intentFilter</span><br><span class="line">        mIntentFilter = new IntentFilter[]&#123;filter&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 开启前台调度系统</span><br><span class="line">     */</span><br><span class="line">    public void enableForegroundDispatch(Activity activity) &#123;</span><br><span class="line">        if (mNfcAdapter != null &amp;&amp; mIntentFilter != null) &#123;</span><br><span class="line">            mNfcAdapter.enableForegroundDispatch(activity, mPendingIntent, mIntentFilter, mTechList);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 关闭前台调度系统</span><br><span class="line">     */</span><br><span class="line">    public void disableForegroundDispatch(Activity activity) &#123;</span><br><span class="line">        if (mNfcAdapter != null &amp;&amp; mIntentFilter != null) &#123;</span><br><span class="line">            mNfcAdapter.disableForegroundDispatch(activity);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 读取到的NFC数据</span><br><span class="line">     */</span><br><span class="line">    public void resolveIntent(Intent intent) &#123;</span><br><span class="line">        if (SystemClock.elapsedRealtime() - lSetLocationSysTime &lt; 8000L) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        lSetLocationSysTime = SystemClock.elapsedRealtime();</span><br><span class="line">        String action = intent.getAction();</span><br><span class="line">        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action) || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action) || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) &#123;</span><br><span class="line">            Parcelable[] rawArray = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);</span><br><span class="line">            NdefMessage[] msgs;</span><br><span class="line">            //处理扫描蓝牙地址的</span><br><span class="line">            if (rawArray != null) &#123;</span><br><span class="line">                msgs = new NdefMessage[rawArray.length];</span><br><span class="line">                for (int i = 0; i &lt; rawArray.length; i++) &#123;</span><br><span class="line">                    msgs[i] = (NdefMessage) rawArray[i];</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                for (final NdefRecord record : msgs[0].getRecords()) &#123;</span><br><span class="line">                    byte[] src = record.getPayload();</span><br><span class="line">                    if (record.getPayload().length &lt; 36) &#123;</span><br><span class="line">                        return;</span><br><span class="line">                    &#125;</span><br><span class="line">                    StringBuilder macBuilder = new StringBuilder();</span><br><span class="line">                    //解析蓝牙mac地址，倒过来放的</span><br><span class="line">                    char[] buffer = new char[2];</span><br><span class="line">                    for (int i = 7; i &gt; 1; i--) &#123;</span><br><span class="line">                        buffer[0] = Character.toUpperCase(Character.forDigit((src[i] &gt;&gt;&gt; 4) &amp; 0x0F, 16));</span><br><span class="line">                        buffer[1] = Character.toUpperCase(Character.forDigit(src[i] &amp; 0x0F, 16));</span><br><span class="line">                        macBuilder.append(buffer);</span><br><span class="line">                        if (i == 2) &#123;</span><br><span class="line">                            break;</span><br><span class="line">                        &#125;</span><br><span class="line">                        macBuilder.append(&quot;:&quot;);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    StringBuilder boothBuilder = new StringBuilder();</span><br><span class="line">                    for (int i = 21; i &lt; src.length; i++) &#123;</span><br><span class="line">                        buffer[0] = Character.toUpperCase(Character.forDigit((src[i] &gt;&gt;&gt; 4) &amp; 0x0F, 16));</span><br><span class="line">                        buffer[1] = Character.toUpperCase(Character.forDigit(src[i] &amp; 0x0F, 16));</span><br><span class="line">                        boothBuilder.append(buffer);</span><br><span class="line">                    &#125;</span><br><span class="line">                    String strDeviceName = StringManage.decode(boothBuilder.toString());</span><br><span class="line">                    String strDevice = strDeviceName + &quot;|&quot; + macBuilder.toString();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">   /**</span><br><span class="line">     * 程序退出，释放</span><br><span class="line">     */</span><br><span class="line">    public void nfcRelease() &#123;</span><br><span class="line">        if (mNfcAdapter != null) &#123;</span><br><span class="line">            mNfcAdapter = null;</span><br><span class="line">        &#125;</span><br><span class="line">        if (nfcUtils != null) &#123;</span><br><span class="line">            nfcUtils = null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public NfcAdapter getNfcAdapter() &#123;</span><br><span class="line">        return mNfcAdapter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public IntentFilter[] getIntentFilter() &#123;</span><br><span class="line">        return mIntentFilter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public PendingIntent getPendingIntent() &#123;</span><br><span class="line">        return mPendingIntent;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String[][] getTechList() &#123;</span><br><span class="line">        return mTechList;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends BaseActivity&#123;</span><br><span class="line">private NfcUtils nfcUtils;</span><br><span class="line"></span><br><span class="line">     @Override</span><br><span class="line">    public void initData() &#123;</span><br><span class="line">        //nfc初始化设置</span><br><span class="line">        nfcUtils = NfcUtils.getInstance(this);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">     @Override</span><br><span class="line">    protected void onNewIntent(Intent intent) &#123;</span><br><span class="line">        super.onNewIntent(intent);</span><br><span class="line">        //当该Activity接收到NFC标签时，运行该方法</span><br><span class="line">        //调用工具方法，读取到的NFC数据</span><br><span class="line">        if (intent.getAction() != null &amp;&amp; intent.getAction().equalsIgnoreCase(&quot;android.nfc.action.NDEF_DISCOVERED&quot;)) &#123;</span><br><span class="line">            setIntent(intent);</span><br><span class="line">            if (nfcUtils != null) &#123;</span><br><span class="line">                nfcUtils.resolveIntent(intent);</span><br><span class="line">            &#125;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    protected void onResume() &#123;</span><br><span class="line">        super.onResume();</span><br><span class="line">        if (nfcUtils != null &amp;&amp; nfcUtils.isEnabled()) &#123;</span><br><span class="line">            nfcUtils.enableForegroundDispatch(this);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    @Override</span><br><span class="line">    protected void onPause() &#123;</span><br><span class="line">        super.onPause();</span><br><span class="line">        if (nfcUtils != null &amp;&amp; nfcUtils.isEnabled()) &#123;</span><br><span class="line">            nfcUtils.disableForegroundDispatch(this);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    protected void onDestroy() &#123;</span><br><span class="line">        if (nfcUtils != null ) &#123;</span><br><span class="line">            nfcUtils.nfcRelease();</span><br><span class="line">        &#125;</span><br><span class="line">        super.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/ali.png"><b>支付宝</b>
+                </span>
+            
+            
+        </div>
+    </div>
+    <p class="reward-tip">扫上面二维码，领支付宝红包</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">RH</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2021/03/29/博客发布后自定义域名失效/" class="pre-post btn btn-default" title='博客发布后自定义域名失效'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">博客发布后自定义域名失效</span>
+        </a>
+    
+    
+        <a href="/2021/03/25/synchronized与线程中断问题/" class="next-post btn btn-default" title='synchronized与线程中断问题'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">synchronized与线程中断问题</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+    
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'tpqT2XsfMpVPjR2x4Ou2Hfgk-gzGzoHsz',
+            appKey: 'zVoewkC4BTgyKYFCxAG8V2tO',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-CN'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <p>暂无目录</p>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
