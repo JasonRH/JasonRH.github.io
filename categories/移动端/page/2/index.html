@@ -27,7 +27,7 @@
     <!--Title-->
 
 
-<title>分类: Java | RH</title>
+<title>分类: 移动端 | RH</title>
 
 
     <link rel="alternate" href="/atom.xml" title="RH" type="application/atom+xml">
@@ -104,6 +104,10 @@
                             </li>
                         
                             <li role="presentation" class="text-center">
+                                <a href="/categories/移动端/"><i class="fa "></i>移动端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
                                 <a href="/categories/前端/"><i class="fa "></i>前端</a>
                             </li>
                         
@@ -131,7 +135,7 @@
                 <main class="col-md-8 main-content ">
                     <h3>
     
-        Java
+        移动端
     
 </h3>
 
@@ -140,26 +144,238 @@
         <div class="post-content">
             <div class="post-head home-post-head">
                 <h1 class="post-title">
-                    <a href="/2019/04/08/Java数据转换/">Java数据转换</a>
+                    <a href="/2021/01/18/Android共享文件（FileProvider）/">Android共享文件（FileProvider）</a>
                 </h1>
                 <div class="post-meta">  &bull;
                     <time class="post-date" datetime="" title="">
-                        2019年04月08日
+                        2021年01月18日
                     </time>
                 </div>
             </div>
             <p class="brief">
                 
-                    基本Java类型转换Java类型转换分为自动转换和强制转换两种。
-基本类型间的自动类型转换需要满足以下条件:
-(1)转换双方的类型必须兼容，例如int和long类型就是兼容的，而int和boolean就是不兼容的。
-(2)只能是”窄类...
+                    说明：android 7.0以后需要使用FileProvider配置访问路径
+1.添加 FileProvider 到 AndroidManifest.xml12345678910111213    &amp;lt;!-- FileProvid...
+                
+            </p>
+        </div>
+    </article>
+ 
+    <article class="post">
+        
+        <div class="post-content">
+            <div class="post-head home-post-head">
+                <h1 class="post-title">
+                    <a href="/2020/08/05/Retrofit   okhttp 下载问题/">Retrofit + okhttp 下载问题</a>
+                </h1>
+                <div class="post-meta">  &bull;
+                    <time class="post-date" datetime="" title="">
+                        2020年08月05日
+                    </time>
+                </div>
+            </div>
+            <p class="brief">
+                
+                    问题 使用retrofit，添加okhttp拦截器，平常的json返回正常，但下载文件时，文件不准确。
+解决 原先：return response.newBuilder()                    .body(okhtt...
+                
+            </p>
+        </div>
+    </article>
+ 
+    <article class="post">
+        
+        <div class="post-content">
+            <div class="post-head home-post-head">
+                <h1 class="post-title">
+                    <a href="/2020/08/05/okhttp 连续两次请求踩坑/">okhttp 连续两次请求踩坑</a>
+                </h1>
+                <div class="post-meta">  &bull;
+                    <time class="post-date" datetime="" title="">
+                        2020年08月05日
+                    </time>
+                </div>
+            </div>
+            <p class="brief">
+                
+                    1.现象
+APP只请求了一次，服务器显示有两次请求，回复了两次。结果网络拦截器中显示的服务器返回的response.body()是正确的，而retrofit2实际回调的response.body()是另一个返回结果。
+2.原因okht...
+                
+            </p>
+        </div>
+    </article>
+ 
+    <article class="post">
+        
+        <div class="post-content">
+            <div class="post-head home-post-head">
+                <h1 class="post-title">
+                    <a href="/2019/12/10/Android Studio新建Module异常/">Android Studio新建Module异常</a>
+                </h1>
+                <div class="post-meta">  &bull;
+                    <time class="post-date" datetime="" title="">
+                        2019年12月10日
+                    </time>
+                </div>
+            </div>
+            <p class="brief">
+                
+                    问题：新建module后，上面显示 Gradle sync 同步失败，build窗口一直卡在同步中，卸载重装 更换sdk，删除.gradle和 android配置文件夹都没有用
+解决办法：由于开启了渐变同步导致，到设置界面：   Fi...
+                
+            </p>
+        </div>
+    </article>
+ 
+    <article class="post">
+        
+        <div class="post-content">
+            <div class="post-head home-post-head">
+                <h1 class="post-title">
+                    <a href="/2019/09/07/Android Studio 配置签名和编译自命名/">Android Studio 配置签名和编译自命名</a>
+                </h1>
+                <div class="post-meta">  &bull;
+                    <time class="post-date" datetime="" title="">
+                        2019年09月07日
+                    </time>
+                </div>
+            </div>
+            <p class="brief">
+                
+                    123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354android &amp;#123;def ...
+                
+            </p>
+        </div>
+    </article>
+ 
+    <article class="post">
+        
+        <div class="post-content">
+            <div class="post-head home-post-head">
+                <h1 class="post-title">
+                    <a href="/2019/07/11/字符串压缩编码/">Android和PHP，字符压缩和编码</a>
+                </h1>
+                <div class="post-meta">  &bull;
+                    <time class="post-date" datetime="" title="">
+                        2019年07月11日
+                    </time>
+                </div>
+            </div>
+            <p class="brief">
+                
+                    base64_encode(gzdeflate(源字符串))
+Android字符压缩12345678910111213141516171819202122232425262728293031public static byte[] d...
+                
+            </p>
+        </div>
+    </article>
+ 
+    <article class="post">
+        
+        <div class="post-content">
+            <div class="post-head home-post-head">
+                <h1 class="post-title">
+                    <a href="/2019/07/10/json数据/">json数据</a>
+                </h1>
+                <div class="post-meta">  &bull;
+                    <time class="post-date" datetime="" title="">
+                        2019年07月10日
+                    </time>
+                </div>
+            </div>
+            <p class="brief">
+                
+                    1.出现转译字符    
+String s = new Gson().toJson(encodedText);出现转译字符
+
+原因：Gson会把html标签，转换为Unicode转义字符。
+
+正确的使用方法是:Gson gson = ...
+                
+            </p>
+        </div>
+    </article>
+ 
+    <article class="post">
+        
+        <div class="post-content">
+            <div class="post-head home-post-head">
+                <h1 class="post-title">
+                    <a href="/2019/05/20/常用指令/">Android,Linux常用指令</a>
+                </h1>
+                <div class="post-meta">  &bull;
+                    <time class="post-date" datetime="" title="">
+                        2019年05月20日
+                    </time>
+                </div>
+            </div>
+            <p class="brief">
+                
+                    文件操作adb 查看文件详细信息： 
+ls –l
+pull文件
+adb pull sdcard/Box/log/log_2019-04-24.log 2019-01-24.log
+push文件：
+adb push C:/Users/E...
+                
+            </p>
+        </div>
+    </article>
+ 
+    <article class="post">
+        
+        <div class="post-content">
+            <div class="post-head home-post-head">
+                <h1 class="post-title">
+                    <a href="/2019/01/19/Android-Uri和Path/">Android Uri和Path</a>
+                </h1>
+                <div class="post-meta">  &bull;
+                    <time class="post-date" datetime="" title="">
+                        2019年01月19日
+                    </time>
+                </div>
+            </div>
+            <p class="brief">
+                
+                    起因拍照后要保存图片，我们需要指定一个存储图片路径的Uri。此时需要将file path转换为Uri。
+打开相册，选取本地的二维码图片识别，此时需要将Uri转Path，以获取图片路径。
+Android Uri to PathAndro...
+                
+            </p>
+        </div>
+    </article>
+ 
+    <article class="post">
+        
+        <div class="post-content">
+            <div class="post-head home-post-head">
+                <h1 class="post-title">
+                    <a href="/2018/12/01/HashMap-Bundle/">HashMap和Bundle</a>
+                </h1>
+                <div class="post-meta">  &bull;
+                    <time class="post-date" datetime="" title="">
+                        2018年12月01日
+                    </time>
+                </div>
+            </div>
+            <p class="brief">
+                
+                    HashMap(JAVA)HashMap 是一个散列表，它存储的内容是键值对(key-value)映射。
+HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。
+...
                 
             </p>
         </div>
     </article>
  
 
+
+    <nav class="pagination" role="navigation">
+        <div id="page-nav">
+            <a class="extend prev" rel="prev" href="/categories/移动端/"><i class='fa fa-angle-left'></i></a><a class="page-number" href="/categories/移动端/">1</a><span class="page-number current">2</span><a class="page-number" href="/categories/移动端/page/3/">3</a><a class="extend next" rel="next" href="/categories/移动端/page/3/"><i class='fa fa-angle-right'></i></a>
+        </div>
+    </nav>
 
 
 
@@ -252,7 +468,7 @@
         
     <div class="widget">
         <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/"><i class="fa" aria-hidden="true">Java</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其它/"><i class="fa" aria-hidden="true">其它</i></a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/前端/"><i class="fa" aria-hidden="true">前端</i></a><span class="category-list-count">23</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">4</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/其他/"><i class="fa" aria-hidden="true">其他</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/其它/"><i class="fa" aria-hidden="true">其它</i></a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/"><i class="fa" aria-hidden="true">前端</i></a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/移动端/"><i class="fa" aria-hidden="true">移动端</i></a><span class="category-list-count">22</span></li></ul>
     </div>
 
 
