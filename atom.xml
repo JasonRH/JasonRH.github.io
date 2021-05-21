@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-05-14T09:01:00.574Z</updated>
+  <updated>2021-05-21T03:38:39.155Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,81 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SQLite表升级和导入</title>
+    <link href="http://example.com/2021/04/15/SQLite%E8%A1%A8%E5%8D%87%E7%BA%A7%E5%92%8C%E5%AF%BC%E5%85%A5/"/>
+    <id>http://example.com/2021/04/15/SQLite表升级和导入/</id>
+    <published>2021-04-15T06:31:00.000Z</published>
+    <updated>2021-05-21T03:38:39.155Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="数据库升级增加表和删除表都不涉及数据迁移，但是修改表涉及到对原有数据进行迁移。"><a href="#数据库升级增加表和删除表都不涉及数据迁移，但是修改表涉及到对原有数据进行迁移。" class="headerlink" title="数据库升级增加表和删除表都不涉及数据迁移，但是修改表涉及到对原有数据进行迁移。"></a>数据库升级增加表和删除表都不涉及数据迁移，但是修改表涉及到对原有数据进行迁移。</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public class DBservice extends SQLiteOpenHelper &#123;</span><br><span class="line">        private String CREATE_BOOK = &quot;create table book(bookId integer</span><br><span class="line">        primarykey,</span><br><span class="line">        bookName text);&quot;;</span><br><span class="line">        private String CREATE_TEMP_BOOK = &quot;alter table book rename to _temp_book&quot;;</span><br><span class="line">        private String INSERT_DATA = &quot;insert into book select *,&apos;&apos; from _temp_book&quot;;</span><br><span class="line">        private String DROP_BOOK = &quot;drop table _temp_book&quot;;</span><br><span class="line"></span><br><span class="line">        public DBservice(Context context, String name, CursorFactory factory, int</span><br><span class="line">                version) &#123;</span><br><span class="line">            super(context, name, factory, version);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void onCreate(SQLiteDatabase db) &#123;</span><br><span class="line">            db.execSQL(CREATE_BOOK);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) &#123;</span><br><span class="line">            switch (newVersion) &#123;</span><br><span class="line">                case 2:</span><br><span class="line">                    db.beginTransaction();</span><br><span class="line">                    db.execSQL(CREATE_TEMP_BOOK);</span><br><span class="line">                    db.execSQL(CREATE_BOOK);</span><br><span class="line">                    db.execSQL(INSERT_DATA);</span><br><span class="line">                    db.execSQL(DROP_BOOK);</span><br><span class="line">                    db.setTransactionSuccessful();</span><br><span class="line">                    db.endTransaction();</span><br><span class="line">                    break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure><h5 id="打开外部数据库"><a href="#打开外部数据库" class="headerlink" title="打开外部数据库"></a>打开外部数据库</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class DatabaseManager &#123;</span><br><span class="line">    private DaoMaster mDaoMaster = null;</span><br><span class="line">    private DaoSession otherDaoSession = null;</span><br><span class="line"></span><br><span class="line">    private DatabaseManager() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static final class Holder &#123;</span><br><span class="line">        private static final DatabaseManager INSTANCE = new DatabaseManager();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static DatabaseManager getInstance() &#123;</span><br><span class="line">        return Holder.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //获取外部其它数据库DaoSession</span><br><span class="line">    DaoSession getOtherDaoSession(String dbName) &#123;</span><br><span class="line">        //if (otherDaoSession == null) &#123;</span><br><span class="line">            otherDaoSession = getDaoMaster(dbName).newSession();</span><br><span class="line">        //&#125;</span><br><span class="line">        return otherDaoSession;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private DaoMaster getDaoMaster(String dbName) &#123;</span><br><span class="line">        if (dbName == null || TextUtils.isEmpty(dbName)) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        //if (mDaoMaster == null) &#123;</span><br><span class="line">            //mDaoMaster = new DaoMaster(new DaoMaster.DevOpenHelper(context, dbName).getWritableDb());</span><br><span class="line">            mDaoMaster = new DaoMaster(SQLiteDatabase.openDatabase(dbName, null, SQLiteDatabase.OPEN_READWRITE));</span><br><span class="line">        //&#125;</span><br><span class="line">        return mDaoMaster;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h5 id=&quot;数据库升级增加表和删除表都不涉及数据迁移，但是修改表涉及到对原有数据进行迁移。&quot;&gt;&lt;a href=&quot;#数据库升级增加表和删除表都不涉及数据迁移，但是修改表涉及到对原有数据进行迁移。&quot; class=&quot;headerlink&quot; title=&quot;数据库升级增加表和删除表都不
+      
+    
+    </summary>
+    
+      <category term="移动端" scheme="http://example.com/categories/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
+    
+    
+      <category term="Android" scheme="http://example.com/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>坐标、投影及坐标转换</title>
+    <link href="http://example.com/2021/04/15/%E5%9D%90%E6%A0%87%E3%80%81%E6%8A%95%E5%BD%B1%E5%8F%8A%E5%9D%90%E6%A0%87%E8%BD%AC%E6%8D%A2/"/>
+    <id>http://example.com/2021/04/15/坐标、投影及坐标转换/</id>
+    <published>2021-04-15T06:31:00.000Z</published>
+    <updated>2021-05-14T07:19:18.584Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.坐标、投影及坐标转换<br><a href="https://pic1.zhimg.com/80/v2-8d3fb5483f96fa4b1c30f921aa23cbbc_720w.jpg" target="_blank" rel="noopener">坐标转换图</a></p><p>参考博客：<a href="https://zhuanlan.zhihu.com/p/34662114" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34662114</a></p><p>2.<a href="https://epsg.io/" target="_blank" rel="noopener">epsg转换</a></p><p>3.飞控系统 dronekit  ，dronekit-android</p><ol start="4"><li><a href="https://baike.baidu.com/item/%E5%B7%AE%E5%88%86GPS/10862498?fromtitle=GPS%E5%B7%AE%E5%88%86&amp;fromid=417300" target="_blank" rel="noopener">基准站使用原理(差分)</a></li></ol><p>以地球角度看，移动站和基站准加载20公里以内都可以看做是同一位置。<br>同一时间 同一位置对同一组卫星进行观测，大家都是穿过相同的大气、云层等这些‘固定’误差的地方（可以当作常数考虑），常数在方程中是可以抵消，所以你差分后得到的结果是已经抵消掉理论上所有环境上的误差</p><p>载波相位测量（英语：Carrier phase measurement） 利用卫星与接收器之间相对运动的关系，先取得卫星发射讯号时所产生的相位与接收器接收时所产生的参考相位，并求出两者之间的相位差值，即为载波观测量[1]。测量方法与虚拟距离相似，但虚拟距离是利用电码观测。</p><p><a href="https://blog.csdn.net/zhangbijun1230/article/details/80958036" target="_blank" rel="noopener">手机定位，GPS定位</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1.坐标、投影及坐标转换&lt;br&gt;&lt;a href=&quot;https://pic1.zhimg.com/80/v2-8d3fb5483f96fa4b1c30f921aa23cbbc_720w.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;坐标转换图&lt;/a&gt;
+      
+    
+    </summary>
+    
+      <category term="其它" scheme="http://example.com/categories/%E5%85%B6%E5%AE%83/"/>
+    
+    
+      <category term="Android" scheme="http://example.com/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Retrofit与Postman的对应关系</title>
+    <link href="http://example.com/2021/04/12/Retrofit%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%20%E4%B8%8E%20Postman/"/>
+    <id>http://example.com/2021/04/12/Retrofit网络请求 与 Postman/</id>
+    <published>2021-04-12T07:42:00.000Z</published>
+    <updated>2021-05-21T03:39:17.267Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.postman里面的form-data<br>对应 @Part 标签，上传数据。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Multipart</span><br><span class="line">@POST</span><br><span class="line">Call&lt;JsonObject&gt; post1(@Url String url, @PartMap Map&lt;String, RequestBody&gt; params, @PartMap Map&lt;String, MultipartBody.Part&gt; parts);</span><br><span class="line"></span><br><span class="line">实现：</span><br><span class="line">参数一：RequestBody name = RequestBody.create(MediaType.parse(&quot;application/form-data&quot;), name);</span><br><span class="line"></span><br><span class="line">参数二：RequestBody fileRQ = RequestBody.create(MediaType.parse(&quot;image/*&quot;), file);</span><br><span class="line">MultipartBody.Part part = MultipartBody.Part.createFormData(&quot;file&quot;, file.getName(), fileRQ);</span><br></pre></td></tr></table></figure></p><p>2.postman里面的x-www-form-urlencoded<br>对应 @Field，以表单形式提交数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@FormUrlEncoded</span><br><span class="line">@POST</span><br><span class="line">Call&lt;JsonObject&gt; post(@Url String url, @FieldMap Map&lt;String, Object&gt; params);</span><br></pre></td></tr></table></figure></p><p>3.postman里面的raw<br>对应@Body ,在body中以json或text字符串的形式提交数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@POST</span><br><span class="line">Call&lt;JsonObject&gt; post2(@Url String url, @Body RequestBody test);</span><br><span class="line">例子：RequestBody type = RequestBody.create(MediaType.parse(&quot;application/json&quot;), string);</span><br><span class="line"></span><br><span class="line">//或者不传RequestBody，直接传对象</span><br><span class="line">@POST</span><br><span class="line">Call&lt;JsonObject&gt; post2(@Url String url, @Body Object o);</span><br><span class="line"></span><br><span class="line">例子：post(url，User),post(url，hashmap)</span><br></pre></td></tr></table></figure></p><hr><p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//将json数据打包成字符串一次性传输</span><br><span class="line">Gson gson = new GsonBuilder().disableHtmlEscaping().create();</span><br><span class="line">JSONObject  object = new JSONObject(gson.toJson(entity));</span><br><span class="line">object.put(&quot;&quot;,&quot;&quot;);</span><br><span class="line">HashMap&lt;String, Object&gt; hashMap = new HashMap&lt;&gt;();</span><br><span class="line">hashMap.put(&quot;requestText&quot;, object.toString());</span><br><span class="line">service.post(url,hashmap);</span><br><span class="line"></span><br><span class="line">[JSONObject 和 JsonObject 的区别](https://blog.csdn.net/ceovip/article/details/77980832)</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1.postman里面的form-data&lt;br&gt;对应 @Part 标签，上传数据。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/sp
+      
+    
+    </summary>
+    
+      <category term="移动端" scheme="http://example.com/categories/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
+    
+    
+      <category term="Android" scheme="http://example.com/tags/Android/"/>
+    
+  </entry>
   
   <entry>
     <title>Handler机制</title>
@@ -449,86 +524,6 @@
     
     
       <category term="Android" scheme="http://example.com/tags/Android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SVN分支合并</title>
-    <link href="http://example.com/2020/04/15/SVN%E5%88%86%E6%94%AF%E5%90%88%E5%B9%B6/"/>
-    <id>http://example.com/2020/04/15/SVN分支合并/</id>
-    <published>2020-04-15T09:11:23.000Z</published>
-    <updated>2021-04-07T08:47:23.122Z</updated>
-    
-    <content type="html"><![CDATA[<p>1.SVN想要使用分支标记功能，需要在创建项目的时候创建三个文件夹</p><ul><li>trunk (主干)</li><li>branches (分支，主要用于新功能的开发)</li><li>tags  (标记，主要用于项目开发中的里程碑，比如开发到一定阶段可以单独一个版本作为发布等，它往往代表一个可以固定的完整的版本)</li></ul><p>注意事项：</p><ul><li>开发时为了避免branch和trunk冲突，需要branch不停地和trunk保持同步，即不停的合并trunk到branch。</li><li>正式合并前一定要先进行测试合并</li><li>合并branch到主干，只能进行一次。</li><li>分支主干合并的来源和Git使用相反，需要理解</li></ul><h4 id="合并trunk到branch"><a href="#合并trunk到branch" class="headerlink" title="合并trunk到branch"></a>合并trunk到branch</h4><p>需要当前处于branch仓库目录中。<br>右键-合并-合并一个版本范围-合并的源选择trunk路径（所有版本，指定范围根据需要）-测试合并-合并</p><pre><code>需要经常合并</code></pre><h4 id="合并branch到trunk"><a href="#合并branch到trunk" class="headerlink" title="合并branch到trunk"></a>合并branch到trunk</h4><p>需要当前处于trunk仓库目录。<br>右键-合并-合并一个版本范围-合并的源选择branch路径（所有版本，指定范围根据需要）-测试合并-合并</p><pre><code>此合并只可进行一次</code></pre><h3 id="合并分支步骤"><a href="#合并分支步骤" class="headerlink" title="合并分支步骤"></a>合并分支步骤</h3><p>右键-TortoiseSVN-合并-合并一个版本范围-合并的源（输入你想要获取的代码的仓库地址，合并trunk到branch时选择trunk）-所有版本和指定范围根据需要选择-测试合并，有冲突时解决本地冲突，或删文件-合并</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;1.SVN想要使用分支标记功能，需要在创建项目的时候创建三个文件夹&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;trunk (主干)&lt;/li&gt;
-&lt;li&gt;branches (分支，主要用于新功能的开发)&lt;/li&gt;
-&lt;li&gt;tags  (标记，主要用于项目开发中的里程碑，比如开发到一定阶段可以单
-      
-    
-    </summary>
-    
-      <category term="其它" scheme="http://example.com/categories/%E5%85%B6%E5%AE%83/"/>
-    
-    
-      <category term="代码" scheme="http://example.com/tags/%E4%BB%A3%E7%A0%81/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Nginx服务器搭建</title>
-    <link href="http://example.com/2019/12/25/Nginx%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/"/>
-    <id>http://example.com/2019/12/25/Nginx服务器编译安装/</id>
-    <published>2019-12-25T12:42:08.000Z</published>
-    <updated>2021-04-08T03:17:12.298Z</updated>
-    
-    <content type="html"><![CDATA[<p>1.下载<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://nginx.org/download/nginx-1.18.0.tar.gz</span><br></pre></td></tr></table></figure></p><p>2.复制，解压<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp nginx-1.18.0.tar.gz /usr/local/</span><br><span class="line">tar -xzf nginx-1.18.0.tar.gz</span><br><span class="line">cd nginx-1.18.0</span><br></pre></td></tr></table></figure></p><p>3.安装编译环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum update</span><br><span class="line">yum install -y gcc gcc-c++ pcre pcre-devel zlib zlib-devel openssl openssl-devel</span><br></pre></td></tr></table></figure></p><p>4.编译安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#添加用户和组</span><br><span class="line">groupadd www</span><br><span class="line">useradd -g www www</span><br><span class="line">#配置</span><br><span class="line">./configure --prefix=/usr/local/nginx-1.18.0  --user=qgydevops  --group=qgydevops  --with-http_ssl_module --with-http_gzip_static_module --with-http_sub_module --with-http_stub_status_module</span><br><span class="line">（用户组可以不添加，不配置）</span><br><span class="line"></span><br><span class="line">#编译，安装</span><br><span class="line">make &amp;&amp; make instal</span><br></pre></td></tr></table></figure></p><p>5.配置环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile.d/nginx.sh</span><br><span class="line">文件内写入：</span><br><span class="line">export NGINX_HOME=/usr/local/nginx</span><br><span class="line">export PATH=$NGINX_HOME/sbin:$PATH</span><br><span class="line">保存文件退出执行：</span><br><span class="line">chmod +x /etc/profile.d/nginx.sh</span><br><span class="line">source /etc/profile.d/nginx.sh</span><br></pre></td></tr></table></figure></p><p>6.修改配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/local/nginx/conf/nginx.conf</span><br></pre></td></tr></table></figure></p><p>7.文件内添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">user    www;</span><br><span class="line">worker_processes  8;  </span><br><span class="line">pid      /usr/local/nginx/nginx.pid;</span><br><span class="line">worker_rlimit_nofile 65535;</span><br><span class="line">error_log /data/wwwlog/error_nginx.log crit;</span><br><span class="line">events &#123;</span><br><span class="line">    use  epoll;</span><br><span class="line">    worker_connections  65535;</span><br><span class="line">    multi_accept on;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;</span><br><span class="line">    limit_conn_zone $binary_remote_addr zone=addr:10m;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</span><br><span class="line">                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</span><br><span class="line">                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</span><br><span class="line">    server_names_hash_bucket_size 128;</span><br><span class="line">    client_header_buffer_size    512k;</span><br><span class="line">    client_max_body_size  100m;</span><br><span class="line">    client_body_buffer_size 10m;</span><br><span class="line">    large_client_header_buffers  4 512k;</span><br><span class="line">    sendfile       on;</span><br><span class="line">    tcp_nopush     on;</span><br><span class="line">    tcp_nodelay    on;</span><br><span class="line">    server_tokens off;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">    send_timeout        10;</span><br><span class="line">    client_body_timeout  10;</span><br><span class="line">    client_header_timeout  10;</span><br><span class="line">    </span><br><span class="line">    fastcgi_connect_timeout 300;</span><br><span class="line">    fastcgi_send_timeout 300;</span><br><span class="line">    fastcgi_read_timeout 300;</span><br><span class="line">    fastcgi_buffer_size 64k;</span><br><span class="line">    fastcgi_buffers 4 64k;</span><br><span class="line">    fastcgi_busy_buffers_size 128k;</span><br><span class="line">    fastcgi_temp_file_write_size 128k;</span><br><span class="line">    fastcgi_intercept_errors on;</span><br><span class="line"></span><br><span class="line">    gzip on;</span><br><span class="line">    gzip_min_length 256k;</span><br><span class="line">    gzip_buffers    16  8k;</span><br><span class="line">    gzip_http_version  1.1;</span><br><span class="line">    gzip_comp_level  6;</span><br><span class="line">    gzip_proxied any;</span><br><span class="line">    gzip_vary  on;</span><br><span class="line">    gzip_types</span><br><span class="line">    text/xml application/xml application/atom+xml application/rss+xml application/xhtml+xml image/svg+xml</span><br><span class="line">    text/javascript application/javascript application/x-javascript</span><br><span class="line">    text/x-json application/json application/x-web-app-manifest+json</span><br><span class="line">    text/css text/plain text/x-component</span><br><span class="line">    font/opentype application/x-font-ttf application/vnd.ms-fontobject</span><br><span class="line">    image/x-icon;</span><br><span class="line">    gzip_disable &quot;MSIE [1-6]\.(?!.*SV1)&quot;;</span><br><span class="line">    open_file_cache max=65535 inactive=20s;</span><br><span class="line">    open_file_cache_valid 30s;</span><br><span class="line">    open_file_cache_min_uses 2;</span><br><span class="line">    open_file_cache_errors on;</span><br><span class="line">    include vhost/*.conf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p> 8.http{}配置中添加<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">      listen <span class="number">80</span>;</span><br><span class="line">      server_name 你的IP地址;</span><br><span class="line">      root /home/RH;</span><br><span class="line">      index index.html;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure></p><p>9.重启服务，配置生效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx –s reload</span><br></pre></td></tr></table></figure></p><p>10.访问nginx，现在你可以通过公网ip (本地可以通过 localhost /或 127.0.0.1 ) 查看nginx 服务返回的信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i localhost</span><br></pre></td></tr></table></figure></p><p>11.修改文件夹权限，否则无法访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 RH</span><br></pre></td></tr></table></figure></p><p>12.。浏览器访问 http://你的IP地址</p><h3 id="设置开机启动"><a href="#设置开机启动" class="headerlink" title="设置开机启动"></a>设置开机启动</h3><p>13.在系统服务目录里创建nginx.service文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /usr/lib/systemd/system/nginx.service</span><br></pre></td></tr></table></figure></p><p>14.写入内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#服务的说明</span><br><span class="line">[Unit]</span><br><span class="line">#描述服务</span><br><span class="line">Description=nginx</span><br><span class="line">#描述服务类别</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">#服务运行参数的设置  </span><br><span class="line">[Service]</span><br><span class="line">#forking是后台运行的形式</span><br><span class="line">Type=forking</span><br><span class="line">#服务的具体运行命令</span><br><span class="line">ExecStart=/usr/local/nginx/sbin/nginx</span><br><span class="line">#重启命令</span><br><span class="line">ExecReload=/usr/local/nginx/sbin/nginx -s reload</span><br><span class="line">#停止命令</span><br><span class="line">ExecStop=/usr/local/nginx/sbin/nginx -s quit</span><br><span class="line">#表示给服务分配独立的临时空间</span><br><span class="line">PrivateTmp=true</span><br><span class="line"></span><br><span class="line">#运行级别下服务安装的相关设置，可设置为多用户，即系统运行级别为3  </span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure></p><p>15.设置开机自启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable nginx.service</span><br></pre></td></tr></table></figure></p><p>16.查看nginx状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status nginx.service</span><br></pre></td></tr></table></figure></p><p>17.重启nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pkill -9 nginx</span><br><span class="line">ps aux | grep nginx</span><br><span class="line">systemctl start nginx</span><br></pre></td></tr></table></figure></p><p>18.查看服务状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status nginx.service</span><br></pre></td></tr></table></figure></p><h4 id="备案访问问题："><a href="#备案访问问题：" class="headerlink" title="备案访问问题："></a>备案访问问题：</h4><p>1.域名需要实名认证、</p><p>2.购买的国内云服务器。默认访问80端口，服务器需要备案，否则无法访问；访问非80端口不需要备案。</p><p>3.购买的国外云服务器。不需要备案。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;1.下载&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pr
-      
-    
-    </summary>
-    
-      <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
-    
-    
-      <category term="服务器" scheme="http://example.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>搭建FTP服务器</title>
-    <link href="http://example.com/2019/12/25/%E6%90%AD%E5%BB%BAFTP%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
-    <id>http://example.com/2019/12/25/搭建FTP服务器/</id>
-    <published>2019-12-25T11:41:24.000Z</published>
-    <updated>2021-04-09T09:00:22.653Z</updated>
-    
-    <content type="html"><![CDATA[<p>1.安装<br>[root@Sungeek ~]# yum -y install vsftpd</p><p>1.编辑配置<br>[root@Sungeek ~]# cd /etc/vsftpd<br>[root@Sungeek ~]# vim vsftpd.conf</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//本地用户访问</span><br><span class="line">local_enable=YES</span><br><span class="line">#本地用户访问目录</span><br><span class="line">local_root=/home/FTP/</span><br><span class="line">#只允许在主目录下活动</span><br><span class="line">chroot_local_user=YES</span><br><span class="line"></span><br><span class="line">#匿名用户不能访问</span><br><span class="line">anonymous_enable=NO</span><br><span class="line">#匿名用户访问目录</span><br><span class="line">anon_root=/home/RH/JasonRH.github.io/index.html</span><br></pre></td></tr></table></figure><p>3.<br>添加FTP用户命令：useradd XXX<br>设置FTP用户密码：passwd XXX<br>设置用户目录访问权限：<br>[root@Sungeek vsftpd]# chown -R ftpuser /home/ftp</p><p>3、设置vsftpd服务开机启动<br>[root@Sungeek ~]# systemctl enable vsftpd.service</p><p>//设置开机自启动<br>systemctl enable vsftpd.service<br>//启动ftp服务<br>systemctl start vsftpd.service<br>//暂停ftp服务<br>systemctl status vsftpd.service<br>//查看ftp服务端口<br>netstat -antup | grep ftp<br>重启服务<br>service vsftpd restart</p><h3 id="开启被动模式"><a href="#开启被动模式" class="headerlink" title="开启被动模式"></a>开启被动模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pasv_enable=YES # 是否允许数据传输时使用PASV模式（默认值为 YES）</span><br><span class="line">pasv_min_port=port port_number # PASV 模式下，数据传输使用的端口下界（0 表示任意。默认值为 0）把端口范围设在比较高的一段范围内，比如 50000-60000，将有助于安全性的提高.</span><br><span class="line">pasv_max_port=port_number # PASV 模式下，数据传输使用的端口上界（0 表示任意。默认值为 0）</span><br><span class="line">pasv_promiscuous=NO # 是否屏蔽对 PASV 进行安全检查，默认值为 NO（当有安全隧道时可禁用）</span><br><span class="line">pasv_address # PASV 模式中服务器传回的 ip 地址。默认值为 none，即地址是从呼入的连接套接字中获取。</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;1.安装&lt;br&gt;[root@Sungeek ~]# yum -y install vsftpd&lt;/p&gt;
-&lt;p&gt;1.编辑配置&lt;br&gt;[root@Sungeek ~]# cd /etc/vsftpd&lt;br&gt;[root@Sungeek ~]# vim vsftpd.conf&lt;/p
-      
-    
-    </summary>
-    
-      <category term="后端" scheme="http://example.com/categories/%E5%90%8E%E7%AB%AF/"/>
-    
-    
-      <category term="服务器" scheme="http://example.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     
   </entry>
   
