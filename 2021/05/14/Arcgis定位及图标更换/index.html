@@ -27,7 +27,7 @@
     <!--Title-->
 
 
-<title>Android Studio新建Module异常 | RH</title>
+<title>Arcgis定位及图标更换 | RH</title>
 
 
     <link rel="alternate" href="/atom.xml" title="RH" type="application/atom+xml">
@@ -136,9 +136,9 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="Android Studio新建Module异常">
+        <h1 id="Arcgis定位及图标更换">
             
-	            Android Studio新建Module异常
+	            Arcgis定位及图标更换
             
         </h1>
         <div class="post-meta">
@@ -146,8 +146,8 @@
     
     <span class="categories-meta fa-wrap">
         <i class="fa fa-folder-open-o"></i>
-        <a href="/categories/移动端">
-            移动端
+        <a href="/categories/前端">
+            前端
         </a>
     </span>
     
@@ -158,8 +158,8 @@
         <span class="tags-meta">
             
                 
-                    <a href="/tags/Android Studio" title='Android Studio'>
-                        Android Studio
+                    <a href="/tags/Android" title='Android'>
+                        Android
                     </a>
                 
             
@@ -171,7 +171,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/12/10</span>
+            <span class="date-meta">2021/05/14</span>
         </span>
         
     
@@ -179,17 +179,10 @@
 
             
             
-            <p class="fa fa-exclamation-triangle warning">
-                本文于<strong>533</strong>天之前发表，文中内容可能已经过时。
-            </p>
-        
     </div>
     
     <div class="post-body post-content">
-        <h4 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h4><p>新建module后，上面显示 Gradle sync 同步失败，build窗口一直卡在同步中，卸载重装 更换sdk，删除.gradle和 android配置文件夹都没有用</p>
-<h3 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h3><p>由于开启了渐变同步导致，到设置界面：   File → Settings → Experimental → Gradle 把Only sync the active variant 的勾去掉即可</p>
-<p><img src="https://img-blog.csdnimg.cn/20191210093212747.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dQUjEzMDA1NjU1OTg5,size_16,color_FFFFFF,t_70" alt="取消打勾"></p>
-
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> PictureMarkerSymbol symbol;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定位当前位置</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startLocation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mMapView == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mLocationDisplay = mMapView.getLocationDisplay();</span><br><span class="line">        <span class="comment">//mLocationDisplay.setShowLocation(true);</span></span><br><span class="line">        <span class="comment">//mLocationDisplay.setShowPingAnimation(true);</span></span><br><span class="line">        <span class="comment">//步行导航</span></span><br><span class="line">        mLocationDisplay.setAutoPanMode(LocationDisplay.AutoPanMode.COMPASS_NAVIGATION);</span><br><span class="line"></span><br><span class="line">        MyLocationDataSource dataSource = MyLocationDataSource.getInstance();</span><br><span class="line">        <span class="comment">//MyLocationDataSource.getInstance().UpdateLocation(new LocationDataSource.Location(new Point(SouthLocation.GetInstance().getLongitude(), SouthLocation.GetInstance().getLatitude(), SpatialReferences.getWgs84())));</span></span><br><span class="line">        mLocationDisplay.setLocationDataSource(dataSource);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//显示自定义的定位符号</span></span><br><span class="line">        Drawable drawable = context.getResources().getDrawable(R.mipmap.direction);</span><br><span class="line">        symbol = <span class="keyword">new</span> PictureMarkerSymbol((BitmapDrawable) drawable);</span><br><span class="line">        symbol.loadAsync();</span><br><span class="line">        symbol.addDoneLoadingListener(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                mLocationDisplay.setDefaultSymbol(symbol);</span><br><span class="line">                <span class="comment">//mLocationDisplay.setShowAccuracy(false);//隐藏符号的缓存区域</span></span><br><span class="line">                mLocationDisplay.setHeadingSymbol(symbol);<span class="comment">//设置当前位置设备面对方向的符号</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//当我们执行LocationDisplay.startAsync()方法时候，会在地图上显示出我们当前位置</span></span><br><span class="line">        dataSource.startAsync();</span><br><span class="line">        mLocationDisplay.startAsync();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果要在LocationDisplay里进行位置信息的自动监听，方法也很简单，只需要LocationDisplay.addLocationChangedListener即可</span></span><br><span class="line">        mLocationDisplay.addLocationChangedListener(<span class="keyword">new</span> LocationDisplay.LocationChangedListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLocationChanged</span><span class="params">(LocationDisplay.LocationChangedEvent locationChangedEvent)</span> </span>&#123;</span><br><span class="line">                location = locationChangedEvent.getLocation();</span><br><span class="line">                scaleView.refreshScaleView();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取手机传感器数据，更新定位图标方向</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateRotation</span><span class="params">(<span class="keyword">float</span> rotation)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (symbol != <span class="keyword">null</span>) &#123;</span><br><span class="line">            symbol.setAngle(rotation);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
     </div>
     
         <div class="reward">
@@ -222,15 +215,10 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/2019/12/25/搭建FTP服务器/" class="pre-post btn btn-default" title='搭建FTP服务器'>
-            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">搭建FTP服务器</span>
-        </a>
     
-    
-        <a href="/2019/09/07/Android Studio 配置签名和编译自命名/" class="next-post btn btn-default" title='Android Studio 配置签名和编译自命名'>
+        <a href="/2021/04/15/SQLite表升级和导入/" class="next-post btn btn-default" title='SQLite表升级和导入'>
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">Android Studio 配置签名和编译自命名</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">SQLite表升级和导入</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>
@@ -273,7 +261,7 @@
     <div class="widget">
         <h3 class="title">文章目录</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题："><span class="toc-text">问题：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决办法："><span class="toc-text">解决办法：</span></a>
+            <p>暂无目录</p>
         
     </div>
 </aside>
